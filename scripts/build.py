@@ -53,6 +53,7 @@ def build():
     target.mkdir()
     for p in (ROOT/'web').iterdir():
         if p.is_file(): shutil.copyfile(p,target/p.name)
+        elif p.is_dir(): shutil.copytree(p,target/p.name)
     records=[]
     canonical={'AGENTS.md':(ROOT/'AGENTS.md').read_bytes()}
     for name,label in DOCS:

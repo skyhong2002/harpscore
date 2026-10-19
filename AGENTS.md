@@ -18,3 +18,5 @@ Read `docs/workflow.md` and `docs/arranging.md`. Read `docs/jianpu.md` when prod
 ## Public contributions
 
 Keep universal rules in docs and preferences in profiles. Add a minimal original fixture when fixing an engraving defect. Never commit third-party music/audio, private filesystem paths, credentials or machine-specific crash workarounds to universal defaults. Do not bundle any existing Summer score.
+
+The user-authorized rendered demo images in `web/assets/` are a specific exception for website presentation. Keep attribution and their exclusion from the MIT license in NOTICE.md; they do not authorize bundling editable scores or recordings.

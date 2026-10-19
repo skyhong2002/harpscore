@@ -22,7 +22,8 @@ class BuildTests(unittest.TestCase):
             for n in z.namelist():
                 self.assertFalse(n.startswith(('.git/','.openai/','dist/')))
                 self.assertNotIn(Path(n).suffix.lower(),['.mscz','.mp3','.wav','.pdf'])
-                self.assertNotRegex(z.read(n).decode(),r'/Users/[A-Za-z0-9_-]+/')
+                if Path(n).suffix.lower() not in ['.webp','.png','.jpg','.jpeg']:
+                    self.assertNotRegex(z.read(n).decode(),r'/Users/[A-Za-z0-9_-]+/')
 
     def test_download_reproducibility(self):
         paths=list((ROOT/'dist/downloads').glob('*.zip'))
@@ -32,7 +33,7 @@ class BuildTests(unittest.TestCase):
 
     def test_static_references_resolve(self):
         for ref in re.findall(r'(?:href|src)="([^"]+)"',(ROOT/'dist/index.html').read_text()):
-            if not ref.startswith('#'):self.assertTrue((ROOT/'dist'/ref).is_file(),ref)
+            if not ref.startswith(('#','https://','http://')):self.assertTrue((ROOT/'dist'/ref).is_file(),ref)
 
     def test_renderer_escapes_source_text(self):
         self.assertIn('&lt;script&gt;',build.render('<script>alert(1)</script>'))
