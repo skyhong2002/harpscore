@@ -35,6 +35,8 @@ HarpScore 附上八份 `.mscz` 原生起始檔，放在 `templates/musescore/`�
 
 驗收分成容器/XML、空白音樂結構、正常 MuseScore 視窗載入、實際排版與播放等層。範本的實際正常視窗驗證狀態見 `templates/verification.json`，以對應檔案雜湊為準；沒有驗過的部分不宣稱通過。
 
+目前八份通過容器與空白結構測試；三份簡譜，以及五線譜獨奏、獨奏＋鋼琴，已在 MuseScore 4.7.5 正常視窗載入並目視檢查。另三份五線譜待正常視窗檢查，仍標為實驗性。空白範本尚未驗證密集音符、播放起音或匯出品質。編輯器中的灰色譜線是隱藏譜表的編輯輔助；首次開啟可能標示未儲存，請另存新曲。
+
 ## 維護與重建
 
 執行 `python3 scripts/create_templates.py --out templates/musescore` 可重建。產生器不讀本機既有樂譜，也不啟動 MuseScore 或輸出 PDF。修改產生器後，重新驗證 native window，保存新的檔案雜湊，才更新該項紀錄。

@@ -1,10 +1,62 @@
 {
   "template_version": "0.2.0",
-  "structural_checks": "automated native container, empty measures, styles and no third-party material",
+  "structural_checks": "All eight: native ZIP/XML container, expected staff count, twelve empty measures, deterministic rebuild and no third-party musical material.",
   "native_window": {
-    "status": "pending",
-    "reason": "local MuseScore process is running but its main window is currently unavailable to desktop control"
+    "status": "partial",
+    "application": "MuseScore Studio 4.7.5 on macOS",
+    "method": "Opened through Open other in the existing normal application window; inspected the visible score. No CLI converter or PDF export.",
+    "files": [
+      {
+        "file": "HarpScore_Solo.mscz",
+        "sha256": "88a6012abe478ccebaf897bc953a2e3f2baea1ae7dc7819e0122ff1aaa3b97e7",
+        "status": "loaded_and_visually_inspected"
+      },
+      {
+        "file": "HarpScore_Solo_Jianpu.mscz",
+        "sha256": "d2680a7643d6ab84bfcec2a402b190f512b79038c5f75d3e36e48df07e4f2bae",
+        "status": "loaded_and_visually_inspected"
+      },
+      {
+        "file": "HarpScore_Solo_Piano.mscz",
+        "sha256": "31cbf5e28cc8501d20e77122af6e22cab56efb5f7d6c0066bbb53068097a124d",
+        "status": "loaded_and_visually_inspected"
+      },
+      {
+        "file": "HarpScore_Duet.mscz",
+        "sha256": "245ef19a6aee174414a54e04786587074374d49887f7826f4cbac325b82bb973",
+        "status": "pending"
+      },
+      {
+        "file": "HarpScore_Duet_Jianpu.mscz",
+        "sha256": "0af8ca53aaf9005051ed3f0357675d344d6c722b1f0311dae42aad2a99e9daf3",
+        "status": "loaded_and_visually_inspected"
+      },
+      {
+        "file": "HarpScore_Duet_Piano.mscz",
+        "sha256": "bf6b1283384b97b7b1f284ba88f3f2a77fd8db89a326a81fcb1459422bac287d",
+        "status": "pending"
+      },
+      {
+        "file": "HarpScore_Quintet.mscz",
+        "sha256": "733046c8af4afea02d461c86d336e1d57fc4752a908102daaf411759927a3d30",
+        "status": "pending"
+      },
+      {
+        "file": "HarpScore_Quintet_Jianpu.mscz",
+        "sha256": "c4ce13ad367829d3dcf9f5a2b87d4975fc631699dc8a488565226d0ad01e35eb",
+        "status": "loaded_and_visually_inspected"
+      }
+    ],
+    "pending_reason": "The shared application window was handed back to the separate score-editing task. Three staff editions have structural checks only."
   },
-  "rendering": "not yet verified",
-  "playback": "silent empty starters; no instrument attack verification"
+  "rendering": {
+    "scope": "Empty starter appearance only. Three numbered editions plus Solo and Solo_Piano staff editions were visually inspected. Quintet numbered page-two workTitle header was visible.",
+    "limits": [
+      "No dense-note engraving test from these empty files.",
+      "No PDF or SVG export validation in this release.",
+      "Invisible staff guide lines appear gray in the editor.",
+      "First opening can mark a generated starter as modified; use Save As for a new piece."
+    ]
+  },
+  "playback": "Silent empty starters; no instrument attack verification"
 }

@@ -34,7 +34,7 @@ Keep source corrections, musical adaptations and layout-only edits separate.
 
 ## MuseScore 起始檔
 
-[八份原生 `.mscz` 範本](templates/musescore/)：五線譜五份、簡譜三份，空白音樂、MIT，可直接下載另存新曲。見 [使用與驗證狀態](docs/templates.md)。目前正常視窗驗證待完成；簡譜修改原生音符後仍需同步覆層。
+[八份原生 `.mscz` 範本](templates/musescore/)：五線譜五份、簡譜三份，空白音樂、MIT，可直接下載另存新曲。見 [使用與驗證狀態](docs/templates.md)。目前五份已在 MuseScore 正常視窗載入與目視檢查，另三份待檢查；簡譜修改原生音符後仍需同步覆層。
 
 ## Try it
 
