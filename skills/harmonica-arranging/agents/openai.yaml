@@ -1,0 +1,4 @@
+interface:
+  display_name: "口琴編譜協作"
+  short_description: "協作口琴編曲與簡譜，保留樂句、拍點、演奏程度與排版檢查依據"
+  default_prompt: "使用 $harmonica-arranging，依參考音源、演奏程度與編制完成口琴譜，先核對音樂再處理排版。"

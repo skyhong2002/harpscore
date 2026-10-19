@@ -1,0 +1,14 @@
+{
+  "id": "fixed-c",
+  "label": "固定 C · 清楚拍點",
+  "status": "initial collaborative preset; validate on each new piece",
+  "tonic_system": "fixed-c",
+  "unpointed_one": {"chromatic": "C5", "double_bass": "C3"},
+  "print_reference_labels": false,
+  "accidental_placement": "upper-left-superscript",
+  "underline_grouping": "quarter-beat-with-visible-gaps",
+  "chord": {"symbols": ["x", "X", "0"], "alignment": "baseline", "strong_attack_existing_velocity_at_least": 56, "change_velocity_for_symbol": false},
+  "page": {"size": "A4", "bars_per_system_target": 4, "quintet_full_page_systems_target": 5, "images_in_jianpu": false, "partial_last_page": "top-with-normal-system-spacing"},
+  "font": {"preferred": "Avenir Next", "portable_alternative": "Noto Sans", "recheck_metrics_on_substitution": true},
+  "references": ["docs/jianpu.md", "docs/verification.md"]
+}

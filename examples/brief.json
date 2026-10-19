@@ -1,0 +1,12 @@
+{
+  "schema_version": "0.1",
+  "title": "原創練習曲",
+  "source": "使用者提供的原創旋律與示範音檔",
+  "ensemble": "duet",
+  "level": "beginner-2-months",
+  "profile": "fixed-c",
+  "editions": ["combined-harmonicas"],
+  "notation": ["staff", "jianpu"],
+  "pdf": false,
+  "notes": "兩把口琴保持完整樂句，困難跑動由伴奏承接。請先確認樂器型號與實際音域。"
+}
