@@ -48,7 +48,7 @@ python3 scripts/tryout.py --out /tmp/harpscore-trial
 
 ## Development
 
-Python 3 與 Node.js 用於建置及測試，不需要安裝第三方套件。
+Python 3.9+ 與 Node.js 18+ 用於建置及測試，不需要安裝第三方套件。
 
 ```sh
 python3 scripts/build.py
