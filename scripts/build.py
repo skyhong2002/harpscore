@@ -7,7 +7,7 @@ import shutil
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-DOCS = [('agent-contract','Agent 執行守則'),('workflow','從新曲開始'),('arranging','配器與可吹性'),('jianpu','簡譜規則'),('preferences','完整偏好'),('conversation-decisions','66 項對話決策'),('musescore-adapter','MuseScore 實作經驗'),('tryout','Agent 試做任務'),('verification','檢查與交付'),('project','維護與發布')]
+DOCS = [('agent-contract','Agent 執行守則'),('workflow','從新曲開始'),('templates','MuseScore 起始檔'),('arranging','配器與可吹性'),('jianpu','簡譜規則'),('preferences','完整偏好'),('conversation-decisions','66 項對話決策'),('musescore-adapter','MuseScore 實作經驗'),('tryout','Agent 試做任務'),('verification','檢查與交付'),('project','維護與發布')]
 
 def inline(s):
     s = html.escape(s)
@@ -63,7 +63,7 @@ def build():
     for p in sorted((ROOT/'profiles').glob('*.json')):
         canonical[str(p.relative_to(ROOT))]=p.read_bytes()
     (target/'docs.js').write_text('window.HANDBOOK='+json.dumps(records,ensure_ascii=False)+';\n')
-    for folder in ['docs','profiles','examples']:
+    for folder in ['docs','profiles','examples','templates']:
         shutil.copytree(ROOT/folder,target/folder)
     shutil.copyfile(ROOT/'AGENTS.md',target/'AGENTS.md')
     shutil.copyfile(ROOT/'SKILL.md',target/'SKILL.md')
@@ -71,13 +71,16 @@ def build():
     (target/'llms-full.txt').write_text('\n\n'.join(f'# FILE: {n}\n'+d.decode() for n,d in canonical.items()))
     dl=target/'downloads';dl.mkdir()
     kit={**canonical}
-    for folder in ['profiles','examples','agents']:
+    for folder in ['profiles','examples','agents','templates']:
         for p in (ROOT/folder).rglob('*'):
             if p.is_file():kit[str(p.relative_to(ROOT))]=p.read_bytes()
-    for n in ['LICENSE','scripts/tryout.py']:kit[n]=(ROOT/n).read_bytes()
+    for n in ['LICENSE','scripts/tryout.py','scripts/create_templates.py']:kit[n]=(ROOT/n).read_bytes()
     skill={'harpscore/'+n:data for n,data in kit.items()}
     archive(dl/'harpscore-skill.zip',skill)
     archive(dl/'agent-kit.zip',kit)
+    archive(dl/'harpscore-musescore-templates.zip',{
+        **{str(p.relative_to(ROOT)):p.read_bytes() for p in (ROOT/'templates').rglob('*') if p.is_file()},
+        'README.md':(ROOT/'docs/templates.md').read_bytes(),'LICENSE':(ROOT/'LICENSE').read_bytes()})
     import tempfile
     import runpy
     write_fixture=runpy.run_path(str(ROOT/'scripts/tryout.py'))['write_fixture']
@@ -87,11 +90,11 @@ def build():
     public={}
     for name in ['README.md','AGENTS.md','SKILL.md','LICENSE','CONTRIBUTING.md','.gitignore']:
         public[name]=(ROOT/name).read_bytes()
-    for name in ['docs','profiles','examples','agents','web','scripts','tests','.github']:
+    for name in ['docs','profiles','examples','agents','web','scripts','tests','templates','.github']:
         for p in (ROOT/name).rglob('*'):
             if p.is_file() and '__pycache__' not in p.parts and not p.name.endswith('.pyc'):
                 public[str(p.relative_to(ROOT))]=p.read_bytes()
     archive(dl/'source.zip',public)
-    print(f'Built {len(records)} chapters and 4 reproducible download packages in {target}')
+    print(f'Built {len(records)} chapters and 5 reproducible download packages in {target}')
 
 if __name__=='__main__': build()

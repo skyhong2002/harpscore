@@ -3,3 +3,5 @@
 .topbar #search-input{margin:0;border:0;border-radius:0;background:white;padding:10px 14px;font-size:13px;min-width:0}
 
 .agent-entry{background:#fff}.agent-entry pre{background:#f2f4fa;border-left:4px solid var(--blue);padding:25px 28px;font:14px/1.9 ui-monospace,monospace;white-space:pre-wrap;overflow-wrap:anywhere}.entry-links{display:flex;gap:20px;flex-wrap:wrap;font-size:12px;color:var(--blue)}
+
+.native-templates{border-top:1px solid var(--line)}.template-columns{display:grid;grid-template-columns:1fr 1fr;gap:50px;margin:30px 0}.template-columns a{display:block;color:var(--blue);padding:7px 0;font-size:14px}.template-columns p,.template-status{font-size:12px;color:var(--muted)}.template-status{margin:20px 0 0;max-width:850px}.template-status a{color:var(--blue)}@media(max-width:650px){.template-columns{grid-template-columns:1fr;gap:20px}}

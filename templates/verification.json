@@ -1,0 +1,10 @@
+{
+  "template_version": "0.2.0",
+  "structural_checks": "automated native container, empty measures, styles and no third-party material",
+  "native_window": {
+    "status": "pending",
+    "reason": "local MuseScore process is running but its main window is currently unavailable to desktop control"
+  },
+  "rendering": "not yet verified",
+  "playback": "silent empty starters; no instrument attack verification"
+}

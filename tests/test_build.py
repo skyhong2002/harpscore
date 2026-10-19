@@ -22,8 +22,10 @@ class BuildTests(unittest.TestCase):
         with zipfile.ZipFile(ROOT/'dist/downloads/source.zip') as z:
             for n in z.namelist():
                 self.assertFalse(n.startswith(('.git/','.openai/','dist/')))
-                self.assertNotIn(Path(n).suffix.lower(),['.mscz','.mp3','.wav','.pdf'])
-                if Path(n).suffix.lower() not in ['.webp','.png','.jpg','.jpeg']:
+                self.assertNotIn(Path(n).suffix.lower(),['.mp3','.wav','.pdf'])
+                if n.endswith('.mscz'):
+                    self.assertTrue(n.startswith('templates/musescore/HarpScore_'))
+                if Path(n).suffix.lower() not in ['.webp','.png','.jpg','.jpeg','.mscz']:
                     self.assertNotRegex(z.read(n).decode(),r'/Users/[A-Za-z0-9_-]+/')
 
     def test_download_reproducibility(self):

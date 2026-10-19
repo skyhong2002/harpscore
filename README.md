@@ -32,6 +32,10 @@ Keep source corrections, musical adaptations and layout-only edits separate.
 
 **不是自動聽歌轉譜服務，也尚未包含通用 MuseScore 簡譜渲染引擎。** Skill 的作用是讓 agent 能依可靠規則使用它可用的工具，且對實際成果負責。試做產生器只產生原稿，不會假裝已在你的 MuseScore 完成簡譜。
 
+## MuseScore 起始檔
+
+[八份原生 `.mscz` 範本](templates/musescore/)：五線譜五份、簡譜三份，空白音樂、MIT，可直接下載另存新曲。見 [使用與驗證狀態](docs/templates.md)。目前正常視窗驗證待完成；簡譜修改原生音符後仍需同步覆層。
+
 ## Try it
 
 ```sh

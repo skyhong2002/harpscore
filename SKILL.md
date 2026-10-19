@@ -14,6 +14,7 @@ An agent-readable arranging and engraving skill. Read rules, do a small real tri
 - Reusing the founding user's style: `docs/preferences.md` and `profiles/skyhong.json`.
 - Resolving an old contradictory instruction: `docs/conversation-decisions.md`. Later explicit corrections supersede earlier requests; do not average contradictory instructions.
 - MuseScore editing/export: `docs/musescore-adapter.md`. Machine-specific constraints are conditional.
+- Starting a new piece: `docs/templates.md` and `templates/musescore/`. Check the verification record and copy the matching native starter rather than rebuilding its staff/style setup. The initial files are experimental until normal-window rendering is confirmed. Jianpu overlays still require explicit synchronization after editing notes.
 - Before delivery: `docs/verification.md`.
 - First use or changed renderer/font: `docs/tryout.md`; run `python3 scripts/tryout.py --out <temporary-directory>`, open the generated MusicXML normally in MuseScore and perform the trial task. This helper creates a fixture, not a completed Jianpu renderer.
 

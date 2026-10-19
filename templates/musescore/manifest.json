@@ -1,0 +1,93 @@
+{
+  "version": "0.2.0",
+  "templates": [
+    {
+      "file": "HarpScore_Solo.mscz",
+      "form": "Solo",
+      "notation": "staff",
+      "bars": 12,
+      "staves": 1,
+      "sha256": "88a6012abe478ccebaf897bc953a2e3f2baea1ae7dc7819e0122ff1aaa3b97e7",
+      "license": "MIT",
+      "musical_content": "empty rests only; no third-party music",
+      "verification_record": "templates/verification.json"
+    },
+    {
+      "file": "HarpScore_Solo_Jianpu.mscz",
+      "form": "Solo",
+      "notation": "jianpu",
+      "bars": 12,
+      "staves": 1,
+      "sha256": "d2680a7643d6ab84bfcec2a402b190f512b79038c5f75d3e36e48df07e4f2bae",
+      "license": "MIT",
+      "musical_content": "empty rests only; no third-party music",
+      "verification_record": "templates/verification.json"
+    },
+    {
+      "file": "HarpScore_Solo_Piano.mscz",
+      "form": "Solo_Piano",
+      "notation": "staff",
+      "bars": 12,
+      "staves": 3,
+      "sha256": "31cbf5e28cc8501d20e77122af6e22cab56efb5f7d6c0066bbb53068097a124d",
+      "license": "MIT",
+      "musical_content": "empty rests only; no third-party music",
+      "verification_record": "templates/verification.json"
+    },
+    {
+      "file": "HarpScore_Duet.mscz",
+      "form": "Duet",
+      "notation": "staff",
+      "bars": 12,
+      "staves": 2,
+      "sha256": "245ef19a6aee174414a54e04786587074374d49887f7826f4cbac325b82bb973",
+      "license": "MIT",
+      "musical_content": "empty rests only; no third-party music",
+      "verification_record": "templates/verification.json"
+    },
+    {
+      "file": "HarpScore_Duet_Jianpu.mscz",
+      "form": "Duet",
+      "notation": "jianpu",
+      "bars": 12,
+      "staves": 2,
+      "sha256": "0af8ca53aaf9005051ed3f0357675d344d6c722b1f0311dae42aad2a99e9daf3",
+      "license": "MIT",
+      "musical_content": "empty rests only; no third-party music",
+      "verification_record": "templates/verification.json"
+    },
+    {
+      "file": "HarpScore_Duet_Piano.mscz",
+      "form": "Duet_Piano",
+      "notation": "staff",
+      "bars": 12,
+      "staves": 4,
+      "sha256": "bf6b1283384b97b7b1f284ba88f3f2a77fd8db89a326a81fcb1459422bac287d",
+      "license": "MIT",
+      "musical_content": "empty rests only; no third-party music",
+      "verification_record": "templates/verification.json"
+    },
+    {
+      "file": "HarpScore_Quintet.mscz",
+      "form": "Quintet",
+      "notation": "staff",
+      "bars": 12,
+      "staves": 5,
+      "sha256": "733046c8af4afea02d461c86d336e1d57fc4752a908102daaf411759927a3d30",
+      "license": "MIT",
+      "musical_content": "empty rests only; no third-party music",
+      "verification_record": "templates/verification.json"
+    },
+    {
+      "file": "HarpScore_Quintet_Jianpu.mscz",
+      "form": "Quintet",
+      "notation": "jianpu",
+      "bars": 12,
+      "staves": 5,
+      "sha256": "c4ce13ad367829d3dcf9f5a2b87d4975fc631699dc8a488565226d0ad01e35eb",
+      "license": "MIT",
+      "musical_content": "empty rests only; no third-party music",
+      "verification_record": "templates/verification.json"
+    }
+  ]
+}
