@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='utf-8'?>
+<models>
+  <StaffText model="digit">
+    <style>staff</style>
+    <family>Avenir Next</family>
+    <size>12</size>
+    <bold>0</bold>
+    <sizeIsSpatiumDependent>0</sizeIsSpatiumDependent>
+    <align>center,center</align>
+    <offset x="0.6" y="0" />
+    <autoplace>0</autoplace>
+    <text>0</text>
+  </StaffText>
+  <StaffText model="dash">
+    <style>staff</style>
+    <family>Avenir Next</family>
+    <size>13</size>
+    <sizeIsSpatiumDependent>0</sizeIsSpatiumDependent>
+    <align>center,baseline</align>
+    <offset x="0.6" y="0.741" />
+    <autoplace>0</autoplace>
+    <text>–</text>
+  </StaffText>
+  <StaffText model="durationDot">
+    <style>staff</style>
+    <family>Arial</family>
+    <size>11.5</size>
+    <sizeIsSpatiumDependent>0</sizeIsSpatiumDependent>
+    <align>center,center</align>
+    <offset x="0.6" y="0.4" />
+    <autoplace>0</autoplace>
+    <text>·</text>
+    <bold>1</bold>
+  </StaffText>
+  <StaffText model="octaveDot">
+    <style>staff</style>
+    <family>Arial</family>
+    <size>5</size>
+    <sizeIsSpatiumDependent>0</sizeIsSpatiumDependent>
+    <align>center,center</align>
+    <offset x="1.2" y="2.5200000000000005" />
+    <autoplace>0</autoplace>
+    <text>•</text>
+  </StaffText>
+  <StaffText model="weak">
+    <style>staff</style>
+    <family>Avenir Next</family>
+    <size>12</size>
+    <sizeIsSpatiumDependent>0</sizeIsSpatiumDependent>
+    <align>center,baseline</align>
+    <offset x="0.6" y="1.0" />
+    <autoplace>0</autoplace>
+    <text>x</text>
+    <bold>0</bold>
+  </StaffText>
+  <StaffText model="strong">
+    <style>staff</style>
+    <family>Avenir Next</family>
+    <size>12</size>
+    <sizeIsSpatiumDependent>0</sizeIsSpatiumDependent>
+    <align>center,baseline</align>
+    <offset x="0.6" y="1.0" />
+    <autoplace>0</autoplace>
+    <text>X</text>
+    <bold>0</bold>
+  </StaffText>
+  <StaffText model="sharp">
+    <style>staff</style>
+    <family>Arial</family>
+    <size>7</size>
+    <sizeIsSpatiumDependent>0</sizeIsSpatiumDependent>
+    <align>center,center</align>
+    <offset x="0.05" y="-1.25" />
+    <autoplace>0</autoplace>
+    <text>♯</text>
+  </StaffText>
+</models>

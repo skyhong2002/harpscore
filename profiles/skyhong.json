@@ -5,10 +5,53 @@
   "arranger": "skyhong.tw",
   "beginner_level_months": 2,
   "duet_handoffs": "complete-musical-phrases",
-  "bass": {"sustain_into_unnecessary_rests": true, "preserve_groove": true, "force_two_or_four_beats": false},
-  "chord": {"staff_notation": "single-line-round-noteheads", "staccato_dots": false, "symbols_at": ["bar-start", "harmonic-change-onset"], "symbol_lane": "below-chord", "dynamics_lane": "below-symbols"},
-  "editions": {"staff": ["solo", "solo-piano", "duet-combined", "duet-piano", "quintet"], "jianpu": ["solo", "duet-combined", "quintet"], "individual_harmonica_parts": false},
+  "bass": {
+    "sustain_into_unnecessary_rests": true,
+    "preserve_groove": true,
+    "force_two_or_four_beats": false
+  },
+  "chord": {
+    "staff_notation": "single-line-round-noteheads",
+    "staccato_dots": false,
+    "symbols_at": [
+      "bar-start",
+      "harmonic-change-onset"
+    ],
+    "symbol_lane": "below-chord",
+    "dynamics_lane": "below-symbols"
+  },
+  "editions": {
+    "staff": [
+      "solo",
+      "solo-piano",
+      "duet-combined",
+      "duet-piano",
+      "quintet"
+    ],
+    "jianpu": [
+      "solo",
+      "duet-combined",
+      "quintet"
+    ],
+    "individual_harmonica_parts": false
+  },
   "jianpu_first_edition": "1.0",
   "export_policy": "record per task; PDF was paused in founding conversation",
-  "references": ["docs/preferences.md", "docs/conversation-decisions.md", "docs/musescore-adapter.md"]
+  "references": [
+    "docs/preferences.md",
+    "docs/conversation-decisions.md",
+    "docs/musescore-adapter.md"
+  ],
+  "double_stops": {
+    "use": "selective; check instrumentation and player level",
+    "check": [
+      "same-breath",
+      "same-slide-state",
+      "hole-span",
+      "tongue-blocking"
+    ],
+    "numbered_size_relative_to_single": 0.75,
+    "vertical_alignment": "pair-centre-on-single-note-centre",
+    "expand_staff_spacing": false
+  }
 }

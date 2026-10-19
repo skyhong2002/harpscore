@@ -1,0 +1,216 @@
+[
+  {
+    "edition": "Solo",
+    "source_file": "Summer_Solo.mscz",
+    "source_sha256": "763fa93ce7dead764216f9630391cf4d96c938be3d708f1254edf5bd1c77e15b",
+    "copied": [
+      "score_style.mss",
+      "Part instrument/staff definitions",
+      "title and credit text styles",
+      "initial clefs and tempo display"
+    ],
+    "removed": [
+      "all Summer musical measures",
+      "song-specific metadata",
+      "images",
+      "IDs",
+      "view/audio settings"
+    ],
+    "adjusted": [
+      "title and composer text",
+      "image-reserved title height (where present)"
+    ]
+  },
+  {
+    "edition": "Solo_Piano",
+    "source_file": "Summer_Solo_Piano.mscz",
+    "source_sha256": "e1086d44c5bafe25514f5e8a9c17b32abd3fb02461d632e12e93132e4c7371c9",
+    "copied": [
+      "score_style.mss",
+      "Part instrument/staff definitions",
+      "title and credit text styles",
+      "initial clefs and tempo display"
+    ],
+    "removed": [
+      "all Summer musical measures",
+      "song-specific metadata",
+      "images",
+      "IDs",
+      "view/audio settings"
+    ],
+    "adjusted": [
+      "title and composer text",
+      "image-reserved title height (where present)"
+    ]
+  },
+  {
+    "edition": "Duet",
+    "source_file": "Summer_Duet.mscz",
+    "source_sha256": "df3a62d2197f90a7ed5fd3d1a8ccab6bb9a63c281663b6fdba7da188d3c09cf5",
+    "copied": [
+      "score_style.mss",
+      "Part instrument/staff definitions",
+      "title and credit text styles",
+      "initial clefs and tempo display"
+    ],
+    "removed": [
+      "all Summer musical measures",
+      "song-specific metadata",
+      "images",
+      "IDs",
+      "view/audio settings"
+    ],
+    "adjusted": [
+      "title and composer text",
+      "image-reserved title height (where present)"
+    ]
+  },
+  {
+    "edition": "Duet_Piano",
+    "source_file": "Summer_Duet_Piano.mscz",
+    "source_sha256": "9058cac0c23753cb9e09adde8492b8e2aa25e8f7013d5dfa603828496b6c029e",
+    "copied": [
+      "score_style.mss",
+      "Part instrument/staff definitions",
+      "title and credit text styles",
+      "initial clefs and tempo display"
+    ],
+    "removed": [
+      "all Summer musical measures",
+      "song-specific metadata",
+      "images",
+      "IDs",
+      "view/audio settings"
+    ],
+    "adjusted": [
+      "title and composer text",
+      "image-reserved title height (where present)"
+    ]
+  },
+  {
+    "edition": "Quintet",
+    "source_file": "Summer_Quintet.mscz",
+    "source_sha256": "b80a15b7c452cb03c7dacb1d1b86c66c0c5d7fe33bbaf41f192713ce5940af55",
+    "copied": [
+      "score_style.mss",
+      "Part instrument/staff definitions",
+      "title and credit text styles",
+      "initial clefs and tempo display"
+    ],
+    "removed": [
+      "all Summer musical measures",
+      "song-specific metadata",
+      "images",
+      "IDs",
+      "view/audio settings"
+    ],
+    "adjusted": [
+      "title and composer text",
+      "image-reserved title height (where present)"
+    ]
+  },
+  {
+    "edition": "Solo_Numbered",
+    "source_file": "Summer_Solo_Numbered.mscz",
+    "source_sha256": "ec40344392690589490fb2bf16ca2eaa49e7939924b543c44ad76ed845e64cd3",
+    "copied": [
+      "score_style.mss",
+      "Part instrument/staff definitions",
+      "title and credit text styles",
+      "initial clefs and tempo display"
+    ],
+    "removed": [
+      "all Summer musical measures",
+      "song-specific metadata",
+      "images",
+      "IDs",
+      "view/audio settings"
+    ],
+    "adjusted": [
+      "title and composer text",
+      "image-reserved title height (where present)"
+    ]
+  },
+  {
+    "edition": "Duet_Numbered",
+    "source_file": "Summer_Duet_Numbered.mscz",
+    "source_sha256": "8e6a086a23b3da34f3001f0a47c5b4c68f52b6a05d38c1095ea54a263f9e1c7c",
+    "copied": [
+      "score_style.mss",
+      "Part instrument/staff definitions",
+      "title and credit text styles",
+      "initial clefs and tempo display"
+    ],
+    "removed": [
+      "all Summer musical measures",
+      "song-specific metadata",
+      "images",
+      "IDs",
+      "view/audio settings"
+    ],
+    "adjusted": [
+      "title and composer text",
+      "image-reserved title height (where present)"
+    ]
+  },
+  {
+    "edition": "Quintet_Numbered",
+    "source_file": "Summer_Quintet_Numbered.mscz",
+    "source_sha256": "c0fcb7f843f6691022635239002b10d97b7ae8868cc65ebbc815918c0748e6b7",
+    "copied": [
+      "score_style.mss",
+      "Part instrument/staff definitions",
+      "title and credit text styles",
+      "initial clefs and tempo display"
+    ],
+    "removed": [
+      "all Summer musical measures",
+      "song-specific metadata",
+      "images",
+      "IDs",
+      "view/audio settings"
+    ],
+    "adjusted": [
+      "title and composer text",
+      "image-reserved title height (where present)"
+    ]
+  },
+  {
+    "edition": "Quartet",
+    "derived_from": "Quintet",
+    "copied": [
+      "Summer-derived staff/style/title assets"
+    ],
+    "adjusted": [
+      "Remove H3; retain H1, H2, DB H. and Chord.",
+      "Renumber staff/part IDs and set bracket span to four.",
+      "Numbered staff gap 7.5sp, unchanged for compact centred 9pt double stops."
+    ]
+  },
+  {
+    "edition": "Quartet_Numbered",
+    "derived_from": "Quintet_Numbered",
+    "copied": [
+      "Summer-derived staff/style/title assets"
+    ],
+    "adjusted": [
+      "Remove H3; retain H1, H2, DB H. and Chord.",
+      "Renumber staff/part IDs and set bracket span to four.",
+      "Numbered staff gap 7.5sp, unchanged for compact centred 9pt double stops."
+    ]
+  },
+  {
+    "edition": "Solo_Piano_Numbered",
+    "derived_from": [
+      "Solo_Piano",
+      "Solo_Numbered"
+    ],
+    "copied": [
+      "Summer-derived grand staff, title and style; numbered H1 staff type"
+    ],
+    "adjusted": [
+      "Only wind becomes numbered; piano remains native grand staff.",
+      "Use numbered note-spacing parameters without increasing staff/system gaps."
+    ]
+  }
+]

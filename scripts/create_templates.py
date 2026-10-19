@@ -1,157 +1,55 @@
-"""Create original empty MuseScore starters. No source scores, converter or GUI required."""
-import argparse
+"""Build three full Entertainer arrangements in two notation formats each.
+
+The complete source event set is public domain. This is a bounded arrangement,
+not a transcription engine. Rendering must be checked in normal MuseScore.
+"""
 from pathlib import Path
-import json
-import hashlib
+import argparse,hashlib,json,sys,zipfile
 import xml.etree.ElementTree as E
-import zipfile
-
-EDITIONS = {
-    'Solo': ['h1'], 'Solo_Piano':['h1','piano'],
-    'Duet':['h1','h2'], 'Duet_Piano':['h1','h2','piano'],
-    'Quintet':['h1','h2','h3','bass','chord'],
-}
-
-def add(parent, tag, text=None, **attrs):
-    n=E.SubElement(parent,tag,{k:str(v) for k,v in attrs.items()})
-    if text is not None:n.text=str(text)
-    return n
-
+sys.path.insert(0,str(Path(__file__).resolve().parent))
+from entertainer import edition
+from entertainer_notation import fill_score,put,setv
+ROOT=Path(__file__).resolve().parents[1]
+EDITIONS={'Solo':['h1'],'Solo_Piano':['h1','piano'],'Duet':['h1','h2'],'Duet_Piano':['h1','h2','piano'],'Quintet':['h1','h2','h3','bass','chord']}
+CURRENT_FORMS=['Solo_Piano','Duet','Quartet']
 def xml(root):
-    E.indent(root)
-    return E.tostring(root,encoding='utf-8',xml_declaration=True)
-
-def style(form,jianpu):
-    root=E.Element('museScore',version='4.70');s=add(root,'Style')
-    settings={
-        'pageWidth':'8.27','pageHeight':'11.69','pagePrintableWidth':'7.0889',
-        'pageOddLeftMargin':'.590551','pageEvenLeftMargin':'.590551',
-        'pageOddTopMargin':'.590551','pageEvenTopMargin':'.590551',
-        'pageOddBottomMargin':'.590551','pageEvenBottomMargin':'.590551',
-        'staffDistance':'6.1' if form=='Quintet' else '7.6',
-        'minSystemDistance':'5.4','maxSystemDistance':'8.9','maxPageFillSpread':'0',
-        'minMeasureWidth':'26','measureSpacing':'2.0','minNoteDistance':'.55',
-        'spacingDensity':'1.5','smallNoteMag':'.6','lastSystemFillLimit':'0',
-        'startBarlineSingle':'1','startBarlineMultiple':'1',
-        'firstSystemInstNameVisibility':'0','subsSystemInstNameVisibility':'2',
-        'measureNumberSystem':'1','measureNumberAlignToBarline':'1',
-        'measureNumberHPlacement':'center','measureNumberVPlacement':'0',
-        'showHeader':'1','headerFirstPage':'0','headerOddEven':'1',
-        'oddHeaderL':'','oddHeaderC':'$:workTitle:','oddHeaderR':'',
-        'evenHeaderL':'','evenHeaderC':'$:workTitle:','evenHeaderR':'',
-        'showFooter':'1','footerFirstPage':'1','footerOddEven':'0',
-        'oddFooterL':'','oddFooterC':'$P / $n','oddFooterR':'',
-        'evenFooterL':'','evenFooterC':'$P / $n','evenFooterR':'',
-        'showPageNumber':'0','footerFontSize':'9','footerAlign':'center,bottom',
-        'headerFontSize':'9','harmonyPlacement':'1',
-        'musicalSymbolFont':'Leland','musicalTextFont':'Leland Text',
-    }
-    if jianpu:settings.update({'barNoteDistance':'2.2','noteBarDistance':'2.5'})
-    for k,v in settings.items():add(s,k,v)
-    add(s,'footerOffset',x=0,y=4)
-    add(s,'measureNumberOffset',x=0,y=-.7)
-    add(s,'harmonyPosBelow',x=0,y=3.8 if jianpu else 3)
-    add(s,'dynamicsPosBelow',x=0,y=3.8 if jianpu else 2)
-    return root
-
-def part(score,role,index,staff_start,total_staves,jianpu):
-    piano=role=='piano';bass=role=='bass';chord=role=='chord'
-    number=role[1:] if role.startswith('h') else ''
-    name='Piano' if piano else ('DB H.' if bass else ('Chord' if chord else f'H. {number}'))
-    instrument_id='piano' if piano else ('bass-harmonica' if bass else ('concertina' if chord else 'harmonica-c16c'))
-    sound_id='keyboard.piano' if piano else ('wind.reed.harmonica.bass' if bass else ('keyboard.concertina' if chord else 'wind.reed.harmonica'))
-    p=add(score,'Part',id=index)
-    for local in range(2 if piano else 1):
-        sd=add(p,'Staff');st=add(sd,'StaffType',group='pitched');add(st,'name','stdNormal')
-        if jianpu:
-            for tag,val in [('lines',1),('invisible',1),('stemless',1),('clef',0),('keysig',0),('timesig',0),('ledgerlines',0)]:add(st,tag,val)
-            add(sd,'barLineFrom',-2);add(sd,'barLineTo',2)
-        elif chord:
-            add(st,'lines',1);add(st,'clef',0);add(st,'keysig',0);add(st,'ledgerlines',0)
-        if piano and local==0:add(sd,'bracket',type=1,span=2,col=0,visible=1)
-        add(sd,'barLineSpan',int(staff_start+local<total_staves))
-    add(p,'trackName',name)
-    ins=add(p,'Instrument',id=instrument_id)
-    add(ins,'longName',name);add(ins,'shortName','Pno.' if piano else name);add(ins,'trackName',name)
-    low,high=(21,108) if piano else ((28,67) if bass else ((36,93) if chord else (48,98)))
-    for key,val in [('minPitchP',low),('maxPitchP',high),('minPitchA',low),('maxPitchA',high)]:add(ins,key,val)
-    add(ins,'instrumentId',sound_id)
-    if bass:add(ins,'clef','F')
-    if piano:add(ins,'clef','F',staff=2)
-    art=add(ins,'Articulation');add(art,'velocity',100);add(art,'gateTime',100)
-    channel=add(ins,'Channel');add(channel,'program',value=0 if piano else (33 if bass else (21 if chord else 22)))
-    add(channel,'controller',ctrl=10,value=63);add(channel,'synti','Fluid')
-
-def text(voice,value,*,size=12,x=.6,y=0,chord=False):
-    t=add(voice,'StaffText');add(t,'style','staff');add(t,'family','Avenir Next')
-    add(t,'size',size);add(t,'sizeIsSpatiumDependent',0)
-    add(t,'align','center,baseline' if chord else 'center,center')
-    add(t,'offset',x=x,y=y);add(t,'autoplace',0);add(t,'text',value)
-    return t
-
-def score(form,jianpu,bars):
-    roles=EDITIONS[form];root=E.Element('museScore',version='4.70')
-    add(root,'programVersion','4.7.5');add(root,'programRevision','harpscore-template')
-    s=add(root,'Score');add(s,'Division',480)
-    for key,val in {'workTitle':'Untitled','composer':'Composer','arranger':'Arranger','copyright':'MIT - HarpScore contributors','harpscoreTemplate':form+('_Jianpu' if jianpu else ''),'harpscoreTemplateVersion':'0.2.0','harpscoreNumeralFont':'Avenir Next','jianpuChromaticUnpointedC':'72','jianpuBassUnpointedC':'48','harpscoreOverlayAutoSync':'false'}.items():add(s,'metaTag',val,name=key)
-    staff_roles=[]
-    for role in roles:staff_roles.extend([role,'piano-lh'] if role=='piano' else [role])
-    start=1
-    for i,role in enumerate(roles,1):
-        part(s,role,i,start,len(staff_roles),jianpu);start+=2 if role=='piano' else 1
-    for si,role in enumerate(staff_roles,1):
-        st=add(s,'Staff',id=si)
-        if si==1:
-            box=add(st,'VBox');add(box,'height',55 if jianpu and form=='Quintet' else (50 if form=='Quintet' else 24));add(box,'boxAutoSize',0)
-            for sty,value,size,y in [('title','Untitled',20,0),('subtitle','',11,8),('composer','Composer',9,14),('composer','Arranged by Arranger',9,18)]:
-                t=add(box,'Text');add(t,'style',sty);add(t,'size',size)
-                if sty=='composer':add(t,'align','right,top')
-                add(t,'offset',x=0,y=y);add(t,'text',value)
-        for mi in range(bars):
-            m=add(st,'Measure');v=add(m,'voice')
-            if mi==0:
-                clef=add(v,'Clef');add(clef,'concertClefType','F' if role in ['bass','piano-lh'] else 'G');add(clef,'transposingClefType','F' if role in ['bass','piano-lh'] else 'G');add(clef,'isHeader',1)
-                key=add(v,'KeySig');add(key,'concertKey',0)
-                ts=add(v,'TimeSig');add(ts,'sigN',4);add(ts,'sigD',4)
-                if jianpu:
-                    for n in [clef,key,ts]:add(n,'visible',0)
-                    if si==1:text(v,'4/4',size=9,x=-3.4,y=-2.7)
-                if si==1:
-                    tempo=add(v,'Tempo');add(tempo,'tempo',2);add(tempo,'followText',1)
-                    tx=add(tempo,'text');add(tx,'sym','metNoteQuarterUp').tail=' = 120'
-                    if jianpu:add(tempo,'autoplace',0);add(tempo,'offset',x=0,y=-2.4)
-            if jianpu:
-                for beat in range(4):
-                    text(v,'0',y=1 if role=='chord' else 0,chord=role=='chord')
-                    if beat<3:loc=add(v,'location');add(loc,'fractions','1/4');add(loc,'timeTick',1)
-                loc=add(v,'location');add(loc,'fractions','-3/4');add(loc,'timeTick',1)
-            rest=add(v,'Rest');add(rest,'durationType','measure');add(rest,'duration','1/1')
-            if jianpu:
-                add(rest,'visible',1);add(rest,'color',r=255,g=255,b=255,a=0);add(rest,'small',1)
-                seg=add(v,'Segment');add(seg,'leadingSpace',.75)
-            if mi==bars-1:
-                b=add(v,'BarLine');add(b,'subtype','end')
-    return root
-
-def build_templates(destination,bars=12):
-    if bars<4:raise ValueError('Use at least four bars')
-    destination=Path(destination);destination.mkdir(parents=True,exist_ok=True)
-    records=[]
-    for form in EDITIONS:
-        for jianpu in ([False,True] if form in ['Solo','Duet','Quintet'] else [False]):
-            stem='HarpScore_'+form+('_Jianpu' if jianpu else '')
-            members={stem+'.mscx':xml(score(form,jianpu,bars)),'score_style.mss':xml(style(form,jianpu))}
-            c=E.Element('container');files=add(c,'rootfiles')
-            for name in members:add(files,'rootfile',**{'full-path':name})
-            members['META-INF/container.xml']=xml(c)
-            path=destination/(stem+'.mscz')
-            with zipfile.ZipFile(path,'w',zipfile.ZIP_DEFLATED)as z:
-                for name,data in sorted(members.items()):
-                    info=zipfile.ZipInfo(name,(2026,1,1,0,0,0));info.compress_type=zipfile.ZIP_DEFLATED;z.writestr(info,data)
-            records.append({'file':path.name,'form':form,'notation':'jianpu' if jianpu else 'staff','bars':bars,'staves':sum(2 if r=='piano' else 1 for r in EDITIONS[form]),'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'license':'MIT','musical_content':'empty rests only; no third-party music','verification_record':'templates/verification.json'})
-    (destination/'manifest.json').write_text(json.dumps({'version':'0.2.0','templates':records},ensure_ascii=False,indent=2)+'\n')
-    return records
-
+ E.indent(root);return E.tostring(root,encoding='utf-8',xml_declaration=True)
+def build_templates(destination,bars=None,forms=None):
+ if bars not in [None,152]:raise ValueError('The complete performance contains 152 unfolded bars')
+ destination=Path(destination);destination.mkdir(parents=True,exist_ok=True);records=[]
+ for form in (forms or CURRENT_FORMS):
+  for numbered in ([False,True]if form in ['Solo','Solo_Piano','Duet','Quintet','Quartet']else [False]):
+   suffix=form+('_Numbered'if numbered else '');stem='HarpScore_'+suffix
+   root=E.parse(ROOT/'templates/layout'/f'{suffix}.mscx').getroot();score=root.find('Score');music=edition(form)
+   for k,v in {'workTitle':music['title'],'composer':'Scott Joplin','arranger':'skyhong.tw','copyright':'Scott Joplin composition: Public Domain; HarpScore adaptation: MIT','harpscoreTemplateVersion':'0.3.0','harpscoreOverlayAutoSync':'false','harpscoreScope':'Complete rag; Intro AA BB A CC Bridge DD; all repeats and endings written out','jianpuChromaticUnpointedC':'72','jianpuBassUnpointedC':'48'}.items():put(score,'metaTag',v,name=k)
+   graphics=fill_score(root,music,numbered)
+   style=E.parse(ROOT/'templates/layout'/f'{suffix}.mss').getroot()
+   # Keep Summer's geometry; replace only the old song's running title.
+   for key in ['oddHeaderC','evenHeaderC']:
+    if style.find('Style/'+key)is not None:setv(style.find('Style'),key,'$:workTitle:')
+   if suffix in ['Quintet_Numbered','Quartet_Numbered']:
+    # The quartet's moving inner voice needs a larger accidental/dynamic lane.
+    for key in ['staffDistance','akkoladeDistance']:setv(style.find('Style'),key,7.5 if suffix=='Quartet_Numbered'else 6.5)
+   members={stem+'.mscx':xml(root),'score_style.mss':xml(style)}
+   container=E.Element('container');files=put(container,'rootfiles')
+   for name in members:put(files,'rootfile',**{'full-path':name})
+   members['META-INF/container.xml']=xml(container)
+   # Only embed a normal-window preview tied to these exact XML/style bytes.
+   # A musical/layout edit automatically invalidates the cached preview.
+   previews=ROOT/'templates/previews/manifest.json'
+   if previews.exists():
+    preview=json.loads(previews.read_text()).get(suffix)
+    if (preview and preview['score_xml_sha256']==hashlib.sha256(members[stem+'.mscx']).hexdigest()
+            and preview['style_sha256']==hashlib.sha256(members['score_style.mss']).hexdigest()):
+     members['Thumbnails/thumbnail.png']=(ROOT/'templates/previews'/preview['file']).read_bytes()
+   path=destination/(stem+'.mscz')
+   with zipfile.ZipFile(path,'w',zipfile.ZIP_DEFLATED)as z:
+    for name,data in sorted(members.items()):
+     info=zipfile.ZipInfo(name,(2026,1,1,0,0,0));info.compress_type=zipfile.ZIP_DEFLATED;z.writestr(info,data)
+   references=destination/'events';references.mkdir(exist_ok=True)
+   (references/(form+'.json')).write_text(json.dumps(music,indent=2)+'\n')
+   if numbered:(references/(form+'_Numbered_display.json')).write_text(json.dumps(graphics,ensure_ascii=False,indent=2)+'\n')
+   records.append({'file':path.name,'form':form,'notation':('numbered-wind-and-staff-piano'if form=='Solo_Piano'else 'numbered')if numbered else 'staff','bars':152,'pickup':False,'staves':len(music['parts']),'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'license':'Public Domain composition; MIT adaptation','musical_content':'The Entertainer: complete rag with all repeats and endings','events':f'templates/musescore/events/{form}.json','layout_source':f'templates/layout/{suffix}.mss','verification_record':'templates/verification.json'})
+ (destination/'manifest.json').write_text(json.dumps({'version':'0.3.0','templates':records},indent=2)+'\n');return records
 if __name__=='__main__':
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--out',type=Path,required=True);parser.add_argument('--bars',type=int,default=12)
-    args=parser.parse_args();print(json.dumps(build_templates(args.out,args.bars),indent=2))
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--out',type=Path,required=True);p.add_argument('--bars',type=int);p.add_argument('--form',action='append',choices=list(EDITIONS)+['Quartet']);a=p.parse_args();print(json.dumps(build_templates(a.out,a.bars,a.form),indent=2))

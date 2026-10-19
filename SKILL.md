@@ -14,13 +14,19 @@ An agent-readable arranging and engraving skill. Read rules, do a small real tri
 - Reusing the founding user's style: `docs/preferences.md` and `profiles/skyhong.json`.
 - Resolving an old contradictory instruction: `docs/conversation-decisions.md`. Later explicit corrections supersede earlier requests; do not average contradictory instructions.
 - MuseScore editing/export: `docs/musescore-adapter.md`. Machine-specific constraints are conditional.
-- Starting a new piece: `docs/templates.md` and `templates/musescore/`. Check the verification record and copy the matching native starter rather than rebuilding its staff/style setup. The initial files are experimental until normal-window rendering is confirmed. Jianpu overlays still require explicit synchronization after editing notes.
+- Starting a new piece: `docs/templates.md` and `templates/musescore/`. Check the verification record and copy the matching musical example, which contains the public-domain complete Entertainer arrangement using the copied Summer layouts, rather than an empty starter. See its exact verification record. Numbered overlays still require explicit synchronization after editing notes.
 - Before delivery: `docs/verification.md`.
 - First use or changed renderer/font: `docs/tryout.md`; run `python3 scripts/tryout.py --out <temporary-directory>`, open the generated MusicXML normally in MuseScore and perform the trial task. This helper creates a fixture, not a completed Jianpu renderer.
 
 ## Non-negotiable checks
 
 Separate source transcription, musical adaptation, notation respelling and layout. A layout-only request preserves performed pitch, onset, duration and velocity. A new musical change needs a stated musical reason or user request.
+
+Treat pickups and their arrivals as one phrase when assigning parts. A quartet's non-leading wind still needs source-aware inner lines, fills or accompaniment, not only rests. For octave/fifth/third double stops, verify the actual hole pair, common breath and slide state; record tongue blocking. Read A11–A14 in `docs/arranging.md` before using them.
+
+For numbered double stops, reduce both digits and stack symmetrically around the ordinary numeral centre, preserving staff spacing. Scale and centre each pitch's octave dots/accidentals too; place the shared underline below the pair. See J16–J18 in `docs/jianpu.md`. Do not hide a missing second numeral behind playable native notes.
+
+For solo with piano, keep the wind's full melody and score the piano as a grand staff with independent voices where notes overlap. Do not reuse a bass-harp/chord-harp reduction as if it were the original piano accompaniment. A mixed numbered-wind/native-piano score must switch notation per staff, preserve every piano voice and verify the first-page meter/tempo clearance too.
 
 Keep phrases intact in beginner duets; do not hand off mechanically every four bars. Extend Bass notes into unnecessary tiny rests without flattening grooves such as 3+3+2. Chord carries rhythm and often offbeats; its symbols follow harmonic time, including bar starts, independently of its attacks.
 

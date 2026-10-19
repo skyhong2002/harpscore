@@ -25,7 +25,7 @@ Keep source corrections, musical adaptations and layout-only edits separate.
 
 - Agent 守則：何時讀哪些資料、先試做什麼、怎樣才算真的完成。
 - 配器與簡譜：樂句交接、初學難度、Bass 延音、Chord 節奏，以及數字、減時線、點、升降與版面。
-- 完整偏好與 **66 項對話決策**：保留修正過程與優先順序，不把被推翻的做法當成預設。
+- 完整偏好與 **78 項對話決策**：保留修正過程與優先順序，不把被推翻的做法當成預設。
 - MuseScore 實作經驗：覆層風險、已用過的起始參數、單曲例外與環境限制分開。
 - 原創四小節試做素材產生器：MusicXML、音樂事件與檢查依據；不含第三方歌曲。
 - 同一來源產生網站、完整 agent 文件包、可安裝 skill 與原始碼下載。
@@ -34,7 +34,7 @@ Keep source corrections, musical adaptations and layout-only edits separate.
 
 ## MuseScore 起始檔
 
-[八份原生 `.mscz` 範本](templates/musescore/)：五線譜五份、簡譜三份，空白音樂、MIT，可直接下載另存新曲。見 [使用與驗證狀態](docs/templates.md)。目前五份已在 MuseScore 正常視窗載入與目視檢查，另三份待檢查；簡譜修改原生音符後仍需同步覆層。
+[三種編制、六份可編輯譜](templates/musescore/)：《The Entertainer》完整全曲（所有反覆展開，共 152 小節，2/2 拍），含獨奏＋鋼琴、二重奏、四重奏的五線譜與簡譜。獨奏鋼琴簡譜版保留鋼琴大譜表。版式沿用 Summer，雙音縮小對稱置中，弱起與下一句同部承接。正常 MuseScore 渲染與播放已檢查，真人排練仍待進行。原曲／譜源公領域，HarpScore 改編與程式 MIT。見 [使用與驗證](docs/templates.md)。簡譜改音符後仍需同步覆層。
 
 ## Try it
 

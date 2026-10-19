@@ -1,0 +1,44 @@
+{
+  "Solo_Piano": {
+    "file": "Solo_Piano.png",
+    "score_xml_sha256": "b89b03590eecf28d4046a23b496cd5f9bff364f8d4e7279b94d43b19fdb05b93",
+    "style_sha256": "652634de9372c14de8b2f0607ef368ba527bea6e947ea84d9c17a5e6c142c57e",
+    "source_svg_sha256": "36b39a3048ac3f93f875a370cfebee6b3dd8fa585d69e48cf80c2ebef2f8a768",
+    "renderer": "MuseScore Studio 4.7.5 normal-window SVG"
+  },
+  "Solo_Piano_Numbered": {
+    "file": "Solo_Piano_Numbered.png",
+    "score_xml_sha256": "d3fc3ad20a4c7a7257662c3aecb4a6e59055e5a13e9739bfa8bd8bda08c070ba",
+    "style_sha256": "7a9de9947af926dae34054206768976926e0ebec8c5a72400ee22fc86e93b7a2",
+    "source_svg_sha256": "bb8b2c2661c65cb811d3a52f8ac16ff70595f632c90d682f51c711d6269bb36c",
+    "renderer": "MuseScore Studio 4.7.5 normal-window SVG"
+  },
+  "Duet": {
+    "file": "Duet.png",
+    "score_xml_sha256": "a2fd102be932dd083cb76bb238442647960b92f976f7cf2b2e418f67dafac99e",
+    "style_sha256": "652634de9372c14de8b2f0607ef368ba527bea6e947ea84d9c17a5e6c142c57e",
+    "source_svg_sha256": "76717f41e436e1e2498d7604102e31b06f538ea85b8f09def5ddd5e4813a3499",
+    "renderer": "MuseScore Studio 4.7.5 normal-window SVG"
+  },
+  "Duet_Numbered": {
+    "file": "Duet_Numbered.png",
+    "score_xml_sha256": "b371d43f08925429fb22c79123762f6ecb0b604397343468ab28eca188a6fae9",
+    "style_sha256": "16632fcc9844da03f9339f01e0806283a56c17ee6181440878c9b707f6b7bc37",
+    "source_svg_sha256": "17f9f66cdcbe397b6e8744334497f424111a3ae23047482c93f8e207c11376f7",
+    "renderer": "MuseScore Studio 4.7.5 normal-window SVG"
+  },
+  "Quartet": {
+    "file": "Quartet.png",
+    "score_xml_sha256": "cd395f6911a99c610661919a9259c557ec13a4c899ad00dc184c4f30d840b7b9",
+    "style_sha256": "652634de9372c14de8b2f0607ef368ba527bea6e947ea84d9c17a5e6c142c57e",
+    "source_svg_sha256": "71dfad7e95753d6aa78aa2df856b9605525b00d84b1015a5dce758715f2086c7",
+    "renderer": "MuseScore Studio 4.7.5 normal-window SVG"
+  },
+  "Quartet_Numbered": {
+    "file": "Quartet_Numbered.png",
+    "score_xml_sha256": "643b4ad226d576915a136c09b9d057cc1c4ec82659aeff7289ed25b7f144df24",
+    "style_sha256": "5f6a247cfd3077503c5b8e2cb99c3b0568b81d40c7321d13439182c3b12b37de",
+    "source_svg_sha256": "3a2e5634a91787d208573696530e9675f1d0e32f61e8825a1c1dd79a9a93c4bd",
+    "renderer": "MuseScore Studio 4.7.5 normal-window SVG"
+  }
+}

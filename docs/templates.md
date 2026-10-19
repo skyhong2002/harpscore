@@ -1,44 +1,55 @@
-# MuseScore 原生起始檔（實驗性）
+# 可直接使用的 MuseScore 範例
 
-HarpScore 附上八份 `.mscz` 原生起始檔，放在 `templates/musescore/`。這些檔案由本專案自行生成，只有十二個空白小節，沒有 Summer 或其他第三方歌曲的音符、圖片與錄音，採 MIT。
+《The Entertainer》三種編制均完成全曲製作：獨奏＋鋼琴、兩把半音階口琴二重奏、兩把半音階＋DB H.＋Chord 四重奏。每種編制提供五線譜與簡譜；獨奏鋼琴的簡譜版本只有口琴行使用數字，鋼琴維持原生大譜表。
 
-## 五線譜：五份
+目前共六份可編輯 MSCZ，不另外拆分個別口琴或鋼琴分部。正常 MuseScore 視窗的畫面／播放證據與雜湊見 `templates/verification.json`；這些是 agent 核對過的編譜範例，尚未經真人排練驗收。
 
-- HarpScore_Solo.mscz：一部半音階。
-- HarpScore_Solo_Piano.mscz：一部半音階與雙譜表鋼琴。
-- HarpScore_Duet.mscz：兩部半音階，放在同一份合奏譜。
-- HarpScore_Duet_Piano.mscz：兩部半音階與雙譜表鋼琴。
-- HarpScore_Quintet.mscz：三部半音階、DB H. 與單線 Chord。
+全曲包含前奏、A A B B A C C、過門與 D D，按演奏順序展開共 152 小節，包含第一、第二結尾。
 
-## 簡譜：三份
+## 版式直接沿用 Summer
 
-- HarpScore_Solo_Jianpu.mscz：一部半音階。
-- HarpScore_Duet_Jianpu.mscz：兩部半音階。
-- HarpScore_Quintet_Jianpu.mscz：三部半音階、DB H. 與 Chord。
+`templates/layout/` 保存從 Summer 八份最新版原檔直接抽出的樣式、樂器／聲部設定、標題署名格式和簡譜字形樣板。來源檔雜湊與抽取項目記在 `templates/layout/provenance.json`。沒有把 Summer 的音符、圖片、音訊、縮圖或個人視窗設定帶入範例。
 
-簡譜預先設置隱藏原生譜表與數字覆層，空白小節每拍顯示 0，供 agent 從現成結構開始。**修改或輸入原生音符不會自動更新數字。** Agent 必須同步改寫數字、八度點、升降與減時線，再比對原生音符與實際畫面。它不是會自動轉換音符的 MuseScore 簡譜外掛；直接輸音符後仍顯示 0 不能當成譜已完成。
+沿用 A4、Avenir Next 數字、上標升降、x/X/0 共用基線、延音橫線中央對齊、和弦與力度分層、頁首及底部頁數。曲名與作者替換成新作品；原圖預留空間移除。依使用者指定改為 2/2：原譜音值加倍，二分音符＝72；播放速度與先前 2/4、四分音符＝72 相同。減時線依二分音符大拍分組。
 
-## 預先設定了什麼
+## 可使用版本
 
-- A4、4/4、四分音符 = 120、C 大調作為中性起點；新曲先確認調性與速度。
-- 每小節最小寬 26 sp、自然換行、行首小節線及跨聲部小節線、名稱僅首大行顯示。
-- 第二頁起頁首讀取 workTitle；頁腳置中顯示「頁數 / 總頁數」，斜線兩旁有空格。
-- 空白曲名與署名佔位，沒有某首曲子的作者或來源說明。修改首頁曲名與 score properties 的 workTitle，讓頁首一致。
-- 半音階預設發聲 C3–D7、DB H. E1–G4，供十六孔／double bass 配器試做；這不是所有實體樂器的共同音域，編曲前仍依實際型號確認。
-- 簡譜無點 1 的參考為半音階 C5、DB H. C3；文字覆層使用 Avenir Next。沒有這個字型的機器請換可取得的單線筆畫字型，再檢查字寬、底線與基線。檔案不附帶字型。
-- Chord 使用普通圓形音頭的單線五線譜；簡譜版的 0 使用與未來 x/X 相同的 baseline 設定。空白範本沒有既定和弦，不預填每小節 C 和弦。
-- 通用 GM 音色，不含 Muse Sounds 資源、私人帳號或音效外掛路徑。沒有音符的空白範本不提供音色起音品質證據。
+- `HarpScore_Solo_Piano.mscz`：獨奏＋鋼琴五線總譜。
+- `HarpScore_Solo_Piano_Numbered.mscz`：口琴簡譜＋鋼琴五線總譜。
+- `HarpScore_Duet.mscz`、`HarpScore_Duet_Numbered.mscz`：二重奏五線／簡譜。
+- `HarpScore_Quartet.mscz`、`HarpScore_Quartet_Numbered.mscz`：四重奏五線／簡譜。
 
-## 給 agent 的使用順序
+不額外拆單把口琴分部。簡譜固定 C；半音階無點 1=C5，DB H. 無點 1=C3，基準不印在譜面。
 
-先複製相符編制另存為新曲，改 title、workTitle、composer、arranger、key、meter 和 tempo，再讀所選 profile。輸入核對過的音樂；簡譜要同步覆層。用原創試做素材或新曲代表片段檢查，不把十二個空白小節可開啟誤當成密集節奏排版已驗證。
+## 音樂來源與改編
 
-驗收分成容器/XML、空白音樂結構、正常 MuseScore 視窗載入、實際排版與播放等層。範本的實際正常視窗驗證狀態見 `templates/verification.json`，以對應檔案雜湊為準；沒有驗過的部分不宣稱通過。
+來源是 Mutopia 的 1902 年原版重製，樂曲與該排印稿均標示 Public Domain：
+https://www.mutopiaproject.org/ftp/JoplinS/entertainer/entertainer.ly
 
-目前八份通過容器與空白結構測試；三份簡譜，以及五線譜獨奏、獨奏＋鋼琴，已在 MuseScore 4.7.5 正常視窗載入並目視檢查。另三份五線譜待正常視窗檢查，仍標為實驗性。空白範本尚未驗證密集音符、播放起音或匯出品質。編輯器中的灰色譜線是隱藏譜表的編輯輔助；首次開啟可能標示未儲存，請另存新曲。
+`examples/entertainer/source-events.json` 保存全曲來源 MIDI 的 2,621 個音符事件、音高、起訖、雜湊，以及原譜 92 小節到展開後 152 小節的對應。`arrangement-plan.json` 明列和聲、音區與聲部改編決策。沒有用重複一段主題假裝全曲。
 
-## 維護與重建
+四重奏的主旋律沿用來源音高與節奏，鋼琴八度疊音縮成單線。A 段依切分動機和回答動機交接：C–D–D♯、D–D♯ 等弱起與其引入的下一句始終由同一人吹。B、D 段保留較長樂句；高八度重現的引句交給接續主題的演奏者。所有旋律事件恰好分配一次，沒有以小節數餘數機械截斷。
 
-執行 `python3 scripts/create_templates.py --out templates/musescore` 可重建。產生器不讀本機既有樂譜，也不啟動 MuseScore 或輸出 PDF。修改產生器後，重新驗證 native window，保存新的檔案雜湊，才更新該項紀錄。
+原譜 C 段長音下方的 40 個獨立內聲部音符保留，與該段主旋律一起降低八度。其他段落的非主奏口琴使用從原左手和聲、低音進行整理的連續內聲部，包括 C7 七音、F 到 Fm 的半音變化和屬和弦的聲部連接；不再用整句休止或單一長音代替伴奏。旋律與伴奏力度分層，句尾保留呼吸。
 
-頁首 metadata 語法參考 MuseScore 官方手冊：https://handbook.musescore.org/text/header-and-footer 。模板的 `$:workTitle:` 只讀取 score properties，不保證與首頁文字框自動雙向同步。
+`examples/entertainer/quartet-plan.json` 記錄內聲部和樂句決策；`templates/musescore/events/Quartet.json` 保存每個原生事件與旋律所有權。Bass 與 Chord 保留來源律動。和弦代號只標在該和弦第一個實際發聲處，無和弦不印 N.C.。簡譜部別間距改為 7.5sp，避免新內聲部的上標升降記號碰到上一部力度。四個八分音符中若以休止符起頭，減時線由下一個實際音起，不連到前面的 0；播放時值不變。
+
+曾對照公開重奏預覽的樂句與聲部配置，但沒有複製其改編音符；實際音符來源仍為公領域原鋼琴譜，另列口琴改編決策。
+
+這份保留 ragtime 切分（2/2 下主要為八分音符）；是記譜與改編範例，不能直接宣稱適合只學兩個月的人。新手曲須另外依演出程度簡化。
+
+## 編輯與驗證
+
+先另存副本。原生音符負責播放，文字與線段負責簡譜；改音符後必須同步覆層，再在 MuseScore 檢查每拍減時線斷口、低八度點與力度、和弦、行首及結尾。這不是自動轉譜外掛。
+
+`python3 scripts/create_templates.py --out <destination>` 可重建這首明確的全曲範例；不是通用 MIDI 轉譜器。`templates/verification.json` 只記錄對應雜湊的實際檢查，過去空白範本或已撤換練習曲的驗證不適用。
+
+原曲及所用排印譜源為 Public Domain；HarpScore 自行撰寫的改編、格式資產、文件與程式採 MIT。第三方字型未嵌入，使用前檢查 Avenir Next 是否可用；換字型後重新檢查排版。
+
+四重奏新增少量八度、三度與五度雙音，選音和原因在 `quartet-plan.json`，實際孔位檢查在 `scripts/chromatic.py`。每個事件保留原音與時值；跨小節連音從原 attack 起增加第二音。簡譜雙音以兩個 9pt 數字上下對稱於普通 12pt 數字中心，保留既有部別／大行距，沒有為雙音擴大 H1–H2。這是經此曲試排的參數，不是跨字型保證。
+
+## 獨奏鋼琴與二重奏的同步
+
+獨奏口琴保留完整主旋律。鋼琴把原譜左手所有 1,227 個音符的音高、起點與時值完整保留：單音／八度低音留左手，原後半拍和弦交右手；右手另用獨立聲部承接四重奏中的移動內聲部及原 C 段副旋律。原生多聲部避免和弦 attack 打斷另一條持續音，力度降低以配合口琴。這是經記錄的配器安排，不把鋼琴伴奏誤作 Chord／Bass 口琴的簡化譜。
+
+二重奏保留四重奏兩部半音階的完整接句、填句與雙音；省去 DB H.／Chord 後仍由兩部輪流主奏與伴奏，沒有增加鋼琴。所有簡譜沿用同一音樂事件，雙音兩數字各 9pt、上下對稱置中，不擴大部距。固定 C 的參考音不印在譜面。

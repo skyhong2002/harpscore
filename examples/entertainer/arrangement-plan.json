@@ -1,0 +1,1389 @@
+{
+  "description": "Complete rag; explicit source-bar harmony reduction, not a chord inference engine. Full score follows the MIDI performance order with repeats written out.",
+  "harmonies": {
+    "1": [
+      [
+        "0",
+        "N.C."
+      ]
+    ],
+    "2": [
+      [
+        "0",
+        "N.C."
+      ]
+    ],
+    "3": [
+      [
+        "0",
+        "N.C."
+      ]
+    ],
+    "4": [
+      [
+        "0",
+        "N.C."
+      ],
+      [
+        "1",
+        "G"
+      ]
+    ],
+    "5": [
+      [
+        "0",
+        "C"
+      ],
+      [
+        "3/2",
+        "C7"
+      ]
+    ],
+    "6": [
+      [
+        "0",
+        "F"
+      ],
+      [
+        "1",
+        "C"
+      ]
+    ],
+    "7": [
+      [
+        "0",
+        "C"
+      ],
+      [
+        "3/2",
+        "G7"
+      ]
+    ],
+    "8": [
+      [
+        "0",
+        "C"
+      ],
+      [
+        "3/2",
+        "G"
+      ]
+    ],
+    "9": [
+      [
+        "0",
+        "C"
+      ],
+      [
+        "3/2",
+        "C7"
+      ]
+    ],
+    "10": [
+      [
+        "0",
+        "F"
+      ],
+      [
+        "1",
+        "C"
+      ]
+    ],
+    "11": [
+      [
+        "0",
+        "D7"
+      ]
+    ],
+    "12": [
+      [
+        "0",
+        "G"
+      ]
+    ],
+    "13": [
+      [
+        "0",
+        "C"
+      ],
+      [
+        "3/2",
+        "C7"
+      ]
+    ],
+    "14": [
+      [
+        "0",
+        "F"
+      ],
+      [
+        "1",
+        "C"
+      ]
+    ],
+    "15": [
+      [
+        "0",
+        "C"
+      ],
+      [
+        "3/2",
+        "G7"
+      ]
+    ],
+    "16": [
+      [
+        "0",
+        "C"
+      ]
+    ],
+    "17": [
+      [
+        "0",
+        "C"
+      ],
+      [
+        "1",
+        "C7"
+      ]
+    ],
+    "18": [
+      [
+        "0",
+        "F"
+      ],
+      [
+        "1",
+        "Fm"
+      ]
+    ],
+    "19": [
+      [
+        "0",
+        "C"
+      ],
+      [
+        "3/2",
+        "G"
+      ]
+    ],
+    "20": [
+      [
+        "0",
+        "C"
+      ]
+    ],
+    "22": [
+      [
+        "0",
+        "C"
+      ]
+    ],
+    "23": [
+      [
+        "0",
+        "C"
+      ]
+    ],
+    "24": [
+      [
+        "0",
+        "F"
+      ],
+      [
+        "3/2",
+        "Fm"
+      ]
+    ],
+    "25": [
+      [
+        "0",
+        "C"
+      ]
+    ],
+    "26": [
+      [
+        "0",
+        "C"
+      ]
+    ],
+    "27": [
+      [
+        "0",
+        "C"
+      ]
+    ],
+    "28": [
+      [
+        "0",
+        "G"
+      ],
+      [
+        "3/2",
+        "D7"
+      ]
+    ],
+    "29": [
+      [
+        "0",
+        "G"
+      ],
+      [
+        "1/2",
+        "G7"
+      ]
+    ],
+    "30": [
+      [
+        "0",
+        "C"
+      ]
+    ],
+    "31": [
+      [
+        "0",
+        "C"
+      ]
+    ],
+    "32": [
+      [
+        "0",
+        "F"
+      ],
+      [
+        "3/2",
+        "Fm"
+      ]
+    ],
+    "33": [
+      [
+        "0",
+        "C"
+      ],
+      [
+        "3/2",
+        "C7"
+      ]
+    ],
+    "34": [
+      [
+        "0",
+        "F"
+      ],
+      [
+        "1",
+        "F#dim7"
+      ]
+    ],
+    "35": [
+      [
+        "0",
+        "C"
+      ]
+    ],
+    "36": [
+      [
+        "0",
+        "D7"
+      ],
+      [
+        "1",
+        "G7"
+      ]
+    ],
+    "37": [
+      [
+        "0",
+        "C"
+      ]
+    ],
+    "39": [
+      [
+        "0",
+        "C"
+      ],
+      [
+        "3/2",
+        "C7"
+      ]
+    ],
+    "40": [
+      [
+        "0",
+        "F"
+      ],
+      [
+        "1",
+        "C"
+      ]
+    ],
+    "41": [
+      [
+        "0",
+        "C"
+      ],
+      [
+        "3/2",
+        "G7"
+      ]
+    ],
+    "42": [
+      [
+        "0",
+        "C"
+      ],
+      [
+        "3/2",
+        "G"
+      ]
+    ],
+    "43": [
+      [
+        "0",
+        "C"
+      ],
+      [
+        "3/2",
+        "C7"
+      ]
+    ],
+    "44": [
+      [
+        "0",
+        "F"
+      ],
+      [
+        "1",
+        "C"
+      ]
+    ],
+    "45": [
+      [
+        "0",
+        "D7"
+      ]
+    ],
+    "46": [
+      [
+        "0",
+        "G"
+      ]
+    ],
+    "47": [
+      [
+        "0",
+        "C"
+      ],
+      [
+        "3/2",
+        "C7"
+      ]
+    ],
+    "48": [
+      [
+        "0",
+        "F"
+      ],
+      [
+        "1",
+        "C"
+      ]
+    ],
+    "49": [
+      [
+        "0",
+        "C"
+      ],
+      [
+        "3/2",
+        "G7"
+      ]
+    ],
+    "50": [
+      [
+        "0",
+        "C"
+      ]
+    ],
+    "51": [
+      [
+        "0",
+        "C"
+      ],
+      [
+        "1",
+        "C7"
+      ]
+    ],
+    "52": [
+      [
+        "0",
+        "F"
+      ],
+      [
+        "1",
+        "Fm"
+      ]
+    ],
+    "53": [
+      [
+        "0",
+        "C"
+      ],
+      [
+        "3/2",
+        "G"
+      ]
+    ],
+    "54": [
+      [
+        "0",
+        "C"
+      ]
+    ],
+    "55": [
+      [
+        "0",
+        "F"
+      ]
+    ],
+    "56": [
+      [
+        "0",
+        "Bb"
+      ]
+    ],
+    "57": [
+      [
+        "0",
+        "Dm"
+      ]
+    ],
+    "58": [
+      [
+        "0",
+        "Gm"
+      ]
+    ],
+    "59": [
+      [
+        "0",
+        "Gm"
+      ]
+    ],
+    "60": [
+      [
+        "0",
+        "F"
+      ],
+      [
+        "1",
+        "Dm"
+      ]
+    ],
+    "61": [
+      [
+        "0",
+        "E7"
+      ]
+    ],
+    "62": [
+      [
+        "0",
+        "Am"
+      ],
+      [
+        "1",
+        "C7"
+      ]
+    ],
+    "63": [
+      [
+        "0",
+        "F"
+      ]
+    ],
+    "64": [
+      [
+        "0",
+        "Bb"
+      ]
+    ],
+    "65": [
+      [
+        "0",
+        "Dm"
+      ]
+    ],
+    "66": [
+      [
+        "0",
+        "Gm"
+      ]
+    ],
+    "67": [
+      [
+        "0",
+        "Gm"
+      ]
+    ],
+    "68": [
+      [
+        "0",
+        "F"
+      ],
+      [
+        "1",
+        "Db7"
+      ]
+    ],
+    "69": [
+      [
+        "0",
+        "F"
+      ],
+      [
+        "3/4",
+        "C7"
+      ]
+    ],
+    "70": [
+      [
+        "0",
+        "F"
+      ]
+    ],
+    "72": [
+      [
+        "0",
+        "F"
+      ],
+      [
+        "1",
+        "F#dim7"
+      ]
+    ],
+    "73": [
+      [
+        "0",
+        "C"
+      ]
+    ],
+    "74": [
+      [
+        "0",
+        "D7"
+      ],
+      [
+        "1",
+        "G7"
+      ]
+    ],
+    "75": [
+      [
+        "0",
+        "C"
+      ]
+    ],
+    "76": [
+      [
+        "0",
+        "Dm"
+      ]
+    ],
+    "77": [
+      [
+        "0",
+        "Dm"
+      ]
+    ],
+    "78": [
+      [
+        "0",
+        "C"
+      ]
+    ],
+    "79": [
+      [
+        "0",
+        "C"
+      ]
+    ],
+    "80": [
+      [
+        "0",
+        "G7"
+      ]
+    ],
+    "81": [
+      [
+        "0",
+        "G7"
+      ]
+    ],
+    "82": [
+      [
+        "0",
+        "F#dim7"
+      ]
+    ],
+    "83": [
+      [
+        "0",
+        "C"
+      ]
+    ],
+    "84": [
+      [
+        "0",
+        "Dm"
+      ]
+    ],
+    "85": [
+      [
+        "0",
+        "Dm"
+      ]
+    ],
+    "86": [
+      [
+        "0",
+        "C"
+      ]
+    ],
+    "87": [
+      [
+        "0",
+        "C"
+      ]
+    ],
+    "88": [
+      [
+        "0",
+        "F"
+      ]
+    ],
+    "89": [
+      [
+        "0",
+        "C"
+      ],
+      [
+        "1",
+        "F#dim7"
+      ],
+      [
+        "3/2",
+        "C"
+      ]
+    ],
+    "90": [
+      [
+        "0",
+        "D7"
+      ],
+      [
+        "1",
+        "G7"
+      ]
+    ],
+    "91": [
+      [
+        "0",
+        "C"
+      ]
+    ],
+    "21": [
+      [
+        "0",
+        "C"
+      ]
+    ],
+    "38": [
+      [
+        "0",
+        "C"
+      ]
+    ],
+    "71": [
+      [
+        "0",
+        "F"
+      ]
+    ],
+    "92": [
+      [
+        "0",
+        "C"
+      ]
+    ]
+  },
+  "first_theme_h2": [
+    [
+      {
+        "onset": "0",
+        "duration": "3/2",
+        "pitches": [
+          "G4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:G4",
+        "tie_in": false,
+        "tie_out": false
+      },
+      {
+        "onset": "3/2",
+        "duration": "1/2",
+        "pitches": [
+          "Bb4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:3/2:Bb4",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "1",
+        "pitches": [
+          "A4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:A4",
+        "tie_in": false,
+        "tie_out": false
+      },
+      {
+        "onset": "1",
+        "duration": "1",
+        "pitches": [
+          "G4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:1:G4",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "3/2",
+        "pitches": [
+          "G4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:G4",
+        "tie_in": false,
+        "tie_out": false
+      },
+      {
+        "onset": "3/2",
+        "duration": "1/2",
+        "pitches": [
+          "F4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:3/2:F4",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "3/2",
+        "pitches": [
+          "G4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:G4",
+        "tie_in": false,
+        "tie_out": false
+      },
+      {
+        "onset": "3/2",
+        "duration": "1/2",
+        "pitches": [],
+        "velocity": 0,
+        "source_start": "arranged:3/2:None",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "3/2",
+        "pitches": [
+          "G4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:G4",
+        "tie_in": false,
+        "tie_out": false
+      },
+      {
+        "onset": "3/2",
+        "duration": "1/2",
+        "pitches": [
+          "Bb4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:3/2:Bb4",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "1",
+        "pitches": [
+          "A4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:A4",
+        "tie_in": false,
+        "tie_out": false
+      },
+      {
+        "onset": "1",
+        "duration": "1",
+        "pitches": [
+          "G4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:1:G4",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "2",
+        "pitches": [
+          "A4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:A4",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "3/2",
+        "pitches": [
+          "B4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:B4",
+        "tie_in": false,
+        "tie_out": false
+      },
+      {
+        "onset": "3/2",
+        "duration": "1/2",
+        "pitches": [],
+        "velocity": 0,
+        "source_start": "arranged:3/2:None",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "3/2",
+        "pitches": [
+          "G4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:G4",
+        "tie_in": false,
+        "tie_out": false
+      },
+      {
+        "onset": "3/2",
+        "duration": "1/2",
+        "pitches": [
+          "Bb4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:3/2:Bb4",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "1",
+        "pitches": [
+          "A4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:A4",
+        "tie_in": false,
+        "tie_out": false
+      },
+      {
+        "onset": "1",
+        "duration": "1",
+        "pitches": [
+          "G4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:1:G4",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "3/2",
+        "pitches": [
+          "G4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:G4",
+        "tie_in": false,
+        "tie_out": false
+      },
+      {
+        "onset": "3/2",
+        "duration": "1/2",
+        "pitches": [
+          "F4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:3/2:F4",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "3/2",
+        "pitches": [
+          "G4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:G4",
+        "tie_in": false,
+        "tie_out": false
+      },
+      {
+        "onset": "3/2",
+        "duration": "1/2",
+        "pitches": [],
+        "velocity": 0,
+        "source_start": "arranged:3/2:None",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "2",
+        "pitches": [
+          "G4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:G4",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "2",
+        "pitches": [
+          "F4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:F4",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "2",
+        "pitches": [
+          "G4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:G4",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "3/2",
+        "pitches": [
+          "G4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:G4",
+        "tie_in": false,
+        "tie_out": false
+      },
+      {
+        "onset": "3/2",
+        "duration": "1/2",
+        "pitches": [],
+        "velocity": 0,
+        "source_start": "arranged:3/2:None",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ]
+  ],
+  "first_theme_h3": [
+    [
+      {
+        "onset": "0",
+        "duration": "2",
+        "pitches": [
+          "E4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:E4",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "1",
+        "pitches": [
+          "F4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:F4",
+        "tie_in": false,
+        "tie_out": false
+      },
+      {
+        "onset": "1",
+        "duration": "1",
+        "pitches": [
+          "E4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:1:E4",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "3/2",
+        "pitches": [
+          "E4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:E4",
+        "tie_in": false,
+        "tie_out": false
+      },
+      {
+        "onset": "3/2",
+        "duration": "1/2",
+        "pitches": [
+          "B3"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:3/2:B3",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "3/2",
+        "pitches": [
+          "E4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:E4",
+        "tie_in": false,
+        "tie_out": false
+      },
+      {
+        "onset": "3/2",
+        "duration": "1/2",
+        "pitches": [],
+        "velocity": 0,
+        "source_start": "arranged:3/2:None",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "2",
+        "pitches": [
+          "E4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:E4",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "1",
+        "pitches": [
+          "F4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:F4",
+        "tie_in": false,
+        "tie_out": false
+      },
+      {
+        "onset": "1",
+        "duration": "1",
+        "pitches": [
+          "E4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:1:E4",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "2",
+        "pitches": [
+          "C4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:C4",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "3/2",
+        "pitches": [
+          "D4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:D4",
+        "tie_in": false,
+        "tie_out": false
+      },
+      {
+        "onset": "3/2",
+        "duration": "1/2",
+        "pitches": [],
+        "velocity": 0,
+        "source_start": "arranged:3/2:None",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "2",
+        "pitches": [
+          "E4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:E4",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "1",
+        "pitches": [
+          "F4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:F4",
+        "tie_in": false,
+        "tie_out": false
+      },
+      {
+        "onset": "1",
+        "duration": "1",
+        "pitches": [
+          "E4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:1:E4",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "3/2",
+        "pitches": [
+          "E4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:E4",
+        "tie_in": false,
+        "tie_out": false
+      },
+      {
+        "onset": "3/2",
+        "duration": "1/2",
+        "pitches": [
+          "B3"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:3/2:B3",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "3/2",
+        "pitches": [
+          "E4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:E4",
+        "tie_in": false,
+        "tie_out": false
+      },
+      {
+        "onset": "3/2",
+        "duration": "1/2",
+        "pitches": [],
+        "velocity": 0,
+        "source_start": "arranged:3/2:None",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "2",
+        "pitches": [
+          "E4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:E4",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "2",
+        "pitches": [
+          "C4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:C4",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "3/2",
+        "pitches": [
+          "E4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:E4",
+        "tie_in": false,
+        "tie_out": false
+      },
+      {
+        "onset": "3/2",
+        "duration": "1/2",
+        "pitches": [
+          "B3"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:3/2:B3",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ],
+    [
+      {
+        "onset": "0",
+        "duration": "3/2",
+        "pitches": [
+          "C4"
+        ],
+        "velocity": 58,
+        "source_start": "arranged:0:C4",
+        "tie_in": false,
+        "tie_out": false
+      },
+      {
+        "onset": "3/2",
+        "duration": "1/2",
+        "pitches": [],
+        "velocity": 0,
+        "source_start": "arranged:3/2:None",
+        "tie_in": false,
+        "tie_out": false
+      }
+    ]
+  ],
+  "support_policy": {
+    "h2_range": [
+      64,
+      72
+    ],
+    "h3_range": [
+      59,
+      67
+    ],
+    "minimum_duration_quarter_beats_after_augmentation": "1",
+    "breathing": "last eighth of the original 2/4 bar at a four-bar phrase ending; rest must not remove a new harmonic change",
+    "piano": "Harmonica melody with two-hand piano accompaniment built from the source bass and offbeat chord attacks, not a duplicate of the original RH melody"
+  },
+  "adaptations": [
+    "2/4 note values doubled to 2/2, half note = 72; sounding tempo unchanged.",
+    "Piano octave doublings in the melody are reduced to one melodic line.",
+    "The first B pass uses a lower wind register; its repeat is an octave higher, following the original Repeat 8va indication. The C theme is lowered an octave as a complete phrase; octave reductions never invent new pitch classes.",
+    "H2/H3 are sustained harmonica support; no mechanical splitting of piano chords.",
+    "Bass fills short rests but retains source chromatic approaches.",
+    "No excerpt ending: every transition, first/second ending and final cadence is retained.",
+    "The first three intro bars are an exposed H1 unison cascade; supporting winds, Bass and Chord enter in intro bar four instead of adding invented bass notes."
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "title": "Original double-stop fixture",
+  "license": "MIT",
+  "instrument": "C 16-hole solo tuning",
+  "single_digit_pt": 12,
+  "double_digit_pt": 9,
+  "double_digit_centres_sp": [
+    -1.15,
+    1.15
+  ],
+  "expand_staff_spacing": false,
+  "pairs": [
+    [
+      "C4",
+      "E4"
+    ],
+    [
+      "E4",
+      "G4"
+    ],
+    [
+      "D4",
+      "F4"
+    ],
+    [
+      "F4",
+      "Ab4"
+    ],
+    [
+      "C4",
+      "G4"
+    ],
+    [
+      "C4",
+      "C5"
+    ]
+  ],
+  "rejected_pairs": [
+    [
+      "G4",
+      "B4"
+    ],
+    [
+      "F#4",
+      "A4"
+    ]
+  ],
+  "verify": [
+    "same breath and slide",
+    "blocked interior holes",
+    "two visible numerals for two sounding pitches",
+    "pair centre equals single numeral centre",
+    "octave dots centred on their own scaled digit",
+    "underline below both digits",
+    "dynamics clear without expanding staff gap"
+  ],
+  "render_status": "Full Entertainer implementation checked separately in templates/verification.json; this JSON is test input, not rendered proof"
+}
