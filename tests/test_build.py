@@ -4,6 +4,7 @@ import importlib.util
 import json
 import re
 import unittest
+from unittest.mock import patch
 import zipfile
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -30,6 +31,15 @@ class BuildTests(unittest.TestCase):
         before={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
         build.build()
         self.assertEqual(before,{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in paths})
+
+    def test_machine_document_is_independent_of_filesystem_order(self):
+        before=(ROOT/'dist/llms-full.txt').read_bytes()
+        original=Path.glob
+        def reverse_profiles(path,pattern):
+            values=list(original(path,pattern))
+            return iter(reversed(values)) if path==ROOT/'profiles' and pattern=='*.json' else iter(values)
+        with patch.object(Path,'glob',reverse_profiles):build.build()
+        self.assertEqual(before,(ROOT/'dist/llms-full.txt').read_bytes())
 
     def test_static_references_resolve(self):
         for ref in re.findall(r'(?:href|src)="([^"]+)"',(ROOT/'dist/index.html').read_text()):

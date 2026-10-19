@@ -60,7 +60,7 @@ def build():
         p=ROOT/'docs'/f'{name}.md'
         records.append({'id':name,'label':label,'html':render(p.read_text())})
         canonical[f'docs/{name}.md']=p.read_bytes()
-    for p in (ROOT/'profiles').glob('*.json'):
+    for p in sorted((ROOT/'profiles').glob('*.json')):
         canonical[str(p.relative_to(ROOT))]=p.read_bytes()
     (target/'docs.js').write_text('window.HANDBOOK='+json.dumps(records,ensure_ascii=False)+';\n')
     for folder in ['docs','profiles','examples']:
