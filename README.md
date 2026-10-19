@@ -1,47 +1,64 @@
-# Harmonica Arranging
+# HarpScore
 
-口琴編曲、五線譜與簡譜的開放協作手冊。給演奏者、編曲者，以及和他們一起工作的 agent。
+**An agent skill for thoughtful harmonica arranging and readable Jianpu in MuseScore.**
 
-目前是 **0.1.0 協作規範與網站雛形**：已有可閱讀的 SOP、規則編號、需求範本、agent skill 與需求產生器。尚未提供通用音源轉譜或 MuseScore 自動編譜引擎。現有單曲製譜程式仍需另外重構，不能直接套用任意歌曲。
+HarpScore 的 Harp 呼應 harmonica，Score 致敬 MuseScore。這是一份讓 AI agent 讀取、試做並驗證的口琴編譜能力包；網站是同一份規則的人類閱讀與下載入口。
 
-## 使用
+- Website: https://skyhong2002.github.io/harpscore/
+- Agent entrypoint: [SKILL.md](SKILL.md)
+- Working contract: [AGENTS.md](AGENTS.md)
+- Rules, preferences and decisions: [docs/](docs/)
 
-1. 從網站建立需求，或填寫 `examples/brief.json`。
-2. 將需求和 `AGENTS.md` 交給 agent；需要簡譜時一起提供 `docs/jianpu.md`。
-3. 先核對音樂，再檢查排版與播放。網站不接收或上傳音源。
-
-給 agent 的起始指令：
+## Give this to your agent
 
 ```text
-閱讀這個專案的 AGENTS.md，使用 docs/workflow.md 與 docs/arranging.md。
-簡譜另讀 docs/jianpu.md。依我提供的需求做完整曲目，先核對代表段落。
-把音樂變更和純排版變更分開記錄；不要自行把簡譜升降改成首調。
+Use HarpScore: https://github.com/skyhong2002/harpscore
+Read SKILL.md and the references it routes to. Use profile skyhong only when I ask
+for the founding user's style. First try a representative passage in MuseScore,
+verify the actual engraving and playback, then complete the requested work.
+Keep source corrections, musical adaptations and layout-only edits separate.
 ```
 
-## 本機開發
+已安裝 skill 的 agent 可用 `$harpscore`。其他 agent 可以讀取 repository 的 SKILL.md／AGENTS.md，或取得網站的 `llms-full.txt`、`downloads/harpscore-skill.zip`。核心文件使用可攜的相對路徑；不是只放在某台機器上的私人記憶。
 
-只需要 Python 3 與現代瀏覽器，沒有 Node 套件安裝步驟。
+## What is inside
+
+- Agent 守則：何時讀哪些資料、先試做什麼、怎樣才算真的完成。
+- 配器與簡譜：樂句交接、初學難度、Bass 延音、Chord 節奏，以及數字、減時線、點、升降與版面。
+- 完整偏好與 **66 項對話決策**：保留修正過程與優先順序，不把被推翻的做法當成預設。
+- MuseScore 實作經驗：覆層風險、已用過的起始參數、單曲例外與環境限制分開。
+- 原創四小節試做素材產生器：MusicXML、音樂事件與檢查依據；不含第三方歌曲。
+- 同一來源產生網站、完整 agent 文件包、可安裝 skill 與原始碼下載。
+
+**不是自動聽歌轉譜服務，也尚未包含通用 MuseScore 簡譜渲染引擎。** Skill 的作用是讓 agent 能依可靠規則使用它可用的工具，且對實際成果負責。試做產生器只產生原稿，不會假裝已在你的 MuseScore 完成簡譜。
+
+## Try it
+
+```sh
+python3 scripts/tryout.py --out /tmp/harpscore-trial
+```
+
+把產生的 `original.musicxml` 在正常 MuseScore 視窗開啟，交給 agent 依 [試做任務](docs/tryout.md) 轉成簡譜並檢查。原生音符、數字覆層與渲染要互相對得上，不能只檢查 XML。
+
+## Profiles and history
+
+`profiles/fixed-c.json` 是本專案的固定 C 顯示方案。`profiles/skyhong.json` 是使用者的選用偏好。通用規則、個人偏好、Summer 的小節例外及某次 macOS 匯出問題分開維護。
+
+`docs/conversation-decisions.md` 依相關對話順序記錄要求與後續更正，不公開截圖中與製譜無關的私人聊天，也不包含私人檔案路徑。可執行的規則以目前有效決策為準。
+
+## Development
+
+Python 3 與 Node.js 用於建置及測試，不需要安裝第三方套件。
 
 ```sh
 python3 scripts/build.py
 python3 -m unittest discover -s tests
+node --test tests/brief.test.cjs
 python3 -m http.server 8766 --directory dist --bind 127.0.0.1
 ```
 
-`docs/*.md` 是手冊的唯一來源；建置會產生網站、`llms-full.txt` 和 agent ZIP，不需要手動同步三份內容。`web/brief.js` 同時供網站和 Node 測試使用。
+GitHub Actions 驗證後發布 GitHub Pages。編輯 canonical docs 後重建所有下載包，不手動改 dist。完整流程見 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
-## 專案結構
+## License
 
-- `docs/`：編曲、簡譜、驗收與維護規則。
-- `profiles/`：可選的風格設定；個人偏好不等於所有口琴譜的標準。
-- `skills/harmonica-arranging/`：可安裝的 agent 入口，建置時附上同版手冊。
-- `examples/`：不含既有歌曲音符的需求範例。
-- `web/`：網站介面與需求產生器。
-- `scripts/build.py`：無相依套件的靜態網站與 agent 文件建置。
-- `tests/`：文件連結、發布內容、建置一致性與需求產生器檢查。
-
-## 開放維護
-
-程式與自行撰寫的文件採 MIT 授權，見 `LICENSE`。第三方樂曲、錄音、字型和範例譜不因此取得授權。網站另有使用者指定展示的 Summer 譜面圖片，署名與授權排除範圍見 `web/assets/NOTICE.md`；不包含可編輯樂譜或錄音。歡迎提交有可重現範例的規則修訂，見 `CONTRIBUTING.md`。需要跨作品驗證的規則會標示為設定檔或實驗性做法。
-
-下一階段優先使用第二首曲子驗證規則，建立原創短小測試樂句，再抽離 MuseScore adapter、節奏模型與排版檢查。不要把某首曲子的第 20、99 或 102 小節例外搬進通用引擎。
+MIT，適用自行撰寫的程式、文件與原創試做素材。使用者指定展示的 Summer 譜面圖片及其中第三方樂曲除外，見 [NOTICE](web/assets/NOTICE.md)。Repository 不包含其可編輯樂譜、音源或第三方字型。

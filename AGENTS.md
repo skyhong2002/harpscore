@@ -1,22 +1,19 @@
-# Agent entrypoint
+# HarpScore agent entrypoint
 
-This project helps humans and agents collaborate on playable harmonica arrangements. Its current release is a documented workflow and brief builder, not a general transcription or engraving engine.
+HarpScore is an agent skill and shared knowledge base for serious harmonica arranging and Jianpu engraving. The website is a distribution surface, not the product's primary intelligence. Read `SKILL.md` for conditional reference loading.
 
-Read `docs/workflow.md` and `docs/arranging.md`. Read `docs/jianpu.md` when producing numbered notation, `docs/verification.md` before delivery, and `docs/project.md` when changing the toolkit itself. Load only the selected profile under `profiles/`.
+## When making music
 
-## Working contract
+Read `docs/agent-contract.md`, `docs/workflow.md` and `docs/arranging.md`. For Jianpu read `docs/jianpu.md` and the chosen profile. To reuse the founding user's style read `docs/preferences.md`; use `docs/conversation-decisions.md` to resolve superseded requirements. Before delivery read `docs/verification.md`.
 
-- The user's current musical intent overrides a preset. Preserve unrelated pieces and unsaved edits. Discover local application constraints before invoking an exporter.
-- Separate source transcription, musical adaptation, visual engraving and audio rendering. A layout-only request must not alter pitches, onsets, durations or velocities.
-- A beginner arrangement is an explicit target, not the universal default. Keep phrases intact; do not alternate duet voices mechanically by bar count.
-- Choose actual instrument models, playable sounding ranges and concert/written pitch before arranging. Numbered-notation octave references are presentation settings, not transpositions.
-- For Jianpu, follow the selected tonic system. Preserve performed events and verify the visible overlay against the native score when using transparent playback anchors.
-- Group underlines within each quarter beat and inspect physical rendered gaps. Logical grouping alone does not prove that lines are separate.
-- Deliver only the requested editions. Keep one active file per edition, archive previous revisions separately, and keep sources, audio and exports with the same piece.
-- Describe evidence accurately: XML validation, rendered notation, playback, exported files and public deployment are different checks. Record unverified items.
+Keep performed pitch, onset, duration and velocity unchanged for layout-only tasks. Preserve phrases in beginner duets, Bass grooves and Chord's rhythmic role. Validate the actual renderer, not only logical grouping. A native-note/text overlay must remain semantically synchronized. Do the original exercise in `docs/tryout.md` before relying on a new rendering approach.
 
-## Public contributions
+## When maintaining this repository
 
-Keep universal rules in docs and preferences in profiles. Add a minimal original fixture when fixing an engraving defect. Never commit third-party music/audio, private filesystem paths, credentials or machine-specific crash workarounds to universal defaults. Do not bundle any existing Summer score.
+Read `docs/project.md`. `SKILL.md`, `docs/`, profiles and original fixtures are canonical. Build creates the website and portable skill ZIP from them. Keep references relative and runnable after installation. Do not add a fake transcription engine, fabricate verification or substitute stale score thumbnails.
 
-The user-authorized rendered demo images in `web/assets/` are a specific exception for website presentation. Keep attribution and their exclusion from the MIT license in NOTICE.md; they do not authorize bundling editable scores or recordings.
+The current naming is HarpScore (display), harpscore (repository and skill). Keep user requests, profiles and piece-specific exceptions distinct. The decision ledger preserves the history; the current contract selects which decisions to execute.
+
+Preserve unrelated works and unsaved changes. Discover local MuseScore capabilities before exporting; do not repeatedly spawn a known crashing converter or suppress OS crash reports. Export pauses apply to their task, not every user forever.
+
+Public source uses MIT. Do not commit credentials, private paths, unrelated chats or third-party editable scores/audio. User-authorized demo images in `web/assets/` are a specific presentation exception with separate attribution/license scope. They do not grant permission to distribute the underlying music as MIT.

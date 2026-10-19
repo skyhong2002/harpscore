@@ -7,7 +7,7 @@ import shutil
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-DOCS = [('workflow','從新曲開始'),('arranging','配器與可吹性'),('jianpu','簡譜規則'),('verification','檢查與交付'),('project','維護與開發')]
+DOCS = [('agent-contract','Agent 執行守則'),('workflow','從新曲開始'),('arranging','配器與可吹性'),('jianpu','簡譜規則'),('preferences','完整偏好'),('conversation-decisions','66 項對話決策'),('musescore-adapter','MuseScore 實作經驗'),('tryout','Agent 試做任務'),('verification','檢查與交付'),('project','維護與發布')]
 
 def inline(s):
     s = html.escape(s)
@@ -55,36 +55,43 @@ def build():
         if p.is_file(): shutil.copyfile(p,target/p.name)
         elif p.is_dir(): shutil.copytree(p,target/p.name)
     records=[]
-    canonical={'AGENTS.md':(ROOT/'AGENTS.md').read_bytes()}
+    canonical={n:(ROOT/n).read_bytes() for n in ['AGENTS.md','SKILL.md']}
     for name,label in DOCS:
         p=ROOT/'docs'/f'{name}.md'
         records.append({'id':name,'label':label,'html':render(p.read_text())})
         canonical[f'docs/{name}.md']=p.read_bytes()
+    for p in (ROOT/'profiles').glob('*.json'):
+        canonical[str(p.relative_to(ROOT))]=p.read_bytes()
     (target/'docs.js').write_text('window.HANDBOOK='+json.dumps(records,ensure_ascii=False)+';\n')
     for folder in ['docs','profiles','examples']:
         shutil.copytree(ROOT/folder,target/folder)
     shutil.copyfile(ROOT/'AGENTS.md',target/'AGENTS.md')
-    (target/'llms.txt').write_text('# Harmonica Arranging\n\nAgent entrypoint: AGENTS.md\nFull handbook: llms-full.txt\nWorkflow: docs/workflow.md\nJianpu: docs/jianpu.md\nProfile: profiles/fixed-c.json\nDownload: downloads/agent-kit.zip\n')
+    shutil.copyfile(ROOT/'SKILL.md',target/'SKILL.md')
+    (target/'llms.txt').write_text('# HarpScore\n\nAn agent-readable harmonica arranging and Jianpu skill.\n\nAgent entrypoint: SKILL.md\nContract: docs/agent-contract.md\nFull rules and decisions: llms-full.txt\nTrial task: docs/tryout.md\nProfile: profiles/skyhong.json\nRepository: https://github.com/skyhong2002/harpscore\nDownload: downloads/harpscore-skill.zip\n')
     (target/'llms-full.txt').write_text('\n\n'.join(f'# FILE: {n}\n'+d.decode() for n,d in canonical.items()))
     dl=target/'downloads';dl.mkdir()
-    skill={}
-    for p in (ROOT/'skills/harmonica-arranging').rglob('*'):
-        if p.is_file():skill['harmonica-arranging/'+str(p.relative_to(ROOT/'skills/harmonica-arranging'))]=p.read_bytes()
-    for name,_ in DOCS:
-        skill[f'harmonica-arranging/references/{name}.md']=(ROOT/'docs'/f'{name}.md').read_bytes()
-    skill['harmonica-arranging/references/fixed-c.json']=(ROOT/'profiles/fixed-c.json').read_bytes()
-    skill['harmonica-arranging/LICENSE']=(ROOT/'LICENSE').read_bytes()
-    archive(dl/'harmonica-arranging-skill.zip',skill)
-    kit={**canonical,'profiles/fixed-c.json':(ROOT/'profiles/fixed-c.json').read_bytes(),'examples/brief.json':(ROOT/'examples/brief.json').read_bytes(),'LICENSE':(ROOT/'LICENSE').read_bytes()}
+    kit={**canonical}
+    for folder in ['profiles','examples','agents']:
+        for p in (ROOT/folder).rglob('*'):
+            if p.is_file():kit[str(p.relative_to(ROOT))]=p.read_bytes()
+    for n in ['LICENSE','scripts/tryout.py']:kit[n]=(ROOT/n).read_bytes()
+    skill={'harpscore/'+n:data for n,data in kit.items()}
+    archive(dl/'harpscore-skill.zip',skill)
     archive(dl/'agent-kit.zip',kit)
+    import tempfile
+    import runpy
+    write_fixture=runpy.run_path(str(ROOT/'scripts/tryout.py'))['write_fixture']
+    with tempfile.TemporaryDirectory() as temp:
+        write_fixture(temp)
+        archive(dl/'harpscore-trial.zip',{p.name:p.read_bytes() for p in Path(temp).iterdir() if p.is_file()})
     public={}
-    for name in ['README.md','AGENTS.md','LICENSE','CONTRIBUTING.md','.gitignore']:
+    for name in ['README.md','AGENTS.md','SKILL.md','LICENSE','CONTRIBUTING.md','.gitignore']:
         public[name]=(ROOT/name).read_bytes()
-    for name in ['docs','profiles','examples','skills','web','scripts','tests']:
+    for name in ['docs','profiles','examples','agents','web','scripts','tests','.github']:
         for p in (ROOT/name).rglob('*'):
             if p.is_file() and '__pycache__' not in p.parts and not p.name.endswith('.pyc'):
                 public[str(p.relative_to(ROOT))]=p.read_bytes()
     archive(dl/'source.zip',public)
-    print(f'Built {len(records)} chapters and 3 reproducible download packages in {target}')
+    print(f'Built {len(records)} chapters and 4 reproducible download packages in {target}')
 
 if __name__=='__main__': build()

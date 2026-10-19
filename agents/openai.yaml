@@ -1,0 +1,4 @@
+interface:
+  display_name: "HarpScore"
+  short_description: "讓 agent 依口琴配器、簡譜偏好與實際渲染檢查認真完成編譜"
+  default_prompt: "使用 $harpscore，先讀編譜規則並試排代表樂句，再依我的編制與程度完成 MuseScore 口琴譜。"

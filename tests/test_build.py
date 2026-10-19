@@ -40,8 +40,9 @@ class BuildTests(unittest.TestCase):
         self.assertNotIn('<script>',build.render('<script>alert(1)</script>'))
 
     def test_skill_references_are_bundled(self):
-        with zipfile.ZipFile(ROOT/'dist/downloads/harmonica-arranging-skill.zip') as z:
-            for name in re.findall(r'references/([\w.-]+)',z.read('harmonica-arranging/SKILL.md').decode()):
-                self.assertIn('harmonica-arranging/references/'+name,z.namelist())
+        with zipfile.ZipFile(ROOT/'dist/downloads/harpscore-skill.zip') as z:
+            for name in re.findall(r'`((?:docs|profiles|scripts)/[\w./-]+\.(?:md|json|py))`',z.read('harpscore/SKILL.md').decode()):
+                self.assertIn('harpscore/'+name,z.namelist())
+            self.assertIn('harpscore/scripts/tryout.py',z.namelist())
 
 if __name__=='__main__':unittest.main()
