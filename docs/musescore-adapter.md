@@ -15,7 +15,7 @@
 - 數字 Avenir Next 12pt；Chord x/X/0 用 center,baseline，y=1.0。X 讀既有 velocity >=56，不改 velocity。
 - 延音橫線 Avenir Next 13pt、center,baseline、y=0.741；不用 Arial 文字框垂直置中。附點 11.5pt bold。
 - 減時線 y=1.32、寬 0.11、起點 offset x=0.60、終點 off2 x=2.36。native anchor 在四分拍整點 leading space 0.75，其他位置 0.4。每拍實際斷口仍須重看。
-- 舊 Summer 版的 Dynamics 下方 y=3.8；Chord 在和弦 lane 更下方 y=6.2。五重奏 dynamics 9pt。這是歷史參數；最新 profile 已改 Chord 代號在上方、音桿向下，不能直接把舊座標套到新譜。
+- 舊 Summer 版的 Dynamics 下方 y=3.8；Chord 在和弦 lane 更下方 y=6.2。五重奏 dynamics 9pt。這是歷史參數；最新 profile 區分簡譜代號在節奏下方、五線譜代號在上方且音桿向下。兩者都貼近自己的節奏，不能直接把舊座標套到新譜。
 - 透明 anchor 的 smallNoteMag=0.6；minNoteDistance=0.55；spacingDensity=1.5。
 - 最小小節寬 26；measureSpacing=2.0。依最忙聲部的數字 attack 數，至多四個用 stretch 0.72、五到七個 0.84、其餘 1.0。不是把延音點與「－」當 attacks。
 - 五重奏 staff distance 6.1；二重奏 7.6；五重奏一般頁 system distance min 5.4 / max 8.9。首五重奏標題 VBox 55，三大行靠下。
@@ -58,4 +58,4 @@ PDF 暫停時直接用正常 MuseScore 畫面及截圖檢查，不必另開 SVG 
 
 三連音橫桿、獨立數字標籤、八度虛線及漸強／漸弱各自保有原生時間範圍。縮短它們與本部數字的距離時，同時檢查升降記號、弧線、前一部及上一大行的末部；固定的全曲 y 值不是驗收。保存後比對有語意的資料；相同時間上的 spanner 序列或依聲部身分對應的 audio track 陣列可能只改序，不能因此忽略成員內容、錯把重複音去重，或把真正的播放改變當成格式差異。
 
-Chord 代號太高時先讓它靠回自己的叉叉，不能把 DB H. 的空間當成和弦文字層。若簡譜的 Chord 延音弧線因此穿過代號，可試排到節奏下側，另核對減時線、節奏附點、跨行續段與下一大行；這是排版解法，不是改音長或全曲強制翻轉連結線的規定。
+先依版本選 Chord 的代號層：簡譜在叉叉下方，五線譜在節奏上方，兩者都貼近自己的節奏。不能把 DB H. 或下一大行的空間當成和弦文字層。簡譜代號移到下方後，原先為上方代號避讓而向下排的延音弧線可能需要改回上側；重新核對減時線、節奏附點、裝飾音、跨行續段與力度。這是排版解法，不是改音長或全曲強制翻轉連結線的規定。
