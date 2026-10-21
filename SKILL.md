@@ -33,6 +33,8 @@ Keep phrases intact in beginner duets; do not hand off mechanically every four b
 
 Jianpu octave references alter dots, not pitch. Preserve fixed-C versus movable-do choice. Every quarter-beat underline group needs a physical gap in the actual renderer. Do not tie visibly to extension dashes. Keep x/X/0 baseline, dynamics and chord-symbol lanes separate. Compare any visual overlay with native playback notes after edits.
 
+For denser Jianpu, vary bars per system with actual attack density and verify real automatic wrapping. Keep triplet brackets and their labels close to their own digits. Reflow invalidates old per-system curve handles; recheck every continuation of ties, slurs, octave guides and hairpins against the new rendering. See J23–J24 and V14.
+
 Preserve unrelated works and unsaved changes. Record editable-score work, PDF/audio export and cloud delivery separately, and respect the current task's pauses. Actual GUI screenshots plus normal save/reopen can verify local rendering without PDF or audio exports. Discover actual local MuseScore capabilities before conversion; stop and diagnose a failed export instead of repeatedly spawning converters. A file's existence does not prove clean export, correct rendering or verified playback.
 
 Deliver only requested editions. Report what was checked and which checks still lack evidence. Do not claim automatic transcription, an installed generic engraving engine or a successful MuseScore trial unless actually performed.
