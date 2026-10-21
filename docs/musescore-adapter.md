@@ -42,6 +42,8 @@ PDF 暫停時直接用正常 MuseScore 畫面及截圖檢查，不必另開 SVG 
 
 簡譜的可見 x／X 覆層與隱藏播放音頭分開。在本機 4.7.5，非 drum staff 的原生 cross 音頭會連動 DEAD 悶音屬性，不能只因看不見音頭就假定它只影響外觀。隱藏播放音可採 normal 音頭，由覆層保留叉叉；正常儲存、重開後逐音確認 DEAD 為 false，並保留四音位的八個簧音、節奏與延音鏈。這不代表應移除原譜真正要求的悶音。依據：[4.7.5 Note 的 HEAD_GROUP setter](https://github.com/musescore/MuseScore/blob/v4.7.5/src/engraving/dom/note.cpp)。
 
+五線譜若需要原生叉叉節奏，可先在副本試用 `heavy-cross` 音頭，隱藏的其他簧音仍用 normal；本機 4.7.5 的候選譜經正常保存、重開後，保留了叉叉、向下音桿與原生連結線，且所有簧音的 DEAD 都為 false。這比額外建立一套靜音顯示聲部簡單，但字形粗細、附點、裝飾音與延音須看實際畫面，不能假設任何版本都相同。逐音保留四音位的八個簧音及重複同音，並另行確認 Mixer 載入的音色；音色名稱與 DEAD 檢查不等於實際聆聽。音頭 XML 名稱可查 [4.7.5 的 NoteHeadGroup 對應](https://github.com/musescore/MuseScore/blob/v4.7.5/src/engraving/types/typesconv.cpp)。
+
 ## 隱藏播放元素與乾淨編輯畫面
 
 透明 Note／Rest 不保證其原生附點也透明。在已驗證的 4.7.5 寫入格式中，可對對應的 `NoteDot` 子物件明示 `visible=0`；保留原本的 `dots` 時值屬性，並逐項核對覆層附點及八度點。其他版本先驗證讀寫器和實際字形，不能只因 XML 看似合理便批次套用。
