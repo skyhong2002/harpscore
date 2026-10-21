@@ -11,14 +11,25 @@
     "force_two_or_four_beats": false
   },
   "chord": {
-    "staff_notation": "single-line-round-noteheads",
+    "staff_notation": "single-line-rhythm; preserve source notehead conventions when re-engraving",
     "staccato_dots": false,
     "symbols_at": [
       "bar-start",
       "harmonic-change-onset"
     ],
-    "symbol_lane": "below-chord",
-    "dynamics_lane": "below-symbols"
+    "symbol_lane": "above-chord",
+    "dynamics_lane": "below-chord",
+    "key_signature": false,
+    "stem_direction": "down",
+    "playback_model": {
+      "scope": "user-confirmed Suzuki voicings; confirm other instruments separately",
+      "physical_positions": 4,
+      "octave_reeds_per_position": 2,
+      "preserve_duplicate_unisons": true,
+      "unpointed_one": "C5",
+      "C_lowest_reed": "E3",
+      "voicing_source": "user-supplied Suzuki chart; preserve inversions"
+    }
   },
   "editions": {
     "staff": [
@@ -36,7 +47,7 @@
     "individual_harmonica_parts": false
   },
   "jianpu_first_edition": "1.0",
-  "export_policy": "record per task; PDF was paused in founding conversation",
+  "export_policy": "record per task; local MuseScore work, PDF/audio exports and cloud delivery are independent phases",
   "references": [
     "docs/preferences.md",
     "docs/conversation-decisions.md",
@@ -52,6 +63,21 @@
     ],
     "numbered_size_relative_to_single": 0.75,
     "vertical_alignment": "pair-centre-on-single-note-centre",
-    "expand_staff_spacing": false
+    "expand_staff_spacing": false,
+    "staff_octaves": "write-both-notes",
+    "numbered_octaves": "single-numeral-with-explicit-octave-doubling-mark",
+    "preserve_both_performed_pitches": true,
+    "non_octave_connections": "separate-upper-and-lower-arcs-close-to-digits"
+  },
+  "instrument_ranges": {
+    "scope": "user-confirmed sounding ranges; not all harmonicas",
+    "chromatic": {
+      "low": "C3",
+      "high": "D7"
+    },
+    "double_bass": {
+      "low": "E1",
+      "high": "G4"
+    }
   }
 }

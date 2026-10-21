@@ -7,7 +7,7 @@ import shutil
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-DOCS = [('agent-contract','Agent 執行守則'),('workflow','從新曲開始'),('templates','MuseScore 起始檔'),('arranging','配器與可吹性'),('jianpu','簡譜規則'),('preferences','完整偏好'),('conversation-decisions','對話決策紀錄'),('musescore-adapter','MuseScore 實作經驗'),('tryout','Agent 試做任務'),('verification','檢查與交付'),('project','維護與發布')]
+DOCS = [('agent-contract','Agent 執行守則'),('workflow','從新曲開始'),('templates','MuseScore 起始檔'),('arranging','配器與可吹性'),('source-verification','原譜與編制核對'),('jianpu','簡譜規則'),('preferences','完整偏好'),('conversation-decisions','對話決策紀錄'),('musescore-adapter','MuseScore 實作經驗'),('tryout','Summer 版式驗證'),('verification','檢查與交付'),('project','維護與發布')]
 
 def inline(s):
     s = html.escape(s)
@@ -67,26 +67,20 @@ def build():
         shutil.copytree(ROOT/folder,target/folder,ignore=shutil.ignore_patterns('.DS_Store','*.autosave','*~','__pycache__','*.pyc'))
     shutil.copyfile(ROOT/'AGENTS.md',target/'AGENTS.md')
     shutil.copyfile(ROOT/'SKILL.md',target/'SKILL.md')
-    (target/'llms.txt').write_text('# HarpScore\n\nAn agent-readable harmonica arranging and Jianpu skill.\n\nAgent entrypoint: SKILL.md\nContract: docs/agent-contract.md\nFull rules and decisions: llms-full.txt\nTrial task: docs/tryout.md\nProfile: profiles/skyhong.json\nRepository: https://github.com/skyhong2002/harpscore\nDownload: downloads/harpscore-skill.zip\n')
+    (target/'llms.txt').write_text('# HarpScore\n\nAn agent-readable harmonica arranging and Jianpu skill.\n\nAgent entrypoint: SKILL.md\nContract: docs/agent-contract.md\nFull rules and decisions: llms-full.txt\nSummer layout validation: docs/tryout.md\nProfile: profiles/skyhong.json\nRepository: https://github.com/skyhong2002/harpscore\nDownload: downloads/harpscore-skill.zip\n')
     (target/'llms-full.txt').write_text('\n\n'.join(f'# FILE: {n}\n'+d.decode() for n,d in canonical.items()))
     dl=target/'downloads';dl.mkdir()
     kit={**canonical}
     for folder in ['profiles','examples','agents','templates']:
         for p in (ROOT/folder).rglob('*'):
             if p.is_file() and p.name!='.DS_Store' and '__pycache__' not in p.parts and not p.name.endswith(('.pyc','.autosave','~')):kit[str(p.relative_to(ROOT))]=p.read_bytes()
-    for n in ['LICENSE','scripts/tryout.py','scripts/create_templates.py','scripts/entertainer.py','scripts/entertainer_notation.py','scripts/chromatic.py']:kit[n]=(ROOT/n).read_bytes()
+    for n in ['LICENSE','scripts/create_templates.py','scripts/entertainer.py','scripts/entertainer_notation.py','scripts/chromatic.py']:kit[n]=(ROOT/n).read_bytes()
     skill={'harpscore/'+n:data for n,data in kit.items()}
     archive(dl/'harpscore-skill.zip',skill)
     archive(dl/'agent-kit.zip',kit)
     archive(dl/'harpscore-musescore-templates.zip',{
         **{str(p.relative_to(ROOT)):p.read_bytes() for p in (ROOT/'templates').rglob('*') if p.is_file() and p.name!='.DS_Store' and '__pycache__' not in p.parts and not p.name.endswith(('.pyc','.autosave','~'))},
         'README.md':(ROOT/'docs/templates.md').read_bytes(),'LICENSE':(ROOT/'LICENSE').read_bytes()})
-    import tempfile
-    import runpy
-    write_fixture=runpy.run_path(str(ROOT/'scripts/tryout.py'))['write_fixture']
-    with tempfile.TemporaryDirectory() as temp:
-        write_fixture(temp)
-        archive(dl/'harpscore-trial.zip',{p.name:p.read_bytes() for p in Path(temp).iterdir() if p.is_file()})
     public={}
     for name in ['README.md','AGENTS.md','SKILL.md','LICENSE','CONTRIBUTING.md','.gitignore']:
         public[name]=(ROOT/name).read_bytes()
@@ -95,6 +89,6 @@ def build():
             if p.is_file() and p.name!='.DS_Store' and '__pycache__' not in p.parts and not p.name.endswith(('.pyc','.autosave','~')):
                 public[str(p.relative_to(ROOT))]=p.read_bytes()
     archive(dl/'source.zip',public)
-    print(f'Built {len(records)} chapters and 5 reproducible download packages in {target}')
+    print(f'Built {len(records)} chapters and 4 reproducible download packages in {target}')
 
 if __name__=='__main__': build()

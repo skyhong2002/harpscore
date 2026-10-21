@@ -15,7 +15,7 @@
 - 數字 Avenir Next 12pt；Chord x/X/0 用 center,baseline，y=1.0。X 讀既有 velocity >=56，不改 velocity。
 - 延音橫線 Avenir Next 13pt、center,baseline、y=0.741；不用 Arial 文字框垂直置中。附點 11.5pt bold。
 - 減時線 y=1.32、寬 0.11、起點 offset x=0.60、終點 off2 x=2.36。native anchor 在四分拍整點 leading space 0.75，其他位置 0.4。每拍實際斷口仍須重看。
-- Dynamics 下方 y=3.8；Chord 在和弦 lane 更下方 y=6.2。五重奏 dynamics 9pt。
+- 舊 Summer 版的 Dynamics 下方 y=3.8；Chord 在和弦 lane 更下方 y=6.2。五重奏 dynamics 9pt。這是歷史參數；最新 profile 已改 Chord 代號在上方、音桿向下，不能直接把舊座標套到新譜。
 - 透明 anchor 的 smallNoteMag=0.6；minNoteDistance=0.55；spacingDensity=1.5。
 - 最小小節寬 26；measureSpacing=2.0。依最忙聲部的數字 attack 數，至多四個用 stretch 0.72、五到七個 0.84、其餘 1.0。不是把延音點與「－」當 attacks。
 - 五重奏 staff distance 6.1；二重奏 7.6；五重奏一般頁 system distance min 5.4 / max 8.9。首五重奏標題 VBox 55，三大行靠下。
@@ -32,4 +32,10 @@ Summer 共 105 小節。H.3 m20 第四拍提早 mf；Chord m99 用八分減少�
 
 若匯出或開檔造成額外程序，先檢查程序與未存檔，不把兩個 Dock icon 直接當成裝了兩套。已存檔 tab 關閉後再從同一正常視窗開其他譜，是當時可用的操作；不以此否定其他環境正常的多 tab 支援。
 
-PDF 暫停時可用正常視窗 SVG 作檢查。以 MSCX 與 style 的內容雜湊確認 SVG 對應同版，容器 ZIP timestamp 或縮圖更新不應誤判音樂改變。縮圖用同版實際首頁渲染，更新時驗證其餘檔案 members 不變。
+PDF 暫停時直接用正常 MuseScore 畫面及截圖檢查，不必另開 SVG 匯出流程。保存後重開，記錄檔案版本及片段位置。容器 ZIP timestamp、內部檔名或縮圖更新不應誤判為音樂改變；須比較有語意的音樂資料。縮圖使用同版實際首頁渲染。
+
+## 八度簡寫與現代播放
+
+僅把八度另一音頭設為 invisible，仍可能由它決定音桿、符尾、連音與附加線；簡譜的原生線也可能留在隱藏五線的舊高度。八度簡寫只在簡譜真實片段試作，檢查升降、連音雙端和換行；五線譜保留兩音。不把「看不見」等同於「不影響排版」，也不將局部原型當成跨曲通用實作。
+
+不要把 stored Note.pitch 與真正播放音高混用。原生 Ottava 可能以較低的儲存音加播放移調表示來源高音；低音譜號的八度符號也須計入。舊版 Events 的裝飾音長度或 GM program 不是新版播放器完整行為。依實際 MuseScore 版本核對啟用的音色資源、現代播放及正常儲存重開，避免修好 XML 卻仍是打擊樂音色。

@@ -25,12 +25,12 @@ Keep source corrections, musical adaptations and layout-only edits separate.
 
 - Agent 守則：何時讀哪些資料、先試做什麼、怎樣才算真的完成。
 - 配器與簡譜：樂句交接、初學難度、Bass 延音、Chord 節奏，以及數字、減時線、點、升降與版面。
-- 完整偏好與 **78 項對話決策**：保留修正過程與優先順序，不把被推翻的做法當成預設。
+- 完整偏好與 **對話決策紀錄**：保留修正過程與優先順序，不把被推翻的做法當成預設。
 - MuseScore 實作經驗：覆層風險、已用過的起始參數、單曲例外與環境限制分開。
-- 原創四小節試做素材產生器：MusicXML、音樂事件與檢查依據；不含第三方歌曲。
+- Summer 實檔版式參考與新曲渲染核對流程。
 - 同一來源產生網站、完整 agent 文件包、可安裝 skill 與原始碼下載。
 
-**不是自動聽歌轉譜服務，也尚未包含通用 MuseScore 簡譜渲染引擎。** Skill 的作用是讓 agent 能依可靠規則使用它可用的工具，且對實際成果負責。試做產生器只產生原稿，不會假裝已在你的 MuseScore 完成簡譜。
+**不是自動聽歌轉譜服務，也尚未包含通用 MuseScore 簡譜渲染引擎。** Skill 的作用是讓 agent 能依可靠規則使用它可用的工具，且對實際成果負責。
 
 ## MuseScore 起始檔
 
@@ -38,11 +38,7 @@ Keep source corrections, musical adaptations and layout-only edits separate.
 
 ## Try it
 
-```sh
-python3 scripts/tryout.py --out /tmp/harpscore-trial
-```
-
-把產生的 `original.musicxml` 在正常 MuseScore 視窗開啟，交給 agent 依 [試做任務](docs/tryout.md) 轉成簡譜並檢查。原生音符、數字覆層與渲染要互相對得上，不能只檢查 XML。
+在正常 MuseScore 視窗查看實際 Summer 參考檔，複製相符版式，依 [版式驗證流程](docs/tryout.md) 用新曲的代表段落檢查，再完成全曲。原生音符、數字覆層與實際 MuseScore 畫面要互相對得上，不能只檢查 XML；不再生成原創四小節練習。
 
 ## Profiles and history
 
