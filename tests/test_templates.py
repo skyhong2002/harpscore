@@ -45,6 +45,17 @@ class TemplatesTest(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):cls.temp.cleanup()
 
+    def test_musescore_locations_always_use_explicit_denominators(self):
+        # Fraction('-2') is valid Python but MuseScore reads that bare XML
+        # integer as -2/1024. Audit serialized output, not our Python reader.
+        for record in self.records:
+            root=read_score(self.dest/record['file'])
+            for node in root.findall('.//location/fractions'):
+                self.assertRegex(node.text or '',r'^-?\d+/[1-9]\d*$')
+        from entertainer_notation import loc
+        for beats,expected in [(4,'1/1'),(-8,'-2/1'),(0,'0/1'),(F(1,2),'1/8')]:
+            self.assertEqual(loc(beats).findtext('fractions'),expected)
+
     def test_eight_native_examples_have_public_domain_theme(self):
         self.assertEqual(len(self.records),9)
         for record in self.records:

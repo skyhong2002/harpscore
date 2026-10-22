@@ -15,7 +15,13 @@ VALUES={'whole':F(4),'half':F(2),'quarter':F(1),'eighth':F(1,2),'16th':F(1,4)}
 
 def el(tag,value=None,**attrs):
     n=E.Element(tag,{k:str(v) for k,v in attrs.items()})
-    if value is not None:n.text=str(value)
+    if value is not None:
+        # MuseScore's location reader treats a bare integer as ticks/1024,
+        # not whole-note units. Keep /1 for integral forward/backward moves.
+        if tag=='fractions':
+            fraction=F(value)
+            n.text=f'{fraction.numerator}/{fraction.denominator}'
+        else:n.text=str(value)
     return n
 
 def put(p,tag,value=None,**attrs):
