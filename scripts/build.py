@@ -1,5 +1,6 @@
 """Build portable static handbook and agent packages from canonical Markdown."""
 from pathlib import Path
+import hashlib
 import html
 import json
 import re
@@ -89,6 +90,16 @@ def build():
             if p.is_file() and p.name!='.DS_Store' and '__pycache__' not in p.parts and not p.name.endswith(('.pyc','.autosave','~')):
                 public[str(p.relative_to(ROOT))]=p.read_bytes()
     archive(dl/'source.zip',public)
+    # Changed assets need new URLs so returning visitors cannot mix releases.
+    def version_asset(match):
+        attribute, name = match.groups()
+        path = target/name
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()[:12]
+        versioned = path.with_name(f'{path.stem}.{digest}{path.suffix}')
+        shutil.copyfile(path, versioned)
+        return f'{attribute}="{versioned.name}"'
+    index = target/'index.html'
+    index.write_text(re.sub(r'(src|href)="([^"/]+\.(?:js|css))"', version_asset, index.read_text()))
     print(f'Built {len(records)} chapters and 4 reproducible download packages in {target}')
 
 if __name__=='__main__': build()
