@@ -89,5 +89,13 @@
       "low": "E1",
       "high": "G4"
     }
+  },
+  "numbered_octave_doubling": {
+    "anchor": "lower-performed-pitch",
+    "symbol": "⑧",
+    "range": "dashed-with-end-hooks",
+    "placement": "above-own-numerals",
+    "meaning": "add-upper-octave",
+    "preserve_performed_pitches": true
   }
 }
