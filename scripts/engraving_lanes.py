@@ -231,6 +231,32 @@ def local_mark_proposals(items, gap=.25):
     return plans
 
 
+def symbol_slot_above(mark, anchor, items, gap=.25):
+    """Propose an explicit symbol's closest clear slot above its own numeral.
+
+    Caller must identify the musical anchor; this does not infer attachment.
+    Unlike upward-only evacuation, the proposal can move a misplaced symbol
+    down into a free pocket below a tuplet bracket. All same-page ink is checked,
+    including adjacent staves/systems. No fallback relocation is guessed.
+    """
+    if (mark['page'], mark['system'], mark['track']) != (
+            anchor['page'], anchor['system'], anchor['track']):
+        raise ValueError('Symbol and anchor must share page, system and track')
+    if anchor['kind'] != 'numeral':
+        raise ValueError('Explicit numeral anchor required')
+    box = mark['box'][:]
+    box[1] = anchor['box'][1] - gap - box[3]
+    # Do not treat a remote digit as the attachment for this symbol.
+    if not xoverlap(box, anchor['box']):
+        raise ValueError('Symbol must horizontally overlap its anchor')
+    blockers = [e['id'] for e in items if e['page'] == mark['page']
+                and e['id'] not in (mark['id'], anchor['id'])
+                and overlap(box, e['box'], gap)]
+    return dict(id=mark['id'], anchor=anchor['id'], box=box,
+                dy=box[1]-mark['box'][1], blockers=blockers,
+                status='blocked-slot' if blockers else 'proposal-not-applied')
+
+
 def accent_label_contacts(items, horizontal_gap=.35):
     """Flag a side-by-side accent that can visually join a tuplet number.
 

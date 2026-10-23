@@ -105,6 +105,29 @@ class LaneTests(unittest.TestCase):
         self.assertEqual(len(hits), 1)
         self.assertTrue(hits[0]['cross_system'])
 
+    def test_symbol_can_move_down_into_clear_slot(self):
+        mark = item('ornament', 'articulation', [1, 2, 1, .5])
+        digit = item('digit', 'numeral', [1, 5, 1, 1])
+        bracket = item('bracket', 'tuplet-line', [0, 3, 4, .3])
+        plan = m.symbol_slot_above(mark, digit, [mark, digit, bracket])
+        self.assertEqual(plan['status'], 'proposal-not-applied')
+        self.assertGreater(plan['dy'], 0)
+
+    def test_symbol_slot_checks_neighbor_staff_and_system(self):
+        mark = item('ornament', 'articulation', [1, 2, 1, .5], 4)
+        digit = item('digit', 'numeral', [1, 5, 1, 1], 4)
+        neighbor = item('neighbor-dot', 'text', [1, 4.2, .5, .4])
+        neighbor['system'] = 1
+        plan = m.symbol_slot_above(mark, digit, [mark, digit, neighbor])
+        self.assertEqual(plan['status'], 'blocked-slot')
+        self.assertEqual(plan['blockers'], ['neighbor-dot'])
+
+    def test_symbol_slot_rejects_unrelated_anchor(self):
+        mark = item('ornament', 'articulation', [1, 2, 1, .5])
+        digit = item('digit', 'numeral', [9, 5, 1, 1])
+        with self.assertRaises(ValueError):
+            m.symbol_slot_above(mark, digit, [mark, digit])
+
     def test_empty_renderer_cannot_produce_pass(self):
         with self.assertRaises(ValueError):
             m.analyze({'rows': []})
