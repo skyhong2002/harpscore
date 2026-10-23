@@ -12,6 +12,21 @@ def item(i, kind, box, track=0, page=0):
 
 
 class LaneTests(unittest.TestCase):
+    def test_system_spacing_uses_ink_and_does_not_compare_pages(self):
+        data = []
+        for page, tops in ((0, (0, 30, 42)), (1, (0, 70))):
+            for system, top in enumerate(tops):
+                e = item(str((page, system)), 'numeral', [0, top, 2, 10], page=page)
+                e['system'] = system
+                data.append(e)
+        guide = item('guide', 'octave', [0, 26, 8, 1])
+        guide['system'] = 1
+        data.append(guide)
+        gaps = m.system_spacing(data)
+        self.assertEqual([g['gap'] for g in gaps], [16, 2, 60])
+        self.assertEqual([g['status'] for g in gaps],
+                         ['review-excess-gap', 'measured', 'measured'])
+
     def test_page_isolation_and_neighbor_staff(self):
         a = item('a', 'articulation', [0, 0, 1, 1])
         b = item('b', 'numeral', [0, 0, 1, 1], track=4)

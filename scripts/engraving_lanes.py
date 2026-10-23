@@ -231,6 +231,36 @@ def local_mark_proposals(items, gap=.25):
     return plans
 
 
+def system_spacing(items, minimum_excess=4, ratio=2):
+    """Report uneven inter-system ink gaps on each page, never auto-compress.
+
+    Bounds include all measured marks, not staff origins. At least three systems
+    are needed for a within-page comparison. A large gap may be intentional.
+    """
+    bounds = {}
+    for e in items:
+        key = (e['page'], e['system'])
+        top, bottom = e['box'][1], e['box'][1] + e['box'][3]
+        old = bounds.get(key, (top, bottom))
+        bounds[key] = (min(top, old[0]), max(bottom, old[1]))
+    pages = defaultdict(list)
+    for (page, system), (top, bottom) in bounds.items():
+        pages[page].append((top, bottom, system))
+    result = []
+    for page, systems in sorted(pages.items()):
+        systems.sort()
+        gaps = [dict(after_system=a[2], before_system=b[2], gap=b[0]-a[1])
+                for a, b in zip(systems, systems[1:])]
+        positive = [g['gap'] for g in gaps if g['gap'] > 0]
+        reference = min(positive) if len(positive) >= 2 else None
+        for g in gaps:
+            excessive = (reference is not None and g['gap'] > reference * ratio
+                         and g['gap'] - reference > minimum_excess)
+            result.append(dict(page=page, **g, reference_gap=reference,
+                               status='review-excess-gap' if excessive else 'measured'))
+    return result
+
+
 def analyze(data):
     if data.get('error'):
         raise ValueError('Renderer inspection failed: '+str(data['error']))
@@ -241,6 +271,7 @@ def analyze(data):
         raise ValueError('Renderer inspection contains no measurable elements')
     return {'proof_boundary': 'Geometry candidates and lane proposals only; no score edits or visual acceptance.',
             'elements': items, 'candidates': candidates(items),
+            'system_spacing': system_spacing(items),
             'tuplet_proposals': tuplet_proposals(items),
             'local_mark_proposals': local_mark_proposals(items),
             'proposals': lane_proposals(items)}
