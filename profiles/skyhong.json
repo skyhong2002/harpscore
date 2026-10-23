@@ -75,7 +75,7 @@
     "vertical_alignment": "pair-centre-on-single-note-centre",
     "expand_staff_spacing": false,
     "staff_octaves": "write-both-notes",
-    "numbered_octaves": "single-numeral-with-explicit-octave-doubling-mark",
+    "numbered_octaves": "single-numeral-with-circled-8-dashed-range",
     "preserve_both_performed_pitches": true,
     "non_octave_connections": "separate-upper-and-lower-arcs-close-to-digits"
   },
