@@ -4,6 +4,13 @@
   "scope": "founding user preferences; opt in, not universal",
   "arranger": "skyhong.tw",
   "beginner_level_months": 2,
+  "chromatic_clefs": {
+    "allowed": ["treble", "treble-8-below"],
+    "bass_clef": false,
+    "switch_by_register": true,
+    "preserve_sounding_pitch": true,
+    "scope": "chromatic harmonica only; not Double Bass or Jianpu octave reference"
+  },
   "duet_handoffs": "complete-musical-phrases",
   "bass": {
     "sustain_into_unnecessary_rests": true,
