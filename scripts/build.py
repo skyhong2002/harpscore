@@ -75,7 +75,7 @@ def build():
     for folder in ['profiles','examples','agents','templates']:
         for p in (ROOT/folder).rglob('*'):
             if p.is_file() and p.name!='.DS_Store' and '__pycache__' not in p.parts and not p.name.endswith(('.pyc','.autosave','~')):kit[str(p.relative_to(ROOT))]=p.read_bytes()
-    for n in ['LICENSE','scripts/create_templates.py','scripts/entertainer.py','scripts/entertainer_notation.py','scripts/chromatic.py']:kit[n]=(ROOT/n).read_bytes()
+    for n in ['LICENSE','scripts/create_templates.py','scripts/entertainer.py','scripts/entertainer_notation.py','scripts/chromatic.py','scripts/engraving_lanes.py']:kit[n]=(ROOT/n).read_bytes()
     skill={'harpscore/'+n:data for n,data in kit.items()}
     archive(dl/'harpscore-skill.zip',skill)
     archive(dl/'agent-kit.zip',kit)

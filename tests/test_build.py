@@ -64,6 +64,7 @@ class BuildTests(unittest.TestCase):
         with zipfile.ZipFile(ROOT/'dist/downloads/harpscore-skill.zip') as z:
             for name in re.findall(r'`((?:docs|profiles|scripts)/[\w./-]+\.(?:md|json|py))`',z.read('harpscore/SKILL.md').decode()):
                 self.assertIn('harpscore/'+name,z.namelist())
+            self.assertIn('harpscore/scripts/engraving_lanes.py',z.namelist())
             self.assertNotIn('harpscore/scripts/tryout.py',z.namelist())
         self.assertFalse((ROOT/'dist/downloads/harpscore-trial.zip').exists())
 

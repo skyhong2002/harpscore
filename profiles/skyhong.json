@@ -97,5 +97,7 @@
     "placement": "above-own-numerals",
     "meaning": "add-upper-octave",
     "preserve_performed_pitches": true
-  }
+  },
+  "numbered_transposing_ottava_visible": false,
+  "measure_numbers": "system-start-only"
 }
