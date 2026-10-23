@@ -231,6 +231,29 @@ def local_mark_proposals(items, gap=.25):
     return plans
 
 
+def accent_label_contacts(items, horizontal_gap=.35):
+    """Flag a side-by-side accent that can visually join a tuplet number.
+
+    Use a wider horizontal threshold only for this pair, not for every dot,
+    curve and guide in the score. Vertically separated marks are excluded.
+    """
+    groups = defaultdict(list)
+    for e in items:
+        if e['kind'] in ('articulation', 'tuplet-label'):
+            groups[e['page'], e['system'], e['track']].append(e)
+    contacts = []
+    for group in groups.values():
+        for accent in (e for e in group if e['kind'] == 'articulation'):
+            for label in (e for e in group if e['kind'] == 'tuplet-label'):
+                a, b = accent['box'], label['box']
+                gap = max(a[0], b[0]) - min(a[0]+a[2], b[0]+b[2])
+                if 0 <= gap < horizontal_gap and min(a[1]+a[3], b[1]+b[3]) > max(a[1], b[1]):
+                    contacts.append(dict(a=accent['id'], b=label['id'], gap=gap,
+                                         page=accent['page'], system=accent['system'],
+                                         status='needs-visual-review'))
+    return contacts
+
+
 def system_spacing(items, minimum_excess=4, ratio=2):
     """Report uneven inter-system ink gaps on each page, never auto-compress.
 
@@ -272,6 +295,7 @@ def analyze(data):
     return {'proof_boundary': 'Geometry candidates and lane proposals only; no score edits or visual acceptance.',
             'elements': items, 'candidates': candidates(items),
             'system_spacing': system_spacing(items),
+            'accent_label_contacts': accent_label_contacts(items),
             'tuplet_proposals': tuplet_proposals(items),
             'local_mark_proposals': local_mark_proposals(items),
             'proposals': lane_proposals(items)}

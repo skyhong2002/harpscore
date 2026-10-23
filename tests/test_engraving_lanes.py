@@ -12,6 +12,17 @@ def item(i, kind, box, track=0, page=0):
 
 
 class LaneTests(unittest.TestCase):
+    def test_close_accent_label_is_detected_without_expanding_all_boxes(self):
+        label = item('label', 'tuplet-label', [0, 0, 1, 1])
+        accent = item('accent', 'articulation', [1.3, .5, .8, .4])
+        self.assertFalse(m.candidates([label, accent]))
+        self.assertEqual(len(m.accent_label_contacts([label, accent])), 1)
+        accent['box'][1] = -1
+        self.assertFalse(m.accent_label_contacts([label, accent]))
+        accent['box'][1] = .5
+        accent['track'] = 4
+        self.assertFalse(m.accent_label_contacts([label, accent]))
+
     def test_system_spacing_uses_ink_and_does_not_compare_pages(self):
         data = []
         for page, tops in ((0, (0, 30, 42)), (1, (0, 70))):
