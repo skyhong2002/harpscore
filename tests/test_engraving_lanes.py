@@ -32,6 +32,33 @@ class LaneTests(unittest.TestCase):
         self.assertGreater(plan['extra_previous_staff_gap'], 0)
         self.assertLess(plan['layers'][-1]['dy'], plan['layers'][0]['dy'])
 
+    def test_nested_tuplet_labels_clear_both_brackets(self):
+        data = [item('outer', 'tuplet-line', [0, 3, 12, .4]),
+                item('outer-label', 'tuplet-label', [3, 2, 1, 1.3]),
+                item('inner', 'tuplet-line', [6, 4, 6, .4]),
+                item('inner-label', 'tuplet-label', [8, 3, 1, 1.3])]
+        plans = {p['line']: p for p in m.tuplet_proposals(data)}
+        inner = plans['inner']; outer = plans['outer']
+        inner_top = 3+inner['label_dy']
+        self.assertLess(3.4+outer['line_dy'], inner_top)
+        self.assertLess(4.3+inner['label_dy'], 4+inner['line_dy'])
+
+    def test_local_marks_do_not_move_noncolliding_accents(self):
+        data = [item('digit', 'numeral', [0, 5, 1, 1]),
+                item('line', 'tuplet-line', [0, 4, 2, .2]),
+                item('hit', 'articulation', [0, 4, .8, .5]),
+                item('clear', 'articulation', [5, 4, .8, .5])]
+        changes = m.local_mark_proposals(data)[0]['changes']
+        self.assertEqual([c['id'] for c in changes], ['hit'])
+        self.assertLess(changes[0]['box'][1]+.5, 4)
+
+    def test_horizontal_near_contact_requires_neighbor_spacing(self):
+        data = [item('dot', 'text', [1, 4, .3, .5]),
+                item('accent', 'articulation', [.1, 4, .85, .5], 4),
+                item('digit', 'numeral', [.1, 6, 1, 1], 4)]
+        plans = m.local_mark_proposals(data)
+        self.assertGreater(plans[0]['extra_previous_staff_gap'], 0)
+
     def test_empty_renderer_cannot_produce_pass(self):
         with self.assertRaises(ValueError):
             m.analyze({'rows': []})

@@ -69,6 +69,15 @@ def elements(data):
                                tick=spanner.get('startTick'), text=text,
                                box=rectangle(segment['box']),
                                offset=[segment.get('offsetX', 0), segment.get('offsetY', 0)]))
+    for i, spanner in enumerate(data.get('spanners', [])):
+        if not spanner.get('visible', True):
+            continue
+        for j, segment in enumerate(spanner.get('segments', [])):
+            system = segment['system']
+            if system in systems:
+                result.append(dict(id=f'curve:{i}:{j}', kind='curve', track=spanner['track'],
+                                   page=systems[system], system=system,
+                                   tick=spanner.get('startTick'), box=rectangle(segment['box'])))
     return result
 
 
@@ -78,7 +87,7 @@ def candidates(items, gap=.2):
     for item in items:
         by_system[item['page'], item['system']].append(item)
     output = []
-    target = {'meter', 'tuplet-label', 'tuplet-line', 'articulation', 'octave'}
+    target = {'meter', 'tuplet-label', 'tuplet-line', 'articulation', 'octave', 'curve'}
     for group in by_system.values():
         group.sort(key=lambda e: e['box'][0])
         for i, left in enumerate(group):
@@ -93,6 +102,46 @@ def candidates(items, gap=.2):
                                    'status': 'needs-visual-review',
                                    'cross_staff': left['track']//4 != right['track']//4})
     return output
+
+
+def tuplet_proposals(items, gap=.25):
+    """Separate label ink from its bracket, then keep outer brackets above children.
+
+    Uses measured boxes from the numbered-overlay adapter. Ambiguous label/line
+    associations are omitted for manual review. Does not alter musical tuplets.
+    """
+    groups = defaultdict(list)
+    for e in items:
+        groups[e['page'], e['system'], e['track']].append(e)
+    plans = []
+    for key, group in groups.items():
+        lines = [e for e in group if e['kind'] == 'tuplet-line']
+        assigned = defaultdict(list)
+        for label in (e for e in group if e['kind'] == 'tuplet-label'):
+            b = label['box']; centre = b[0]+b[2]/2
+            options = sorted((abs(b[1]+b[3]-e['box'][1]), e['id'], e)
+                             for e in lines if e['box'][0] <= centre <= e['box'][0]+e['box'][2])
+            if not options or (len(options)>1 and abs(options[0][0]-options[1][0])<.05):
+                continue
+            assigned[options[0][1]].append(label)
+        placed = []
+        for line in sorted(lines, key=lambda e:e['box'][2]):
+            labels = assigned[line['id']]
+            if len(labels) != 1:
+                continue
+            label = labels[0]; b = line['box']; lb = label['box']
+            # A bracket can enclose a smaller bracket on the same rhythmic span.
+            children = [c for c in placed if b[0] <= c['x']+.01
+                        and b[0]+b[2] >= c['right']-.01 and b[2] > c['width']+.05]
+            line_dy = min([0]+[c['top']-gap-(b[1]+b[3]) for c in children])
+            label_dy = min(line_dy, b[1]+line_dy-gap-(lb[1]+lb[3]))
+            placed.append(dict(x=b[0], right=b[0]+b[2], width=b[2], top=lb[1]+label_dy))
+            if line_dy < -.001 or label_dy < -.001:
+                plans.append(dict(page=key[0], system=key[1], track=key[2],
+                                  line=line['id'], label=label['id'],
+                                  line_dy=line_dy, label_dy=label_dy,
+                                  status='proposal-not-applied'))
+    return plans
 
 
 def lane_proposals(items, gap=.35):
@@ -138,6 +187,45 @@ def lane_proposals(items, gap=.35):
     return proposals
 
 
+def local_mark_proposals(items, gap=.25):
+    """Move only colliding marks, using horizontal overlap and neighboring staves.
+
+    Small/low articulations settle before higher articulations. Octave guides
+    then clear the settled marks. Reports spacer needs rather than applying them.
+    """
+    groups = defaultdict(list)
+    for e in items:
+        groups[e['page'], e['system'], e['track']//4].append(e)
+    plans = []
+    for key, group in groups.items():
+        obstacles = [e['box'][:] for e in group if e['kind'] in
+                     ('numeral', 'text', 'tuplet-label', 'tuplet-line', 'curve')]
+        changes = []
+        for kind in ('articulation', 'octave', 'meter'):
+            layer = sorted((e for e in group if e['kind']==kind),
+                           key=lambda e:e['box'][1]+e['box'][3], reverse=True)
+            for e in layer:
+                b = e['box'][:]; original = b[1]
+                for _ in range(len(obstacles)+1):
+                    hits = [o for o in obstacles if overlap(b,o,gap)]
+                    if not hits:break
+                    b[1] = min(o[1]-gap-b[3] for o in hits)-.00001
+                obstacles.append(b)
+                if b[1] < original-.001:
+                    changes.append(dict(id=e['id'], dy=b[1]-original, box=b))
+        previous = groups.get((key[0],key[1],key[2]-1),[])
+        # Even an unchanged guide may already be too close to the preceding staff.
+        tops = obstacles
+        extra = max([0]+[p['box'][1]+p['box'][3]+gap-b[1]
+                    for p in previous if p['kind'] in ('numeral','text')
+                    for b in tops if xoverlap(p['box'], b, gap)])
+        if changes or extra>0:
+            plans.append(dict(page=key[0], system=key[1], staff=key[2]+1,
+                              changes=changes, extra_previous_staff_gap=extra,
+                              status='proposal-not-applied'))
+    return plans
+
+
 def analyze(data):
     if data.get('error'):
         raise ValueError('Renderer inspection failed: '+str(data['error']))
@@ -147,7 +235,10 @@ def analyze(data):
     if not items:
         raise ValueError('Renderer inspection contains no measurable elements')
     return {'proof_boundary': 'Geometry candidates and lane proposals only; no score edits or visual acceptance.',
-            'elements': items, 'candidates': candidates(items), 'proposals': lane_proposals(items)}
+            'elements': items, 'candidates': candidates(items),
+            'tuplet_proposals': tuplet_proposals(items),
+            'local_mark_proposals': local_mark_proposals(items),
+            'proposals': lane_proposals(items)}
 
 
 if __name__ == '__main__':
