@@ -85,7 +85,7 @@ def candidates(items, gap=.2):
     """Broad-phase candidates, including adjacent staves, never a pass/fail oracle."""
     by_system = defaultdict(list)
     for item in items:
-        by_system[item['page'], item['system']].append(item)
+        by_system[item['page']].append(item)
     output = []
     target = {'meter', 'tuplet-label', 'tuplet-line', 'articulation', 'octave', 'curve'}
     for group in by_system.values():
@@ -100,6 +100,8 @@ def candidates(items, gap=.2):
                     output.append({'a': left['id'], 'b': right['id'],
                                    'page': left['page'], 'system': left['system'],
                                    'status': 'needs-visual-review',
+                                   'system_b': right['system'],
+                                   'cross_system': left['system'] != right['system'],
                                    'cross_staff': left['track']//4 != right['track']//4})
     return output
 
@@ -133,7 +135,10 @@ def tuplet_proposals(items, gap=.25):
             # A bracket can enclose a smaller bracket on the same rhythmic span.
             children = [c for c in placed if b[0] <= c['x']+.01
                         and b[0]+b[2] >= c['right']-.01 and b[2] > c['width']+.05]
-            line_dy = min([0]+[c['top']-gap-(b[1]+b[3]) for c in children])
+            near_text = [e['box'] for e in group if e['kind'] in ('text', 'numeral')
+                         and overlap(b, e['box'], gap)]
+            line_dy = min([0]+[c['top']-gap-(b[1]+b[3]) for c in children]
+                          +[t[1]-gap-(b[1]+b[3]) for t in near_text])
             label_dy = min(line_dy, b[1]+line_dy-gap-(lb[1]+lb[3]))
             placed.append(dict(x=b[0], right=b[0]+b[2], width=b[2], top=lb[1]+label_dy))
             if line_dy < -.001 or label_dy < -.001:
@@ -217,7 +222,7 @@ def local_mark_proposals(items, gap=.25):
         # Even an unchanged guide may already be too close to the preceding staff.
         tops = obstacles
         extra = max([0]+[p['box'][1]+p['box'][3]+gap-b[1]
-                    for p in previous if p['kind'] in ('numeral','text')
+                    for p in previous
                     for b in tops if xoverlap(p['box'], b, gap)])
         if changes or extra>0:
             plans.append(dict(page=key[0], system=key[1], staff=key[2]+1,

@@ -59,6 +59,26 @@ class LaneTests(unittest.TestCase):
         plans = m.local_mark_proposals(data)
         self.assertGreater(plans[0]['extra_previous_staff_gap'], 0)
 
+    def test_accidental_ink_clears_tuplet_bracket(self):
+        data = [item('line', 'tuplet-line', [0, 3, 5, .4]),
+                item('label', 'tuplet-label', [2, 1, 1, 1.3]),
+                item('flat', 'text', [1, 3.1, .7, 1.4])]
+        plan = m.tuplet_proposals(data)[0]
+        self.assertLess(3.4+plan['line_dy'], 3.1)
+
+    def test_previous_hairpin_reserves_space(self):
+        data = [item('hairpin', 'other-line', [0, 5, 10, 1]),
+                item('digit', 'numeral', [0, 6, 1, 1], 4)]
+        self.assertGreater(m.local_mark_proposals(data)[0]['extra_previous_staff_gap'], 0)
+
+    def test_candidates_include_adjacent_systems_on_same_page(self):
+        a = item('mark', 'articulation', [0, 5, 1, 1])
+        b = item('next-digit', 'numeral', [0, 5.5, 1, 1])
+        b['system'] = 1
+        hits = m.candidates([a,b])
+        self.assertEqual(len(hits), 1)
+        self.assertTrue(hits[0]['cross_system'])
+
     def test_empty_renderer_cannot_produce_pass(self):
         with self.assertRaises(ValueError):
             m.analyze({'rows': []})
