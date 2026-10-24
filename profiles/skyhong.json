@@ -5,7 +5,10 @@
   "arranger": "skyhong.tw",
   "beginner_level_months": 2,
   "chromatic_clefs": {
-    "allowed": ["treble", "treble-8-below"],
+    "allowed": [
+      "treble",
+      "treble-8-below"
+    ],
     "bass_clef": false,
     "switch_by_register": true,
     "preserve_sounding_pitch": true,
@@ -77,7 +80,7 @@
     "staff_octaves": "write-both-notes",
     "numbered_octaves": "single-numeral-with-circled-8-dashed-range",
     "preserve_both_performed_pitches": true,
-    "non_octave_connections": "separate-upper-and-lower-arcs-close-to-digits"
+    "non_octave_connections": "separate-shallow-upper-arcs-close-to-digits"
   },
   "instrument_ranges": {
     "scope": "user-confirmed sounding ranges; not all harmonicas",
@@ -99,5 +102,17 @@
     "preserve_performed_pitches": true
   },
   "numbered_transposing_ottava_visible": false,
-  "measure_numbers": "system-start-only"
+  "measure_numbers": "system-start-only",
+  "connections": {
+    "placement": "above-own-numerals",
+    "shape": "shallow-arch-centre-above-both-ends",
+    "reject": [
+      "bowl-shaped",
+      "inflected",
+      "excessive-rise",
+      "contact-with-numerals-or-marks"
+    ],
+    "preserve_native_endpoints_and_playback": true,
+    "scope": "founding user preference; supersedes earlier upper/lower split"
+  }
 }
