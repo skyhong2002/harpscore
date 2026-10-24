@@ -19,6 +19,8 @@ class BuildTests(unittest.TestCase):
         with zipfile.ZipFile(ROOT/'dist/downloads/agent-kit.zip') as z:
             for name,_ in build.DOCS:
                 self.assertEqual(z.read(f'docs/{name}.md'),(ROOT/f'docs/{name}.md').read_bytes())
+            for name in ['scripts/articulation_centers.py','scripts/connection_review.py']:
+                self.assertEqual(z.read(name),(ROOT/name).read_bytes())
         with zipfile.ZipFile(ROOT/'dist/downloads/source.zip') as z:
             for n in z.namelist():
                 self.assertFalse(n.startswith(('.git/','.openai/','dist/')))
