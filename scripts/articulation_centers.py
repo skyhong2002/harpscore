@@ -23,7 +23,15 @@ def bounds(box):
 
 def measure(data, articulation_type, minimum_size=9, tolerance=.02):
     pairs, skipped = [], []
+    # MuseScore can emit several segment types at one musical tick. Text and
+    # its chord need not be in the same segment row. Join only exact musical
+    # locations; never substitute text from a neighbouring onset or staff.
+    annotations = {}
     for row in data["rows"]:
+        location = tuple(row[k] for k in ("page", "system", "measure", "tick"))
+        annotations.setdefault(location, []).extend(row["annotations"])
+    for row in data["rows"]:
+        location = tuple(row[k] for k in ("page", "system", "measure", "tick"))
         for event in row["events"]:
             articulations = [a for a in event.get("articulations", [])
                              if a.get("visible") and a["box"]["type"] == articulation_type]
@@ -31,7 +39,7 @@ def measure(data, articulation_type, minimum_size=9, tolerance=.02):
                 continue
             key = dict(page=row["page"] + 1, system=row["system"],
                        measure=row["measure"] + 1, tick=row["tick"], track=event["track"])
-            digits = [a for a in row["annotations"]
+            digits = [a for a in annotations[location]
                       if a["track"] == event["track"] and a.get("size", 0) >= minimum_size
                       and plain(a["text"]) in tuple("1234567xX")]
             # A non-octave double stop has a shared horizontal centre. Multiple
