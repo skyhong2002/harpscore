@@ -70,7 +70,6 @@ def build_templates(destination,bars=None,forms=None):
   if not original:
    record.update(id=suffix,ensemble=record['form'].lower().replace('_','-'),label=record['form'])
  piece['editions']=records
- piece['version']=(ROOT/'VERSION').read_text().strip()
  (destination/'piece.json').write_text(json.dumps(piece,ensure_ascii=False,indent=2)+'\n')
  return records
 if __name__=='__main__':

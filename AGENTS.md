@@ -16,4 +16,4 @@ The current naming is HarpScore (display), harpscore (repository and skill). Kee
 
 Preserve unrelated works and unsaved changes. Discover local MuseScore capabilities before exporting; do not repeatedly spawn a known crashing converter or suppress OS crash reports. Export pauses apply to their task, not every user forever.
 
-Public source uses MIT. Do not commit credentials, private paths, unrelated chats or third-party editable scores/audio. User-authorized demo images in [site/public/images/summer/](https://skyhong2002.github.io/harpscore/images/summer/) are a specific presentation exception with separate attribution/license scope. They do not grant permission to distribute the underlying music as MIT.
+Public source uses MIT. Do not commit credentials, private paths, unrelated chats or third-party editable scores/audio. User-authorized demo images in the website's Summer images (see their [NOTICE](https://skyhong2002.github.io/harpscore/images/summer/NOTICE.md)) are a specific presentation exception with separate attribution/license scope. They do not grant permission to distribute the underlying music as MIT.

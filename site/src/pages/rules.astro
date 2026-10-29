@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import { rules } from '../lib/rules.mjs';
-import { docHref } from '../lib/site';
+import { docHref, handbook } from '../lib/site';
 
 const titles = Object.fromEntries((await getCollection('docs')).map((doc) => [doc.id, doc.data.title]));
 const escape = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
@@ -12,7 +12,10 @@ const inline = (s: string) =>
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
 
-const groups = Object.entries(Object.groupBy(rules(), (rule) => rule.doc));
+// Same order as the handbook, so core rules come before the decision ledger.
+const order = (await handbook()).flatMap((section) => section.docs.map((doc) => doc.id));
+const byDoc = Object.groupBy(rules(), (rule) => rule.doc);
+const groups = order.filter((doc) => byDoc[doc]).map((doc) => [doc, byDoc[doc]] as const);
 const total = rules().length;
 ---
 <Base title="規則索引" description="依編號或關鍵字查找 HarpScore 的所有規則與決策。" current="rules">

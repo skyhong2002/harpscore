@@ -17,7 +17,6 @@
   },
   "layout": "../../layouts/summer",
   "verification": "verification.json",
-  "version": "../../VERSION",
   "editions": [
     {
       "file": "scores/HarpScore_Solo_Piano.mscz",

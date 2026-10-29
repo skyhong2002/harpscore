@@ -38,16 +38,17 @@ export default function rehypeHarpScore({ base, rules }) {
     }
 
     function anchorDefinition(node) {
-      const first = node.children[0];
-      if (first?.type === 'element' && first.tagName === 'p') return anchorDefinition(first);
+      // Loose list items wrap their text in <p>; the anchor still belongs on the <li>.
+      const holder = node.tagName === 'li' && node.children[0]?.tagName === 'p' ? node.children[0] : node;
+      const first = holder.children[0];
       if (first?.type !== 'text') return false;
-      const match = first.value.match(/^([GWAJVD]\d{2}[a-z]?) · /);
+      const match = first.value.match(/^([GWAJVD]\d{2,3}[a-z]?) · /);
       if (!match || !rules[match[1]]) return false;
       const id = match[1];
       node.properties.id = id;
       node.properties.className = [...(node.properties.className ?? []), 'rule'];
       first.value = first.value.slice(match[0].length);
-      node.children.unshift(
+      holder.children.unshift(
         element('a', { className: ['rule-id'], href: `#${id}`, ariaLabel: `規則 ${id} 的連結` }, [text(id)]),
         text(' '),
       );

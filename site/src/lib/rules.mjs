@@ -1,4 +1,4 @@
-// Rule IDs (G/W/A/J/V/D + two digits + optional letter) are the shared
+// Rule IDs (G/W/A/J/V/D + two or three digits + optional letter) are the shared
 // vocabulary between docs, profiles and the decision ledger. This module is
 // plain Node so both astro.config and pages can read it.
 import { readFileSync, readdirSync, statSync } from 'node:fs';
@@ -9,9 +9,9 @@ import { join, relative, resolve, sep } from 'node:path';
 export const ROOT = resolve(process.cwd(), '..');
 export const DOCS = join(ROOT, 'docs');
 
-export const RULE_ID = /\b([GWAJVD]\d{2}[a-z]?)\b/g;
+export const RULE_ID = /\b([GWAJVD]\d{2,3}[a-z]?)\b/g;
 // A definition is a paragraph or list item that opens with "ID · ".
-const DEFINITION = /^(?:- )?([GWAJVD]\d{2}[a-z]?) · (.*)$/;
+const DEFINITION = /^(?:- )?([GWAJVD]\d{2,3}[a-z]?) · (.*)$/;
 
 function markdownFiles(dir) {
   return readdirSync(dir).flatMap((name) => {

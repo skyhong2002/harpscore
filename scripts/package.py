@@ -100,7 +100,7 @@ def build(out=None):
             name: data for name, data in kit.items()
             if name == "LICENSE" or name.startswith("layouts/") or
             (name.startswith("pieces/") and (Path(name).parts[2] in {"scores", "events"} or
-                                              Path(name).parts[2:] in [("piece.json",), ("README.md",)]))},
+                                              Path(name).parts[2:] in [("piece.json",), ("README.md",), ("verification.json",)]))},
         "source.zip": source_files(target),
     }
     owned = set(generated) | {"downloads/" + name for name in downloads}
