@@ -1,0 +1,95 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { REPO, docHref, handbook, sectionOf, SECTIONS } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const docs = await getCollection('docs');
+  return docs.map((doc) => ({ params: { slug: doc.id }, props: { doc } }));
+}
+
+const { doc } = Astro.props;
+const { Content, headings } = await render(doc);
+const sections = await handbook();
+const flat = sections.flatMap((section) => section.docs);
+const index = flat.findIndex((entry) => entry.id === doc.id);
+const previous = flat[index - 1];
+const next = flat[index + 1];
+const section = SECTIONS.find((s) => s.id === sectionOf(doc));
+const toc = headings.filter((h) => h.depth === 2);
+---
+<Base title={doc.data.title} description={doc.data.summary} current="docs">
+  <div class="wrap doc-layout">
+    <aside class="doc-nav" aria-label="手冊章節">
+      {sections.map((s) => (
+        <section>
+          <h2>{s.label}</h2>
+          <ul>
+            {s.docs.map((entry) => (
+              <li><a href={docHref(entry)} aria-current={entry.id === doc.id ? 'page' : undefined}>{entry.data.title}</a></li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </aside>
+
+    <article>
+      <header class="doc-head">
+        <p class="eyebrow">{section?.label}</p>
+        <h1>{doc.data.title}</h1>
+        {doc.data.summary && <p class="lead">{doc.data.summary}</p>}
+      </header>
+      <div class="prose">
+        <Content />
+      </div>
+      <footer class="doc-foot">
+        <nav class="pager" aria-label="上一章與下一章">
+          {previous ? <a href={docHref(previous)}><small>上一章</small>{previous.data.title}</a> : <span />}
+          {next && <a class="next" href={docHref(next)}><small>下一章</small>{next.data.title}</a>}
+        </nav>
+        <p class="muted">
+          原始檔：<a href={`${REPO}/blob/main/docs/${doc.id}.md`}><code>docs/{doc.id}.md</code></a>
+        </p>
+      </footer>
+    </article>
+
+    {toc.length > 1 && (
+      <aside class="toc" aria-label="本章段落">
+        <p class="eyebrow">本章</p>
+        <ul>{toc.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}</ul>
+      </aside>
+    )}
+  </div>
+</Base>
+
+<style>
+  .doc-layout {
+    display: grid;
+    grid-template-columns: 14rem minmax(0, 1fr) 12rem;
+    gap: 3rem;
+    padding-top: 2.5rem;
+    align-items: start;
+  }
+  .doc-nav, .toc { position: sticky; top: 5rem; max-height: calc(100vh - 6rem); overflow-y: auto; font-size: 0.9rem; }
+  .doc-nav h2 { font: 600 0.75rem var(--sans); letter-spacing: 0.12em; color: var(--faint); margin: 1.4rem 0 0.4rem; }
+  .doc-nav section:first-child h2 { margin-top: 0; }
+  .doc-nav ul, .toc ul { list-style: none; margin: 0; padding: 0; }
+  .doc-nav a, .toc a { display: block; color: var(--muted); text-decoration: none; padding: 0.22rem 0.6rem; border-left: 2px solid transparent; line-height: 1.5; }
+  .doc-nav a:hover, .toc a:hover { color: var(--ink); }
+  .doc-nav a[aria-current='page'] { color: var(--accent-ink); border-left-color: var(--accent); font-weight: 600; }
+  .toc { border-left: 1px solid var(--line); padding-left: 0.4rem; }
+  .doc-head { margin-bottom: 2rem; }
+  .doc-foot { margin-top: 4rem; border-top: 1px solid var(--line); padding-top: 1.5rem; max-width: 46rem; }
+  .pager { display: flex; justify-content: space-between; gap: 1rem; }
+  .pager a { display: flex; flex-direction: column; text-decoration: none; font-weight: 600; }
+  .pager .next { text-align: right; margin-left: auto; }
+  .pager small { color: var(--faint); font-weight: 400; }
+  @media (max-width: 1100px) {
+    .doc-layout { grid-template-columns: 13rem minmax(0, 1fr); }
+    .toc { display: none; }
+  }
+  @media (max-width: 760px) {
+    .doc-layout { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+    .doc-nav { position: static; max-height: none; order: 2; border-top: 1px solid var(--line); padding-top: 1.5rem; }
+  }
+</style>

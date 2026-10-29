@@ -1,0 +1,138 @@
+---
+import Base from '../layouts/Base.astro';
+import { ENSEMBLES, LEVELS } from '../lib/brief.js';
+import { VERSION, url } from '../lib/site';
+---
+<Base title="需求產生器" description="整理新曲的編制、程度與交付方式，產生給 agent 的協作指令。" current="brief">
+  <div class="wrap brief-layout">
+    <header class="page-head">
+      <p class="eyebrow">Start a new piece</p>
+      <h1>下一首，從這裡開始</h1>
+      <p class="lead">填入參考來源、編制和程度，把產生的指令連同 skill 一起交給你的 agent。全部在瀏覽器內完成，不會上傳任何音檔或樂譜。</p>
+      <p class="muted note">
+        HarpScore 不會自動聽歌轉譜。實際編曲由 agent 用它手邊的 MuseScore 工具完成，規則和驗收方式寫在<a href={url('docs/')}>手冊</a>裡。
+      </p>
+    </header>
+
+    <form id="brief-form" class="card" data-version={VERSION}>
+      <label>曲名<input name="title" required placeholder="例如：我的下一首演出曲" /></label>
+      <label>參考音源／原譜<input name="source" required placeholder="連結，或你會提供給 agent 的檔案名稱" /></label>
+      <div class="two">
+        <label>演出編制
+          <select name="ensemble">
+            {Object.entries(ENSEMBLES).map(([value, label]) => <option value={value} selected={value === 'duet'}>{label}</option>)}
+          </select>
+        </label>
+        <label>演奏程度
+          <select name="level">
+            {Object.entries(LEVELS).map(([value, label]) => <option value={value}>{label}</option>)}
+          </select>
+        </label>
+      </div>
+      <fieldset>
+        <legend>交付方式</legend>
+        <label class="check"><input type="checkbox" name="staff" checked />五線譜</label>
+        <label class="check"><input type="checkbox" name="jianpu" checked />固定 C 簡譜</label>
+        <label class="check" id="piano-option"><input type="checkbox" name="piano" />另加鋼琴總譜</label>
+        <label class="check"><input type="checkbox" name="pdf" />這次需要 PDF</label>
+      </fieldset>
+      <label>其他需求<textarea name="notes" rows="3" placeholder="演出長度、調性、伴奏，或需要保留的段落"></textarea></label>
+      <div class="actions">
+        <button class="button" type="submit">產生協作指令</button>
+        <p id="message" role="status" aria-live="polite"></p>
+      </div>
+
+      <div id="result" hidden>
+        <label for="output">給 agent 的指令</label>
+        <textarea id="output" rows="14" readonly></textarea>
+        <div class="actions">
+          <button type="button" class="button" id="copy">複製指令</button>
+          <button type="button" class="button quiet" id="download">下載需求 JSON</button>
+          <a class="button quiet" href={url('downloads/agent-kit.zip')}>下載 agent 文件包</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</Base>
+
+<script>
+  import { makeBrief, prompt } from '../lib/brief.js';
+
+  const form = document.getElementById('brief-form') as HTMLFormElement;
+  const field = (name: string) => form.elements.namedItem(name) as HTMLInputElement;
+  const message = document.getElementById('message')!;
+  const output = document.getElementById('output') as HTMLTextAreaElement;
+  const pianoOption = document.getElementById('piano-option')!;
+  let current: ReturnType<typeof makeBrief> | null = null;
+
+  function syncPiano() {
+    const allowed = ['solo', 'duet'].includes(field('ensemble').value);
+    pianoOption.hidden = !allowed;
+    if (!allowed) field('piano').checked = false;
+  }
+  field('ensemble').addEventListener('change', syncPiano);
+  syncPiano();
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    try {
+      current = makeBrief({
+        title: field('title').value,
+        source: field('source').value,
+        ensemble: field('ensemble').value,
+        level: field('level').value,
+        notation: ['staff', 'jianpu'].filter((n) => field(n).checked),
+        piano: field('piano').checked,
+        pdf: field('pdf').checked,
+        notes: field('notes').value,
+      });
+      output.value = prompt(current, form.dataset.version);
+      document.getElementById('result')!.hidden = false;
+      message.textContent = '指令已產生。請連同 agent 文件包一起交給你的 agent。';
+    } catch (error) {
+      message.textContent = (error as Error).message;
+    }
+  });
+
+  document.getElementById('copy')!.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(output.value);
+      message.textContent = '已複製協作指令。';
+    } catch {
+      output.select();
+      message.textContent = '瀏覽器不允許直接複製，已選取文字，請用鍵盤快捷鍵複製。';
+    }
+  });
+
+  document.getElementById('download')!.addEventListener('click', () => {
+    if (!current) return;
+    const blob = new Blob([JSON.stringify(current, null, 2) + '\n'], { type: 'application/json' });
+    const link = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'arrangement-brief.json' });
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+  });
+</script>
+
+<style>
+  .brief-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 3rem; align-items: start; }
+  .note { font-size: 0.92rem; border-left: 3px solid var(--mark); padding-left: 1rem; }
+  form { margin-top: 3.5rem; display: grid; gap: 1.1rem; padding: 1.75rem; }
+  label { display: grid; gap: 0.35rem; font-weight: 600; font-size: 0.92rem; }
+  input, select, textarea { font: 400 1rem var(--sans); padding: 0.6rem 0.75rem; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); color: var(--ink); width: 100%; }
+  input:focus, select:focus, textarea:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+  textarea#output { font: 0.9rem/1.7 var(--mono); background: var(--paper-deep); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  fieldset { border: 1px solid var(--line); border-radius: 8px; padding: 0.75rem 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem 1.5rem; }
+  legend { font-weight: 600; font-size: 0.92rem; padding: 0 0.3rem; }
+  .check { display: flex; align-items: center; gap: 0.45rem; font-weight: 400; }
+  .check input { width: auto; }
+  .check[hidden] { display: none; }
+  #message { margin: 0; color: var(--muted); font-size: 0.92rem; }
+  #result { display: grid; gap: 0.6rem; border-top: 1px solid var(--line); padding-top: 1.2rem; }
+  #result[hidden] { display: none; }
+  @media (max-width: 860px) {
+    .brief-layout { grid-template-columns: 1fr; gap: 0; }
+    form { margin-top: 0; }
+    .two { grid-template-columns: 1fr; }
+  }
+</style>

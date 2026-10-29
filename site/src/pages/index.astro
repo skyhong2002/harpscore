@@ -1,0 +1,177 @@
+---
+import Base from '../layouts/Base.astro';
+import { REPO, VERSION, docHref, handbook, pieceFile, pieces, url } from '../lib/site';
+
+// The project section is for maintainers; it is linked from the footer instead.
+const sections = (await handbook()).filter((section) => section.id !== 'project');
+const [featured] = pieces();
+// One thumbnail per ensemble: staff and Jianpu editions share a first-page image.
+const showcase = [...new Map((featured?.editions ?? []).filter((e) => e.image).map((e) => [e.image, e])).values()];
+
+const agentPrompt = `Use HarpScore: ${REPO}
+
+Read SKILL.md and the references it routes to. Use profile skyhong only when I ask for the founding user's style. First try a representative passage in MuseScore, verify the actual engraving and playback, then complete the requested work. Keep source corrections, musical adaptations and layout-only edits separate.`;
+
+const steps = [
+  { title: '讀規則', body: 'agent 依 SKILL.md 只讀這次需要的章節：配器、簡譜、選用偏好，以及哪些舊要求已被後來的修正取代。' },
+  { title: '在 MuseScore 試做', body: '先打開實際的參考譜，沿用驗證過的版式，用新曲最密、最容易出錯的段落試排。' },
+  { title: '看實際畫面再交付', body: '對照真正的渲染畫面與播放，逐項記錄已檢查和尚未驗證的地方，不拿 XML 當成畫面證據。' },
+];
+
+const downloads = [
+  { href: 'downloads/harpscore-skill.zip', label: '可安裝的 skill', note: '解壓到 agent 的 skills 目錄' },
+  { href: 'downloads/agent-kit.zip', label: 'Agent 文件包', note: '規則、偏好、範例與工具' },
+  { href: 'downloads/harpscore-musescore-templates.zip', label: 'MuseScore 範例檔', note: '所有範例曲目的 MSCZ' },
+  { href: 'llms-full.txt', label: 'llms-full.txt', note: '整份手冊的純文字版' },
+];
+---
+<Base current={undefined}>
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow">Harmonica arranging skill for AI agents · MIT</p>
+        <h1>讓 agent 認真編口琴譜，<br />把簡譜<em>寫清楚</em>。</h1>
+        <p class="lead">
+          HarpScore 是給 AI agent 讀的編譜守則：樂句怎麼交接、簡譜怎麼排、什麼才算驗證過。
+          每次協作的修正都寫回規則，下一首就不必重講。
+        </p>
+        <div class="prompt">
+          <pre><code id="agent-prompt">{agentPrompt}</code></pre>
+          <button type="button" data-copy="agent-prompt">複製</button>
+        </div>
+        <p class="actions">
+          <a class="button" href={url('docs/')}>閱讀手冊</a>
+          <a class="button quiet" href={url('downloads/harpscore-skill.zip')}>下載 skill</a>
+          <span class="muted version">v{VERSION}</span>
+        </p>
+      </div>
+      {featured?.cover && (
+        <figure class="hero-score">
+          <div class="score"><img src={pieceFile(featured, featured.cover.image)} alt={`${featured.title}${featured.cover.caption}的實際 MuseScore 譜面`} width="1400" height="1979" /></div>
+          <figcaption>{featured.title} · {featured.cover.caption} · MuseScore 實際渲染</figcaption>
+        </figure>
+      )}
+    </div>
+  </section>
+
+  <section class="wrap band">
+    <p class="eyebrow">How it works</p>
+    <h2>不只讀懂規則，還要真的動手試排</h2>
+    <ol class="steps">
+      {steps.map((step, i) => (
+        <li><span class="step-n">{i + 1}</span><h3>{step.title}</h3><p>{step.body}</p></li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="wrap band">
+    <div class="band-head">
+      <div>
+        <p class="eyebrow">Handbook</p>
+        <h2>手冊</h2>
+      </div>
+      <a href={url('rules/')}>依編號查規則 →</a>
+    </div>
+    <div class="grid">
+      {sections.map((section) => (
+        <div class="card">
+          <h3>{section.label}</h3>
+          <p>{section.blurb}</p>
+          <ul class="chapters">
+            {section.docs.map((doc) => <li><a href={docHref(doc)}>{doc.data.title}</a></li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  {featured && (
+    <section class="wrap band">
+      <div class="band-head">
+        <div>
+          <p class="eyebrow">Example</p>
+          <h2>{featured.title}</h2>
+          {featured.summary && <p class="muted">{featured.summary}</p>}
+        </div>
+        <a href={url(`pieces/${featured.id}/`)}>下載可編輯譜 →</a>
+      </div>
+      <div class="showcase">
+        {showcase.map((edition) => (
+          <figure>
+            <a class="score" href={url(`pieces/${featured.id}/`)}><img src={pieceFile(featured, edition.image!)} alt={`${featured.title} ${edition.label}第一頁`} loading="lazy" width="1450" height="2050" /></a>
+            <figcaption>{edition.label}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="wrap band">
+    <p class="eyebrow">Downloads</p>
+    <h2>下載</h2>
+    <ul class="downloads">
+      {downloads.map((d) => (
+        <li><a href={url(d.href)}>{d.label}</a><span class="muted">{d.note}</span></li>
+      ))}
+    </ul>
+    <p class="muted">
+      歡迎回報難吹的樂句、不好讀的記譜，或分享你的配器方式。參與方式見 <a href={`${REPO}/blob/main/CONTRIBUTING.md`}>CONTRIBUTING.md</a>。
+    </p>
+  </section>
+</Base>
+
+<script>
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-copy]')) {
+    button.addEventListener('click', async () => {
+      const text = document.getElementById(button.dataset.copy!)!.textContent ?? '';
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = '已複製';
+      } catch {
+        getSelection()?.selectAllChildren(document.getElementById(button.dataset.copy!)!);
+        button.textContent = '已選取';
+      }
+      setTimeout(() => (button.textContent = '複製'), 2000);
+    });
+  }
+</script>
+
+<style>
+  .hero { border-bottom: 1px solid var(--line); background: linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 100%); overflow: hidden; }
+  .hero-inner { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 4rem; align-items: center; padding-top: 4.5rem; padding-bottom: 4.5rem; }
+  .hero h1 em { font-style: normal; background: linear-gradient(transparent 62%, color-mix(in srgb, var(--mark) 70%, transparent) 62%); }
+  .hero .prompt { margin: 1.75rem 0 1.25rem; }
+  .hero .prompt pre { font-size: 0.8rem; }
+  .version { font: 0.85rem var(--mono); }
+  .hero-score { transform: rotate(1.2deg); max-width: 30rem; justify-self: end; }
+  .hero-score .score { aspect-ratio: 1400 / 1500; }
+  .hero-score img { object-fit: cover; object-position: top; height: 100%; }
+
+  .band { padding-top: 4.5rem; }
+  .band > h2, .band-head h2 { margin-top: 0; }
+  .band-head { display: flex; justify-content: space-between; align-items: end; gap: 1rem; margin-bottom: 1.5rem; }
+  .band-head p.muted { margin: 0; }
+
+  .steps { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; }
+  .steps h3 { margin: 0.6rem 0 0.3rem; }
+  .steps p { margin: 0; color: var(--muted); }
+  .step-n { font: 700 0.9rem var(--mono); color: var(--accent); border: 1.5px solid var(--accent); border-radius: 50%; width: 2rem; height: 2rem; display: inline-grid; place-items: center; }
+
+  .chapters { list-style: none; padding: 0; margin: 0.8rem 0 0; font-size: 0.93rem; }
+  .chapters li + li { margin-top: 0.15rem; }
+
+  .showcase { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 2rem; }
+  .showcase .score { display: block; aspect-ratio: 1450 / 1250; }
+  .showcase img { object-fit: cover; object-position: top; height: 100%; }
+
+  .downloads { list-style: none; padding: 0; margin: 1rem 0 1.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; }
+  .downloads li { display: grid; gap: 0.15rem; padding: 1rem 1.2rem; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+  .downloads a { font-weight: 600; }
+  .downloads span { font-size: 0.88rem; }
+
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; padding-top: 3rem; }
+    .hero-score { justify-self: center; transform: none; }
+    .steps { grid-template-columns: 1fr; gap: 1.5rem; }
+  }
+</style>

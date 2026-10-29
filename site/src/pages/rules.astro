@@ -1,0 +1,90 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { rules } from '../lib/rules.mjs';
+import { docHref } from '../lib/site';
+
+const titles = Object.fromEntries((await getCollection('docs')).map((doc) => [doc.id, doc.data.title]));
+const escape = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+const inline = (s: string) =>
+  escape(s)
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+
+const groups = Object.entries(Object.groupBy(rules(), (rule) => rule.doc));
+const total = rules().length;
+---
+<Base title="規則索引" description="依編號或關鍵字查找 HarpScore 的所有規則與決策。" current="rules">
+  <div class="wrap">
+    <header class="page-head">
+      <p class="eyebrow">Rule index</p>
+      <h1>規則索引</h1>
+      <p class="lead">共 {total} 條。輸入編號（如 J08a）或關鍵字（如「減時線」）篩選；點編號開啟所在章節。</p>
+      <label class="filter">
+        <span class="visually-hidden">篩選規則</span>
+        <input id="filter" type="search" placeholder="J08a、Bass、減時線…" autocomplete="off" />
+        <output id="count" for="filter" aria-live="polite"></output>
+      </label>
+    </header>
+
+    {groups.map(([doc, items]) => (
+      <section class="group" data-group>
+        <h2><a href={docHref(doc)}>{titles[doc] ?? doc}</a></h2>
+        <ol>
+          {items!.map((rule) => (
+            <li data-rule data-search={`${rule.id} ${rule.text}`.toLocaleLowerCase()}>
+              <a class="id" href={`${docHref(doc)}#${rule.id}`}>{rule.id}</a>
+              <p set:html={inline(rule.text)} />
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))}
+    <p id="empty" class="muted" hidden>沒有符合的規則。</p>
+  </div>
+</Base>
+
+<script>
+  const input = document.getElementById('filter') as HTMLInputElement;
+  const count = document.getElementById('count')!;
+  const empty = document.getElementById('empty')!;
+  const items = [...document.querySelectorAll<HTMLElement>('[data-rule]')];
+  const groups = [...document.querySelectorAll<HTMLElement>('[data-group]')];
+
+  function apply() {
+    const terms = input.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
+    let shown = 0;
+    for (const item of items) {
+      const match = terms.every((t) => item.dataset.search!.includes(t));
+      item.hidden = !match;
+      if (match) shown++;
+    }
+    for (const group of groups) group.hidden = !group.querySelector('[data-rule]:not([hidden])');
+    count.textContent = terms.length ? `${shown} 條符合` : '';
+    empty.hidden = shown > 0;
+    const url = new URL(location.href);
+    terms.length ? url.searchParams.set('q', input.value.trim()) : url.searchParams.delete('q');
+    history.replaceState(null, '', url);
+  }
+
+  input.value = new URLSearchParams(location.search).get('q') ?? '';
+  input.addEventListener('input', apply);
+  apply();
+</script>
+
+<style>
+  .filter { display: flex; align-items: center; gap: 1rem; margin-top: 1.5rem; max-width: 34rem; }
+  .filter input { flex: 1; font: inherit; padding: 0.65rem 0.9rem; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+  .filter input:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+  .filter output { color: var(--muted); font-size: 0.9rem; white-space: nowrap; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .group { border-top: 1px solid var(--line); padding-top: 0.5rem; }
+  .group h2 { font-size: 1.2rem; }
+  .group h2 a { color: var(--ink); text-decoration: none; }
+  ol { list-style: none; padding: 0; margin: 0; }
+  li { display: grid; grid-template-columns: 4.2rem minmax(0, 1fr); gap: 0.8rem; padding: 0.55rem 0; border-bottom: 1px dashed var(--line); }
+  li p { margin: 0; line-height: 1.8; max-width: 52rem; overflow-wrap: anywhere; }
+  .id { font: 600 0.82rem/1.5 var(--mono); color: var(--accent-ink); background: var(--accent-soft); padding: 0.1rem 0.4rem; border-radius: 5px; text-decoration: none; text-align: center; align-self: start; margin-top: 0.25rem; }
+  .id:hover { background: var(--accent); color: #fff; }
+</style>

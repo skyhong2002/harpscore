@@ -62,9 +62,9 @@
   "jianpu_first_edition": "1.0",
   "export_policy": "record per task; local MuseScore work, PDF/audio exports and cloud delivery are independent phases",
   "references": [
-    "docs/preferences.md",
-    "docs/conversation-decisions.md",
-    "docs/musescore-adapter.md"
+    "docs/history/preferences.md",
+    "docs/history/conversation-decisions.md",
+    "docs/engraving/musescore-adapter.md"
   ],
   "double_stops": {
     "use": "selective; check instrumentation and player level",

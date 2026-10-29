@@ -9,24 +9,24 @@ An agent-readable arranging and engraving skill. Read rules, inspect the actual 
 
 ## Load only the needed references
 
-- Always: `docs/agent-contract.md`, `docs/workflow.md`, `docs/arranging.md`.
-- Jianpu: `docs/jianpu.md` and the chosen profile in `profiles/`.
-- Reusing the founding user's style: `docs/preferences.md` and `profiles/skyhong.json`.
-- Resolving an old contradictory instruction: `docs/conversation-decisions.md`. Later explicit corrections supersede earlier requests; do not average contradictory instructions.
-- Uneven or colliding adjacent Jianpu staves: read `docs/adaptive-spacing.md`; use `scripts/adaptive_staff_spacing.py` with fresh renderer geometry to expand only systems that need space.
-- MuseScore editing/export: `docs/musescore-adapter.md`. Machine-specific constraints are conditional.
-- Re-engraving or checking another edition: `docs/source-verification.md`; a transcription table is an intermediate, not independent proof of the original scan.
-- Starting a new piece: `docs/templates.md` and `templates/musescore/`. Check the verification record and copy the matching musical example, which contains the public-domain complete Entertainer arrangement using the copied Summer layouts, rather than an empty starter. See its exact verification record. Numbered overlays still require explicit synchronization after editing notes.
-- Before delivery: `docs/verification.md`.
-- First use or changed renderer/font: `docs/tryout.md`; open the actual Summer reference in MuseScore, reuse its matching layout and inspect representative passages from the requested piece. Do not create an original four-bar exercise or treat a substitute exercise as evidence for Summer's layout.
+- Always: `docs/guide/agent-contract.md`, `docs/guide/workflow.md`, `docs/rules/arranging.md`.
+- Jianpu: `docs/rules/jianpu.md` and the chosen profile in `profiles/`.
+- Reusing the founding user's style: `docs/history/preferences.md` and `profiles/skyhong.json`.
+- Resolving an old contradictory instruction: `docs/history/conversation-decisions.md`. Later explicit corrections supersede earlier requests; do not average contradictory instructions.
+- Uneven or colliding adjacent Jianpu staves: read `docs/engraving/adaptive-spacing.md`; use `tools/adaptive_staff_spacing.py` with fresh renderer geometry to expand only systems that need space.
+- MuseScore editing/export: `docs/engraving/musescore-adapter.md`. Machine-specific constraints are conditional.
+- Re-engraving or checking another edition: `docs/rules/source-verification.md`; a transcription table is an intermediate, not independent proof of the original scan.
+- Starting a new piece: `docs/guide/starting-a-piece.md` and `pieces/entertainer/scores/`. Check the verification record and copy the matching musical example, which contains the public-domain complete Entertainer arrangement using the copied Summer layouts, rather than an empty starter. See its exact verification record. Numbered overlays still require explicit synchronization after editing notes.
+- Before delivery: `docs/rules/verification.md`.
+- First use or changed renderer/font: `docs/guide/tryout.md`; open the actual Summer reference in MuseScore, reuse its matching layout and inspect representative passages from the requested piece. Do not create an original four-bar exercise or treat a substitute exercise as evidence for Summer's layout.
 
 ## Non-negotiable checks
 
 Separate source transcription, musical adaptation, notation respelling and layout. A layout-only request preserves performed pitch, onset, duration and velocity. A new musical change needs a stated musical reason or user request.
 
-Treat pickups and their arrivals as one phrase when assigning parts. A quartet's non-leading wind still needs source-aware inner lines, fills or accompaniment, not only rests. For octave/fifth/third double stops, verify the actual hole pair, common breath and slide state; record tongue blocking. Read A11–A14 in `docs/arranging.md` before using them.
+Treat pickups and their arrivals as one phrase when assigning parts. A quartet's non-leading wind still needs source-aware inner lines, fills or accompaniment, not only rests. For octave/fifth/third double stops, verify the actual hole pair, common breath and slide state; record tongue blocking. Read A11–A14 in `docs/rules/arranging.md` before using them.
 
-For non-octave numbered double stops, reduce both digits and stack symmetrically around the ordinary numeral centre, preserving staff spacing. Scale and centre their dots/accidentals too. For the selected user's numbered-only octave shorthand, show one numeral with an explicit octave-doubling mark while retaining both performed pitches and their tie chains. Staff notation keeps both written notes. Doubling differs from a transposing ottava. See J16–J21 in `docs/jianpu.md`; hidden native notes alone do not communicate the second pitch. Keep ties/slurs close to the digits, with distinct arcs for non-octave pairs according to the selected profile. The current skyhong preference puts every visible connection above the numerals as a shallow arch, centre above the ends; it supersedes the earlier upper/lower split. `up=up` alone does not prove the edited curve is arch-shaped: inspect short spans and continuations for inversion, inflection and excessive rise.
+For non-octave numbered double stops, reduce both digits and stack symmetrically around the ordinary numeral centre, preserving staff spacing. Scale and centre their dots/accidentals too. For the selected user's numbered-only octave shorthand, show one numeral with an explicit octave-doubling mark while retaining both performed pitches and their tie chains. Staff notation keeps both written notes. Doubling differs from a transposing ottava. See J16–J21 in `docs/rules/jianpu.md`; hidden native notes alone do not communicate the second pitch. Keep ties/slurs close to the digits, with distinct arcs for non-octave pairs according to the selected profile. The current skyhong preference puts every visible connection above the numerals as a shallow arch, centre above the ends; it supersedes the earlier upper/lower split. `up=up` alone does not prove the edited curve is arch-shaped: inspect short spans and continuations for inversion, inflection and excessive rise.
 
 For solo with piano, keep the wind's full melody and score the piano as a grand staff with independent voices where notes overlap. Do not reuse a bass-harp/chord-harp reduction as if it were the original piano accompaniment. A mixed numbered-wind/native-piano score must switch notation per staff, preserve every piano voice and verify the first-page meter/tempo clearance too.
 

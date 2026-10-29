@@ -10,7 +10,7 @@ import xml.etree.ElementTree as ET
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location('spacing', ROOT/'scripts/adaptive_staff_spacing.py')
+spec = importlib.util.spec_from_file_location('spacing', ROOT/'tools/adaptive_staff_spacing.py')
 m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
 
 
@@ -123,7 +123,7 @@ class SpacingTests(unittest.TestCase):
             with self.assertRaises(ValueError):m.apply_plan(src,plan,p/'new.mscz')
 
     def test_standalone_cli(self):
-        result=subprocess.run([sys.executable,str(ROOT/'scripts/adaptive_staff_spacing.py'),'--help'],capture_output=True)
+        result=subprocess.run([sys.executable,str(ROOT/'tools/adaptive_staff_spacing.py'),'--help'],capture_output=True)
         self.assertEqual(result.returncode,0,result.stderr)
 
 

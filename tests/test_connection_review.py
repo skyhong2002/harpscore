@@ -3,7 +3,7 @@ from pathlib import Path
 import unittest
 
 spec = importlib.util.spec_from_file_location(
-    'connection_review', Path(__file__).parents[1] / 'scripts/connection_review.py')
+    'connection_review', Path(__file__).parents[1] / 'tools/connection_review.py')
 m = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(m)
 

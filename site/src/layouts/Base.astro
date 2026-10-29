@@ -1,0 +1,67 @@
+---
+import '../styles/global.css';
+import { REPO, VERSION, url } from '../lib/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  current?: 'docs' | 'rules' | 'pieces' | 'brief';
+}
+
+const { title, description = '給 AI agent 的口琴編曲與簡譜 skill：規則、偏好、MuseScore 範例與驗證流程。', current } = Astro.props;
+const fullTitle = title ? `${title} · HarpScore` : 'HarpScore · 給 AI agent 的口琴編譜 skill';
+const nav = [
+  { id: 'docs', href: url('docs/'), label: '手冊' },
+  { id: 'rules', href: url('rules/'), label: '規則索引' },
+  { id: 'pieces', href: url('pieces/'), label: '範例曲目' },
+  { id: 'brief', href: url('brief/'), label: '需求產生器' },
+];
+---
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={`HarpScore ${VERSION}`} />
+    <title>{fullTitle}</title>
+    <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
+    <link rel="alternate" type="text/plain" href={url('llms.txt')} title="llms.txt" />
+  </head>
+  <body>
+    <a class="skip" href="#main">跳到主要內容</a>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href={url()} aria-label="HarpScore 首頁">
+          <svg viewBox="0 0 28 20" aria-hidden="true"><path d="M1 4h26M1 10h26M1 16h26" /></svg>
+          HarpScore
+        </a>
+        <nav aria-label="主要導覽">
+          {nav.map((item) => (
+            <a href={item.href} aria-current={item.id === current ? 'page' : undefined}>{item.label}</a>
+          ))}
+          <a href={REPO} class="external">GitHub</a>
+        </nav>
+      </div>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <div>
+          <strong>HarpScore {VERSION}</strong>
+          <p>程式與原創文件採 MIT。公領域樂曲與示例圖片的授權範圍見<a href={url('images/summer/NOTICE.md')}>來源說明</a>。獨立專案，非 MuseScore 官方網站。</p>
+        </div>
+        <ul>
+          <li><a href={url('SKILL.md')}>SKILL.md</a></li>
+          <li><a href={url('llms-full.txt')}>llms-full.txt</a></li>
+          <li><a href={url('downloads/harpscore-skill.zip')}>下載 skill</a></li>
+          <li><a href={url('downloads/source.zip')}>下載原始碼</a></li>
+          <li><a href={url('docs/maintaining/')}>維護與發布</a></li>
+          <li><a href={`${REPO}/blob/main/CONTRIBUTING.md`}>參與貢獻</a></li>
+        </ul>
+      </div>
+    </footer>
+  </body>
+</html>

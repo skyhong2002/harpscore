@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/site';
+---
+<Base title="找不到頁面">
+  <div class="wrap page-head">
+    <p class="eyebrow">404</p>
+    <h1>這一頁不在譜上</h1>
+    <p class="lead">網站在 0.4.0 重新整理過，舊連結可能已經換位置。可以從<a href={url('docs/')}>手冊</a>或<a href={url('rules/')}>規則索引</a>找起。</p>
+  </div>
+</Base>
