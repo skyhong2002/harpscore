@@ -114,5 +114,16 @@
     ],
     "preserve_native_endpoints_and_playback": true,
     "scope": "founding user preference; supersedes earlier upper/lower split"
+  },
+  "page_system_consistency": {
+    "ordinary_full_pages": "same system count within an edition",
+    "target": "choose by instrumentation and notation",
+    "bars_per_system": "vary with attack density",
+    "exceptions": [
+      "title page",
+      "incomplete final page",
+      "unusual notation requiring extra space, verified in rendering"
+    ],
+    "verification": "V21: record actual system starts and reasons for exceptions"
   }
 }

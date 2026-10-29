@@ -8,7 +8,7 @@ import shutil
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-DOCS = [('agent-contract','Agent 執行守則'),('workflow','從新曲開始'),('templates','MuseScore 起始檔'),('arranging','配器與可吹性'),('source-verification','原譜與編制核對'),('jianpu','簡譜規則'),('preferences','完整偏好'),('conversation-decisions','對話決策紀錄'),('musescore-adapter','MuseScore 實作經驗'),('tryout','Summer 版式驗證'),('verification','檢查與交付'),('project','維護與發布')]
+DOCS = [('agent-contract','Agent 執行守則'),('workflow','從新曲開始'),('templates','MuseScore 起始檔'),('arranging','配器與可吹性'),('source-verification','原譜與編制核對'),('jianpu','簡譜規則'),('preferences','完整偏好'),('conversation-decisions','對話決策紀錄'),('musescore-adapter','MuseScore 實作經驗'),('tryout','Summer 版式驗證'),('adaptive-spacing','自適應部距'),('verification','檢查與交付'),('project','維護與發布')]
 
 def inline(s):
     s = html.escape(s)
@@ -64,7 +64,7 @@ def build():
     for p in sorted((ROOT/'profiles').glob('*.json')):
         canonical[str(p.relative_to(ROOT))]=p.read_bytes()
     (target/'docs.js').write_text('window.HANDBOOK='+json.dumps(records,ensure_ascii=False)+';\n')
-    for folder in ['docs','profiles','examples','templates']:
+    for folder in ['docs','profiles','examples','templates','plugins']:
         shutil.copytree(ROOT/folder,target/folder,ignore=shutil.ignore_patterns('.DS_Store','*.autosave','*~','__pycache__','*.pyc'))
     shutil.copyfile(ROOT/'AGENTS.md',target/'AGENTS.md')
     shutil.copyfile(ROOT/'SKILL.md',target/'SKILL.md')
@@ -72,10 +72,10 @@ def build():
     (target/'llms-full.txt').write_text('\n\n'.join(f'# FILE: {n}\n'+d.decode() for n,d in canonical.items()))
     dl=target/'downloads';dl.mkdir()
     kit={**canonical}
-    for folder in ['profiles','examples','agents','templates']:
+    for folder in ['docs','profiles','examples','agents','templates','plugins']:
         for p in (ROOT/folder).rglob('*'):
             if p.is_file() and p.name!='.DS_Store' and '__pycache__' not in p.parts and not p.name.endswith(('.pyc','.autosave','~')):kit[str(p.relative_to(ROOT))]=p.read_bytes()
-    for n in ['LICENSE','scripts/create_templates.py','scripts/entertainer.py','scripts/entertainer_notation.py','scripts/chromatic.py','scripts/engraving_lanes.py','scripts/articulation_centers.py','scripts/connection_review.py']:kit[n]=(ROOT/n).read_bytes()
+    for n in ['LICENSE','scripts/create_templates.py','scripts/entertainer.py','scripts/entertainer_notation.py','scripts/chromatic.py','scripts/engraving_lanes.py','scripts/articulation_centers.py','scripts/connection_review.py','scripts/adaptive_staff_spacing.py']:kit[n]=(ROOT/n).read_bytes()
     skill={'harpscore/'+n:data for n,data in kit.items()}
     archive(dl/'harpscore-skill.zip',skill)
     archive(dl/'agent-kit.zip',kit)
@@ -85,7 +85,7 @@ def build():
     public={}
     for name in ['README.md','AGENTS.md','SKILL.md','LICENSE','CONTRIBUTING.md','.gitignore']:
         public[name]=(ROOT/name).read_bytes()
-    for name in ['docs','profiles','examples','agents','web','scripts','tests','templates','.github']:
+    for name in ['docs','profiles','examples','agents','web','scripts','tests','templates','plugins','.github']:
         for p in (ROOT/name).rglob('*'):
             if p.is_file() and p.name!='.DS_Store' and '__pycache__' not in p.parts and not p.name.endswith(('.pyc','.autosave','~')):
                 public[str(p.relative_to(ROOT))]=p.read_bytes()

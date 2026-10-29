@@ -3,6 +3,9 @@ import hashlib
 import importlib.util
 import json
 import re
+import subprocess
+import sys
+import tempfile
 import unittest
 from unittest.mock import patch
 import zipfile
@@ -19,7 +22,7 @@ class BuildTests(unittest.TestCase):
         with zipfile.ZipFile(ROOT/'dist/downloads/agent-kit.zip') as z:
             for name,_ in build.DOCS:
                 self.assertEqual(z.read(f'docs/{name}.md'),(ROOT/f'docs/{name}.md').read_bytes())
-            for name in ['scripts/articulation_centers.py','scripts/connection_review.py']:
+            for name in ['scripts/articulation_centers.py','scripts/connection_review.py','scripts/adaptive_staff_spacing.py','plugins/HarpScoreGeometry/HarpScoreGeometry.qml','docs/adaptive-spacing.md','docs/engraving-diagnostics.md']:
                 self.assertEqual(z.read(name),(ROOT/name).read_bytes())
         with zipfile.ZipFile(ROOT/'dist/downloads/source.zip') as z:
             for n in z.namelist():
@@ -35,6 +38,17 @@ class BuildTests(unittest.TestCase):
         before={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
         build.build()
         self.assertEqual(before,{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in paths})
+
+    def test_adaptive_tool_runs_from_extracted_skill(self):
+        with tempfile.TemporaryDirectory() as folder:
+            with zipfile.ZipFile(ROOT/'dist/downloads/harpscore-skill.zip') as z:
+                z.extractall(folder)
+            installed=Path(folder)/'harpscore'
+            result=subprocess.run([sys.executable,'scripts/adaptive_staff_spacing.py','plan','--help'],
+                                  cwd=installed,capture_output=True,text=True)
+            self.assertEqual(result.returncode,0,result.stderr)
+            self.assertIn('--clearance',result.stdout)
+            self.assertTrue((installed/'plugins/HarpScoreGeometry/HarpScoreGeometry.qml').is_file())
 
     def test_machine_document_is_independent_of_filesystem_order(self):
         before=(ROOT/'dist/llms-full.txt').read_bytes()

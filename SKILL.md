@@ -13,6 +13,7 @@ An agent-readable arranging and engraving skill. Read rules, inspect the actual 
 - Jianpu: `docs/jianpu.md` and the chosen profile in `profiles/`.
 - Reusing the founding user's style: `docs/preferences.md` and `profiles/skyhong.json`.
 - Resolving an old contradictory instruction: `docs/conversation-decisions.md`. Later explicit corrections supersede earlier requests; do not average contradictory instructions.
+- Uneven or colliding adjacent Jianpu staves: read `docs/adaptive-spacing.md`; use `scripts/adaptive_staff_spacing.py` with fresh renderer geometry to expand only systems that need space.
 - MuseScore editing/export: `docs/musescore-adapter.md`. Machine-specific constraints are conditional.
 - Re-engraving or checking another edition: `docs/source-verification.md`; a transcription table is an intermediate, not independent proof of the original scan.
 - Starting a new piece: `docs/templates.md` and `templates/musescore/`. Check the verification record and copy the matching musical example, which contains the public-domain complete Entertainer arrangement using the copied Summer layouts, rather than an empty starter. See its exact verification record. Numbered overlays still require explicit synchronization after editing notes.
@@ -29,13 +30,15 @@ For non-octave numbered double stops, reduce both digits and stack symmetrically
 
 For solo with piano, keep the wind's full melody and score the piano as a grand staff with independent voices where notes overlap. Do not reuse a bass-harp/chord-harp reduction as if it were the original piano accompaniment. A mixed numbered-wind/native-piano score must switch notation per staff, preserve every piano voice and verify the first-page meter/tempo clearance too.
 
-Keep phrases intact in beginner duets; do not hand off mechanically every four bars. Extend Bass notes into unnecessary tiny rests without flattening grooves such as 3+3+2. Chord carries rhythm and often offbeats; its symbols follow harmonic time, including bar starts, independently of its attacks.
+Keep phrases intact in beginner duets; do not hand off mechanically every four bars. Extend Bass notes into unnecessary tiny rests without flattening grooves such as 3+3+2. Chord carries varied rhythmic and string-ostinato roles; its symbols follow harmonic time independently of its attacks. Review full written values, audible playback and selective accent contrast under V17–V19. Keep redundant reading advice and production notes off the score (V20).
 
 Jianpu octave references alter dots, not pitch. Preserve fixed-C versus movable-do choice. Every quarter-beat underline group needs a physical gap in the actual renderer. Do not tie visibly to extension dashes. Keep x/X/0 baseline, dynamics and chord-symbol lanes separate. Compare any visual overlay with native playback notes after edits.
 
 Centre staccato dots and accents directly above the visible numeral (or x/X), using the rendered digit ink rather than the hidden native notehead or the accidental-plus-digit group. Check horizontal alignment separately from vertical clearance; see J08a and V04a.
 
 For denser Jianpu, vary bars per system with actual attack density and verify real automatic wrapping. Keep triplet brackets and their labels close to their own digits. Reflow invalidates old per-system curve handles; recheck every continuation of ties, slurs, octave guides and hairpins against the new rendering. See J23–J24 and V14.
+
+For the skyhong profile, keep the number of systems consistent across ordinary full pages of the same edition. Choose the target for the notation and instrumentation; this does not require equal bars per system. Only verified space needs from unusual notation justify fewer systems on an ordinary page. Title and incomplete final pages are separate cases. Check actual page-by-page system counts and document exceptions under V21.
 
 Preserve unrelated works and unsaved changes. Record editable-score work, PDF/audio export and cloud delivery separately, and respect the current task's pauses. Actual GUI screenshots plus normal save/reopen can verify local rendering without PDF or audio exports. Discover actual local MuseScore capabilities before conversion; stop and diagnose a failed export instead of repeatedly spawning converters. A file's existence does not prove clean export, correct rendering or verified playback.
 
