@@ -8,7 +8,7 @@ import xml.etree.ElementTree as E
 import zipfile
 
 ROOT=Path(__file__).resolve().parents[1]
-spec=importlib.util.spec_from_file_location('templates',ROOT/'scripts/create_templates.py')
+spec=importlib.util.spec_from_file_location('templates',ROOT/'pieces/entertainer/build/make_scores.py')
 templates=importlib.util.module_from_spec(spec);spec.loader.exec_module(templates)
 
 DURATIONS={'whole':F(4),'half':F(2),'quarter':F(1),'eighth':F(1,2),'16th':F(1,4)}
@@ -52,7 +52,7 @@ class TemplatesTest(unittest.TestCase):
             root=read_score(self.dest/record['file'])
             for node in root.findall('.//location/fractions'):
                 self.assertRegex(node.text or '',r'^-?\d+/[1-9]\d*$')
-        from entertainer_notation import loc
+        from notation import loc
         for beats,expected in [(4,'1/1'),(-8,'-2/1'),(0,'0/1'),(F(1,2),'1/8')]:
             self.assertEqual(loc(beats).findtext('fractions'),expected)
 
@@ -73,7 +73,7 @@ class TemplatesTest(unittest.TestCase):
             self.assertNotIn('Jianpu',record['file'])
 
     def test_native_playback_equals_authoritative_events_in_both_notations(self):
-        from entertainer import midi
+        from arrange import midi
         for record in self.records+templates.build_templates(self.dest,forms=['Quartet']):
             root=read_score(self.dest/record['file'])
             source=json.loads((self.dest/'events'/f"{record['form']}.json").read_text())
@@ -106,7 +106,7 @@ class TemplatesTest(unittest.TestCase):
                 self.assertEqual(sorted(actual),sorted(want),(record['file'],part['role']))
 
     def test_overlay_rhythm_accidentals_and_chord_lanes(self):
-        root=read_score(self.dest/'HarpScore_Quintet_Numbered.mscz')
+        root=read_score(self.dest/'scores/HarpScore_Quintet_Numbered.mscz')
         for voice in root.findall('Score/Staff/Measure/voice'):
             t=F(0)
             for n in voice:
@@ -132,7 +132,7 @@ class TemplatesTest(unittest.TestCase):
             self.assertAlmostEqual(float(n.find('offset').get('y')),.741)
 
     def test_cut_time_and_playable_support_voices(self):
-        from entertainer import edition,midi
+        from arrange import edition,midi
         music=edition('Quintet')
         self.assertEqual(music['meter'],[2,2]);self.assertEqual(music['tempo'],144)
         self.assertEqual(music['beat_tempo'],72)
@@ -150,7 +150,7 @@ class TemplatesTest(unittest.TestCase):
             for bar in [7,11,15,19]:self.assertEqual(part['measures'][bar][-1]['pitches'],[])
 
     def test_complete_form_source_trace_and_final_cadence(self):
-        from entertainer import edition, SOURCE, RAW, midi
+        from arrange import edition, SOURCE, RAW, midi
         music=edition('Quintet')
         self.assertEqual(len(music['form']),152)
         starts=[(i+1,b['section'])for i,b in enumerate(music['form'])if b['pass_start']]
@@ -172,7 +172,7 @@ class TemplatesTest(unittest.TestCase):
         self.assertTrue(all(not e['pitches']for es in bass['measures'][:3]for e in es))
 
     def test_quartet_preserves_complete_melody_and_uses_two_real_leads(self):
-        from entertainer import edition, midi, RAW
+        from arrange import edition, midi, RAW
         music=edition('Quartet');old=edition('Solo')['parts'][0]['measures']
         roles={p['role']:p['measures']for p in music['parts']}
         self.assertEqual(list(roles),['h1','h2','bass','chord'])
@@ -195,13 +195,13 @@ class TemplatesTest(unittest.TestCase):
         records=templates.build_templates(self.dest)
         self.assertEqual({r['form']for r in records},{'Solo_Piano','Duet','Quartet'})
         self.assertEqual(len(records),6)
-        from entertainer import edition
+        from arrange import edition
         duet=edition('Duet');quartet=edition('Quartet')
         self.assertEqual(duet['parts'],quartet['parts'][:2])
         self.assertEqual(duet['melodic_handoffs'],quartet['melodic_handoffs'])
 
     def test_solo_piano_preserves_original_left_hand_and_complete_wind_line(self):
-        from entertainer import edition,RAW,midi
+        from arrange import edition,RAW,midi
         music=edition('Solo_Piano');old=edition('Solo')
         self.assertEqual(music['parts'][0],old['parts'][0])
         want=sorted((2*n['a'],2*n['b'],n['pitch'])for n in RAW if n['track']==2)
@@ -215,14 +215,14 @@ class TemplatesTest(unittest.TestCase):
                             actual.extend((a,b,midi(p))for p in e['pitches'])
         self.assertEqual(actual and sorted(actual),want)
         templates.build_templates(self.dest,forms=['Solo_Piano'])
-        root=read_score(self.dest/'HarpScore_Solo_Piano_Numbered.mscz')
+        root=read_score(self.dest/'scores/HarpScore_Solo_Piano_Numbered.mscz')
         staves=root.findall('Score/Staff')
         self.assertTrue(staves[0].findall('.//StaffText'))
         for s in staves[1:]:
             self.assertFalse(s.findall('.//StaffText'))
             self.assertTrue(any(n.findtext('color')is None for n in s.findall('.//Note')))
         self.assertTrue(any(len(m.findall('voice'))==2 for m in staves[1].findall('Measure')))
-        with zipfile.ZipFile(self.dest/'HarpScore_Solo_Piano_Numbered.mscz')as z:
+        with zipfile.ZipFile(self.dest/'scores/HarpScore_Solo_Piano_Numbered.mscz')as z:
             style=E.fromstring(z.read('score_style.mss'))
         self.assertEqual(style.findtext('Style/showHeader'),'1')
         self.assertEqual(style.findtext('Style/headerFirstPage'),'0')
@@ -230,7 +230,7 @@ class TemplatesTest(unittest.TestCase):
             self.assertEqual(style.findtext('Style/'+key),'')
 
     def test_chromatic_double_stops_match_reeds_and_preserve_existing_lines(self):
-        from entertainer import quartet_rows,midi
+        from arrange import quartet_rows,midi
         from chromatic import double_stop_options
         self.assertTrue(double_stop_options([60,64])) # C4/E4 blow 5+6
         self.assertTrue(double_stop_options([65,68])) # F4/Ab4 blow 6+7, slide in
@@ -258,16 +258,16 @@ class TemplatesTest(unittest.TestCase):
                 if len(token['notes'])==2:
                     self.assertEqual([n['size']for n in token['notes']],[9,9])
                     self.assertAlmostEqual(sum(n['y']for n in token['notes']),0)
-        root=read_score(self.dest/'HarpScore_Quartet_Numbered.mscz')
+        root=read_score(self.dest/'scores/HarpScore_Quartet_Numbered.mscz')
         self.assertIsNone(root.find("Score/Part/Staff[@id='2']/distOffset"))
-        with zipfile.ZipFile(self.dest/'HarpScore_Quartet_Numbered.mscz')as z:
+        with zipfile.ZipFile(self.dest/'scores/HarpScore_Quartet_Numbered.mscz')as z:
             style=E.fromstring(z.read('score_style.mss'))
-        original=E.parse(ROOT/'templates/layout/Quartet_Numbered.mss').getroot()
+        original=E.parse(ROOT/'layouts/summer/Quartet_Numbered.mss').getroot()
         for key in ['minSystemDistance','maxSystemDistance']:
             self.assertEqual(style.findtext('Style/'+key),original.findtext('Style/'+key))
 
     def test_quartet_pickups_belong_to_the_following_phrase(self):
-        from entertainer import edition
+        from arrange import edition
         trace=[x for x in edition('Quartet')['melodic_handoffs']if x['kind']=='melody']
         # Source-specific phrase boundaries, not a general modulo-bar rule.
         pickups=[(4,3,5),(6,F(5,2),7),(8,3,9),(10,3,11),(12,3,13),(14,F(5,2),15),(16,3,17),(20,3,21),(22,F(5,2),23),(24,3,25),(26,3,27),(28,3,29),(30,F(5,2),31),(32,3,33),(36,F(5,2),37),(44,F(5,2),45),(52,F(5,2),53),(60,F(5,2),61),(68,3,69),(70,F(5,2),71),(72,3,73),(74,3,75),(76,3,77),(78,F(5,2),79),(80,3,81),(100,1,101)]
@@ -295,14 +295,22 @@ class TemplatesTest(unittest.TestCase):
                 self.assertTrue(set(labels)<=set(attacks))
 
     def test_initial_eighth_rest_is_not_joined_to_three_eighth_notes(self):
-        from entertainer_notation import numbered_annotations, pieces
-        from entertainer import event
+        from notation import numbered_annotations, pieces
+        from arrange import event
         events=[event(F(i,2),F(1,2),[]if i==0 else ['C5'],source=str(i))for i in range(4)]
         parts=[p for e in events for p in pieces(e)]
         annotations,_=numbered_annotations(parts,'h1')
         starts=[at for at,items in annotations.items()if any(x.tag=='Spanner'and x.find('TextLine')is not None for x in items)]
         self.assertEqual(starts,[F(1,2)])
         self.assertTrue(any(x.findtext('text')=='0'for x in annotations[F(0)]))
+
+    def test_rebuild_matches_committed_scores_byte_for_byte(self):
+        with tempfile.TemporaryDirectory() as folder:
+            records=templates.build_templates(folder)
+            piece=ROOT/'pieces/entertainer'
+            for record in records:
+                self.assertEqual((Path(folder)/record['file']).read_bytes(),
+                                 (piece/record['file']).read_bytes(),record['file'])
 
     def test_rebuild_is_reproducible(self):
         with tempfile.TemporaryDirectory() as a,tempfile.TemporaryDirectory() as b:

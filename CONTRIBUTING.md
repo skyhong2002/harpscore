@@ -4,7 +4,7 @@
 
 排版修正附原創最小樂句與實際渲染，並標示有無改變播放。不要上傳未獲准散布的譜或錄音。測試資料不使用本機私人檔案。
 
-執行 `python3 scripts/build.py` 與 `python3 -m unittest discover -s tests`。修改需求產生器時另跑 `node --test tests/brief.test.cjs`。在瀏覽器檢查桌面與窄螢幕，測試下載與複製功能。網站、llms-full 與 skill 由同版文件產生，不直接編輯 dist。
+執行 `python3 -m unittest discover -s tests`，再在 `site/` 執行 `npm run build && npm test`（會檢查網站所有內部連結）。改到網站時，在瀏覽器檢查桌面與窄螢幕，並測試下載與複製功能。網站、llms-full 與 skill 由同版文件產生，不直接編輯 `site/dist`。
 
 目前沒有通用製譜引擎；新 adapter 請先提最小可驗證介面與回歸案例，不要把單曲轉換腳本改名後當成通用工具。
 

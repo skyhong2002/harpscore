@@ -1,0 +1,38 @@
+---
+import Base from '../../layouts/Base.astro';
+import { pieces, pieceFile, url } from '../../lib/site';
+
+const all = pieces();
+---
+<Base title="範例曲目" description="已在 MuseScore 製作並檢查的完整口琴編曲範例。" current="pieces">
+  <div class="wrap">
+    <header class="page-head">
+      <p class="eyebrow">Pieces</p>
+      <h1>範例曲目</h1>
+      <p class="lead">
+        已完成的整首編曲，每首都附上可編輯的 MSCZ 檔、驗證紀錄和生成腳本。開始新曲時，複製編制相符的範例來改，不要從空白檔開始。
+        做法見<a href={url('docs/guide/starting-a-piece/')}>從範例開始新曲</a>。
+      </p>
+    </header>
+
+    <div class="grid">
+      {all.map((piece) => {
+        const cover = piece.editions.find((e) => e.image);
+        return (
+          <a class="card piece" href={url(`pieces/${piece.id}/`)}>
+            {cover && <div class="score"><img src={pieceFile(piece, cover.image!)} alt="" loading="lazy" width="1450" height="2050" /></div>}
+            <h3>{piece.title}</h3>
+            <p>{piece.composer} · {piece.editions.length} 份可編輯譜{piece.bars && ` · ${piece.bars} 小節`}</p>
+            {piece.summary && <p>{piece.summary}</p>}
+          </a>
+        );
+      })}
+    </div>
+  </div>
+</Base>
+
+<style>
+  .grid { grid-template-columns: repeat(auto-fill, minmax(17rem, 22rem)); }
+  .piece .score { aspect-ratio: 4 / 3; margin-bottom: 1rem; }
+  .piece .score img { object-fit: cover; object-position: top; height: 100%; }
+</style>

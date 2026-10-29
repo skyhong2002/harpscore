@@ -1,0 +1,43 @@
+---
+import Base from '../../layouts/Base.astro';
+import { docHref, handbook, url } from '../../lib/site';
+
+const sections = await handbook();
+---
+<Base title="手冊" description="HarpScore 的完整規則、流程、偏好與決策紀錄。" current="docs">
+  <div class="wrap">
+    <header class="page-head">
+      <p class="eyebrow">Handbook</p>
+      <h1>Agent 要讀的規則與決策</h1>
+      <p class="lead">
+        這裡是 skill 的完整內容，和 agent 安裝後讀到的是同一份檔案。agent 依 <a href={url('SKILL.md')}>SKILL.md</a> 按需要讀取章節；
+        要一次給 agent 全部內容，用 <a href={url('llms-full.txt')}>llms-full.txt</a>。
+      </p>
+    </header>
+
+    {sections.map((section) => (
+      <section class="section">
+        <div class="section-label">
+          <h2>{section.label}</h2>
+          <p class="muted">{section.blurb}</p>
+        </div>
+        <div class="grid">
+          {section.docs.map((doc) => (
+            <a class="card" href={docHref(doc)}>
+              <h3>{doc.data.title}</h3>
+              {doc.data.summary && <p>{doc.data.summary}</p>}
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .section { display: grid; grid-template-columns: 15rem minmax(0, 1fr); gap: 2rem; padding: 2rem 0; border-top: 1px solid var(--line); }
+  .section-label h2 { margin: 0 0 0.3rem; font-size: 1.3rem; }
+  .section-label p { margin: 0; font-size: 0.92rem; }
+  .card h3 { font-size: 1.05rem; }
+  @media (max-width: 760px) { .section { grid-template-columns: 1fr; gap: 1rem; } }
+</style>

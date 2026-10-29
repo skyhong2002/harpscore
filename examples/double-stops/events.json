@@ -54,5 +54,5 @@
     "underline below both digits",
     "dynamics clear without expanding staff gap"
   ],
-  "render_status": "Full Entertainer implementation checked separately in templates/verification.json; this JSON is test input, not rendered proof"
+  "render_status": "Full Entertainer implementation checked separately in pieces/entertainer/verification.json; this JSON is test input, not rendered proof"
 }

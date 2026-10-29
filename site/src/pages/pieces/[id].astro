@@ -1,0 +1,75 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { NOTATION_LABEL, REPO, ensembles, pieceFile, pieces, type Piece } from '../../lib/site';
+
+export function getStaticPaths() {
+  return pieces().map((piece) => ({ params: { id: piece.id }, props: { piece } }));
+}
+
+const { piece } = Astro.props as { piece: Piece };
+const readme = await getEntry('pieces', piece.id);
+const { Content } = readme ? await render(readme) : { Content: null };
+const groups = ensembles(piece);
+---
+<Base title={piece.title} description={piece.summary} current="pieces">
+  <div class="wrap">
+    <header class="page-head">
+      <p class="eyebrow">{piece.composer}</p>
+      <h1>{piece.title}</h1>
+      {piece.summary && <p class="lead">{piece.summary}</p>}
+      <dl class="facts">
+        {piece.meter && <div><dt>拍號</dt><dd>{piece.meter}</dd></div>}
+        {piece.tempo && <div><dt>速度</dt><dd>{piece.tempo}</dd></div>}
+        {piece.bars && <div><dt>長度</dt><dd>{piece.bars} 小節</dd></div>}
+        <div><dt>授權</dt><dd>{piece.license}</dd></div>
+        {piece.source && <div><dt>來源</dt><dd><a href={piece.source.url}>{piece.source.name}</a></dd></div>}
+      </dl>
+    </header>
+
+    <section class="editions" aria-label="可編輯譜">
+      {groups.map((editions) => {
+        const shown = editions.find((e) => e.image) ?? editions[0];
+        return (
+          <article>
+            {shown.image && (
+              <a class="score" href={pieceFile(piece, shown.image)}>
+                <img src={pieceFile(piece, shown.image)} alt={`${piece.title} ${shown.label}第一頁`} loading="lazy" width="1450" height="2050" />
+              </a>
+            )}
+            <h2>{shown.label}</h2>
+            <ul>
+              {editions.map((edition) => (
+                <li>
+                  <a href={pieceFile(piece, edition.file)} download>{NOTATION_LABEL[edition.notation] ?? edition.notation}</a>
+                  <small>MSCZ{edition.staves && ` · ${edition.staves} 行`}</small>
+                </li>
+              ))}
+            </ul>
+          </article>
+        );
+      })}
+    </section>
+
+    <p class="actions">
+      {piece.verification && <a class="button quiet" href={pieceFile(piece, piece.verification)}>驗證紀錄</a>}
+      <a class="button quiet" href={`${REPO}/tree/main/pieces/${piece.id}`}>在 GitHub 查看檔案與生成腳本</a>
+    </p>
+
+    {Content && <div class="prose readme"><Content /></div>}
+  </div>
+</Base>
+
+<style>
+  .facts { display: flex; flex-wrap: wrap; gap: 0.5rem 2.5rem; margin: 1.5rem 0 0; }
+  .facts dt { font-size: 0.78rem; color: var(--faint); letter-spacing: 0.08em; }
+  .facts dd { margin: 0; }
+  .editions { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 2rem; margin: 1.5rem 0 2rem; }
+  .editions .score { display: block; aspect-ratio: 1450 / 1300; }
+  .editions .score img { object-fit: cover; object-position: top; height: 100%; }
+  .editions h2 { font-size: 1.15rem; margin: 1rem 0 0.3rem; }
+  .editions ul { list-style: none; padding: 0; margin: 0; }
+  .editions li { display: flex; justify-content: space-between; gap: 1rem; padding: 0.35rem 0; border-bottom: 1px dashed var(--line); }
+  .editions small { color: var(--faint); }
+  .readme { margin-top: 3rem; }
+</style>
