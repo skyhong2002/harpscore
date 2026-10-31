@@ -1,16 +1,15 @@
 ---
 import { getEntry, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { NOTATION_LABEL, REPO, ensembles, pieceFile, pieces, type Piece } from '../../lib/site';
+import { NOTATION_LABEL, REPO, pieceFile, pieces, type Piece } from '../../lib/site';
 
 export function getStaticPaths() {
   return pieces().map((piece) => ({ params: { id: piece.id }, props: { piece } }));
 }
 
 const { piece } = Astro.props as { piece: Piece };
-const readme = await getEntry('pieces', piece.id);
+const readme = piece.catalogue ? undefined : await getEntry('pieces', piece.id);
 const { Content } = readme ? await render(readme) : { Content: null };
-const groups = ensembles(piece);
 ---
 <Base title={piece.title} description={piece.summary} current="pieces">
   <div class="wrap">
@@ -28,24 +27,23 @@ const groups = ensembles(piece);
     </header>
 
     <section class="editions" aria-label="可編輯譜">
-      {groups.map((editions) => {
-        const shown = editions.find((e) => e.image) ?? editions[0];
+      {piece.editions.map((edition) => {
         return (
           <article>
-            {shown.image && (
-              <a class="score" href={pieceFile(piece, shown.image)}>
-                <img src={pieceFile(piece, shown.image)} alt={`${piece.title} ${shown.label}第一頁`} loading="lazy" width="1450" height="2050" />
+            {edition.image && (
+              <a class="score" href={pieceFile(piece, edition.image)} aria-label={`放大${edition.label}第一頁`}>
+                <img src={pieceFile(piece, edition.image)} alt={`${piece.title} ${edition.label} ${NOTATION_LABEL[edition.notation] ?? edition.notation}第一頁`} loading="lazy" width="1000" height="1414" />
               </a>
             )}
-            <h2>{shown.label}</h2>
+            <h2>{edition.label}</h2>
+            <p class="edition-type">{NOTATION_LABEL[edition.notation] ?? edition.notation}</p>
             <ul>
-              {editions.map((edition) => (
                 <li>
-                  <a href={pieceFile(piece, edition.file)} download>{NOTATION_LABEL[edition.notation] ?? edition.notation}</a>
-                  <small>MSCZ{edition.staves && ` · ${edition.staves} 行`}</small>
+                  <a href={pieceFile(piece, edition.file)} download>下載可編輯譜</a>
+                  <small>MSCZ{edition.staves && ` · ${edition.staves} 個譜表`}</small>
                 </li>
-              ))}
             </ul>
+            {edition.status && <p class="edition-status">{edition.status}</p>}
           </article>
         );
       })}
@@ -53,9 +51,10 @@ const groups = ensembles(piece);
 
     <p class="actions">
       {piece.verification && <a class="button quiet" href={pieceFile(piece, piece.verification)}>驗證紀錄</a>}
-      <a class="button quiet" href={`${REPO}/tree/main/pieces/${piece.id}`}>在 GitHub 查看檔案與生成腳本</a>
+      {!piece.catalogue && <a class="button quiet" href={`${REPO}/tree/main/pieces/${piece.id}`}>在 GitHub 查看檔案與生成腳本</a>}
     </p>
 
+    {piece.catalogue && <p class="muted">這些版本有 HarpScore 製作紀錄；每個預覽來自所列版本的第一頁。收錄與首頁檢查不等於全曲逐音、聽奏或真人排練驗收。原始來源譜與單純匯入檔不列入本頁。</p>}
     {Content && <div class="prose readme"><Content /></div>}
   </div>
 </Base>
@@ -65,11 +64,12 @@ const groups = ensembles(piece);
   .facts dt { font-size: 0.78rem; color: var(--faint); letter-spacing: 0.08em; }
   .facts dd { margin: 0; }
   .editions { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 2rem; margin: 1.5rem 0 2rem; }
-  .editions .score { display: block; aspect-ratio: 1450 / 1300; }
-  .editions .score img { object-fit: cover; object-position: top; height: 100%; }
+  .editions .score { display: block; aspect-ratio: 210 / 297; }
+  .editions .score img { object-fit: contain; object-position: top; width: 100%; height: 100%; }
   .editions h2 { font-size: 1.15rem; margin: 1rem 0 0.3rem; }
   .editions ul { list-style: none; padding: 0; margin: 0; }
   .editions li { display: flex; justify-content: space-between; gap: 1rem; padding: 0.35rem 0; border-bottom: 1px dashed var(--line); }
   .editions small { color: var(--faint); }
+  .edition-type, .edition-status { font-size: .85rem; color: var(--muted); margin: .3rem 0; }
   .readme { margin-top: 3rem; }
 </style>

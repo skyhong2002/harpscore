@@ -52,6 +52,9 @@ export interface Edition {
   preview?: string;
   staves?: number;
   sha256?: string;
+  status?: string;
+  production_record_sha256?: string;
+  preview_sha256?: string;
 }
 
 export interface Piece {
@@ -67,20 +70,40 @@ export interface Piece {
   cover?: { image: string; caption: string };
   verification?: string;
   editions: Edition[];
+  catalogue?: boolean;
+  production?: string;
 }
 
 const PIECES = join(ROOT, 'pieces');
 
 export function pieces(): Piece[] {
   if (!existsSync(PIECES)) return [];
-  return readdirSync(PIECES)
+  const examples: Piece[] = readdirSync(PIECES)
     .filter((name) => existsSync(join(PIECES, name, 'piece.json')))
     .sort()
     .map((name) => JSON.parse(readFileSync(join(PIECES, name, 'piece.json'), 'utf8')));
+  const catalogPath = join(ROOT, 'site/src/data/arrangements.json');
+  if (!existsSync(catalogPath)) return examples;
+  const catalog: Piece[] = JSON.parse(readFileSync(catalogPath, 'utf8')).pieces;
+  const overrides = new Map(catalog.map(piece => [piece.id, piece]));
+  return [
+    ...examples.map(piece => {
+      const entry = overrides.get(piece.id);
+      if (!entry) return piece;
+      return { ...piece, editions: piece.editions.map(edition => {
+        const current = entry.editions.find(e => e.sha256 === edition.sha256);
+        return current ? { ...edition, image: current.image, preview_sha256: current.preview_sha256, status: current.status } : edition;
+      }) };
+    }),
+    ...catalog.filter(piece => !examples.some(example => example.id === piece.id))
+      .sort((a, b) => a.title.localeCompare(b.title, 'zh-Hant')),
+  ];
 }
 
 /** Public URL of a file inside a piece folder (piece files are published verbatim). */
 export function pieceFile(piece: Piece, path: string): string {
+  if (path.startsWith('https://')) return path;
+  if (path.startsWith('/')) return url(path);
   return url(`pieces/${piece.id}/${path}`);
 }
 
