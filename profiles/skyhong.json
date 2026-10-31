@@ -18,7 +18,21 @@
   "bass": {
     "sustain_into_unnecessary_rests": true,
     "preserve_groove": true,
-    "force_two_or_four_beats": false
+    "force_two_or_four_beats": false,
+    "scope": "Double Bass harmonica; confirm other instruments separately",
+    "staff_clef": "bass-8-below",
+    "preserve_verified_fundamental_pitch": true,
+    "avoid_duplicate_octave_transposition": true,
+    "playback_model": {
+      "type": "octave-reed-timbre",
+      "layers_semitones_from_fundamental": [0, 12],
+      "layer_relative_gain_db": [0, -10],
+      "synchronize": ["onset", "duration", "tie-chain", "articulation", "dynamic-changes"],
+      "avoid_duplicate_layers_in_existing_sound": true,
+      "gain_is_not_midi_velocity_offset": true,
+      "additional_written_double_stop": false,
+      "verification": "A08a–A08b; V23"
+    }
   },
   "chord": {
     "staff_notation": "single-line-rhythm; preserve source notehead conventions when re-engraving",
