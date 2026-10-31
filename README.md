@@ -54,7 +54,7 @@ SKILL.md, AGENTS.md   agent 入口與工作守則
 docs/                 手冊：guide 開始、rules 規則、engraving MuseScore 工法、history 偏好與決策
 profiles/             顯示方案與選用偏好
 layouts/              共用版式、聲部設定、字形樣板與來源紀錄
-pieces/<id>/          每首範例曲：piece.json、來源、生成腳本、MSCZ、事件、預覽與驗證紀錄
+pieces/<id>/          每首展示作品：piece.json、來源、生成腳本、MSCZ、事件、預覽與驗證紀錄
 tools/                可攜式通用工具（幾何、碰撞、部距）
 plugins/              MuseScore 幾何讀取插件
 scripts/package.py    產生 llms 文件與下載包

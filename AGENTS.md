@@ -8,6 +8,8 @@ Read `docs/guide/agent-contract.md`, `docs/guide/workflow.md` and `docs/rules/ar
 
 Keep performed pitch, onset, duration and velocity unchanged for layout-only tasks. Preserve phrases in beginner duets, Bass grooves and Chord's rhythmic role. Validate the actual renderer, not only logical grouping. A native-note/text overlay must remain semantically synchronized. Follow `docs/guide/tryout.md`: inspect the actual selected reference, copy its verified layout, then check representative passages from the requested piece. Do not generate an original four-bar exercise.
 
+Teaching content must use general principles, without requiring a named composition as an example. Keep composition-specific details in piece records or the historical ledger; preserve the work gallery and source/license attribution.
+
 ## When maintaining this repository
 
 Read `docs/maintaining.md`. `SKILL.md`, `docs/`, profiles and original fixtures are canonical. Build creates the website and portable skill ZIP from them. Keep references relative and runnable after installation. Do not add a fake transcription engine, fabricate verification or substitute stale score thumbnails.

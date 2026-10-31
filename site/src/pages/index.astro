@@ -5,7 +5,7 @@ import { REPO, VERSION, docHref, handbook, pieceFile, pieces, url } from '../lib
 // The project section is for maintainers; it is linked from the footer instead.
 const sections = (await handbook()).filter((section) => section.id !== 'project');
 const [featured] = pieces();
-// One thumbnail per ensemble: staff and Jianpu editions share a first-page image.
+// Keep version-specific first-page previews in the display section.
 const showcase = [...new Map((featured?.editions ?? []).filter((e) => e.image).map((e) => [e.image, e])).values()];
 
 const agentPrompt = `Use HarpScore: ${REPO}
@@ -21,7 +21,7 @@ const steps = [
 const downloads = [
   { href: 'downloads/harpscore-skill.zip', label: '可安裝的 skill', note: '解壓到 agent 的 skills 目錄' },
   { href: 'downloads/agent-kit.zip', label: 'Agent 文件包', note: '規則、偏好、範例與工具' },
-  { href: 'downloads/harpscore-musescore-templates.zip', label: 'MuseScore 範例檔', note: '所有範例曲目的 MSCZ' },
+  { href: 'downloads/harpscore-musescore-templates.zip', label: 'MuseScore 版式與展示檔', note: '共用樣式、譜表骨架與隨包展示版本' },
   { href: 'llms-full.txt', label: 'llms-full.txt', note: '整份手冊的純文字版' },
 ];
 ---
@@ -89,7 +89,7 @@ const downloads = [
     <section class="wrap band">
       <div class="band-head">
         <div>
-          <p class="eyebrow">Example</p>
+          <p class="eyebrow">作品展示</p>
           <h2>{featured.title}</h2>
           {featured.summary && <p class="muted">{featured.summary}</p>}
         </div>

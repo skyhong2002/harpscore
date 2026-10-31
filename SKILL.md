@@ -20,6 +20,8 @@ An agent-readable arranging and engraving skill. Read rules, inspect the actual 
 - Before delivery: `docs/rules/verification.md`.
 - First use or changed renderer/font: `docs/guide/tryout.md`; open the actual selected reference in MuseScore, reuse its matching layout and inspect representative passages from the requested piece. Do not create an original four-bar exercise or treat a substitute exercise as evidence for the selected layout.
 
+Teaching references describe reusable methods by instrumentation, notation and verification needs. Keep composition-specific instructions in the piece record or historical ledger; display works and provenance are optional resources, never required teaching examples. Historical decisions explain changes; execute the current rules and selected profile.
+
 ## Non-negotiable checks
 
 Separate source transcription, musical adaptation, notation respelling and layout. A layout-only request preserves performed pitch, onset, duration and velocity. A new musical change needs a stated musical reason or user request.
