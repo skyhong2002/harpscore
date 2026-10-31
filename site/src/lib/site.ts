@@ -15,7 +15,7 @@ export function url(path = ''): string {
 // Folder order and labels for the handbook. A doc's folder is its section;
 // top-level docs (e.g. maintaining.md) fall into "project".
 export const SECTIONS = [
-  { id: 'guide', label: '開始', blurb: '交付前的守則、從新曲開始的流程與 Summer 版式驗證。' },
+  { id: 'guide', label: '開始', blurb: '交付前的守則、從新曲開始的流程與版式驗證。' },
   { id: 'rules', label: '規則', blurb: '配器、簡譜、來源核對與交付驗收的編號規則。' },
   { id: 'engraving', label: 'MuseScore 工法', blurb: '覆層、碰撞診斷與自適應部距的實作經驗。' },
   { id: 'history', label: '偏好與決策', blurb: '創始使用者的偏好，以及每次修正如何成為規則。' },

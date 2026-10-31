@@ -28,22 +28,22 @@ Keep source corrections, musical adaptations and layout-only edits separate.
 - 完整偏好與 **對話決策紀錄**：保留修正過程與優先順序，不把被推翻的做法當成預設。
 - [自適應部距](docs/engraving/adaptive-spacing.md)：依實際字形計算局部最小部距，附幾何讀取插件與可攜式工具。
 - MuseScore 實作經驗：覆層風險、已用過的起始參數、單曲例外與環境限制分開。
-- Summer 實檔版式參考與新曲渲染核對流程。
+- 依編制與記譜方式選擇版式，對照參考實檔並核對新曲渲染。
 - 同一來源產生網站、完整 agent 文件包、可安裝 skill 與原始碼下載。
 
 **不是自動聽歌轉譜服務，也尚未包含通用 MuseScore 簡譜渲染引擎。** Skill 的作用是讓 agent 能依可靠規則使用它可用的工具，且對實際成果負責。
 
 ## MuseScore 起始檔
 
-[三種編制、六份可編輯譜](pieces/entertainer/scores/)：《The Entertainer》完整全曲（所有反覆展開，共 152 小節，2/2 拍），含獨奏＋鋼琴、二重奏、四重奏的五線譜與簡譜。獨奏鋼琴簡譜版保留鋼琴大譜表。版式沿用 Summer，雙音縮小對稱置中，弱起與下一句同部承接。正常 MuseScore 渲染與播放已檢查，真人排練仍待進行。原曲／譜源公領域，HarpScore 改編與程式 MIT。見 [使用與驗證](pieces/entertainer/README.md)。簡譜改音符後仍需同步覆層。
+依 [編制與記譜版式](docs/guide/starting-a-piece.md) 選擇獨奏、鋼琴伴奏或重奏的起始配置，再以當次任務的來源建立音樂。五線譜、簡譜與口琴簡譜搭配鋼琴大譜表各有對應的顯示方式；原生譜、音樂事件與驗證紀錄分開保存。簡譜改音符後仍需同步覆層。教學流程不要求使用任何特定曲目。
 
 ## Try it
 
-在正常 MuseScore 視窗查看實際 Summer 參考檔，複製相符版式，依 [版式驗證流程](docs/guide/tryout.md) 用新曲的代表段落檢查，再完成全曲。原生音符、數字覆層與實際 MuseScore 畫面要互相對得上，不能只檢查 XML；不再生成原創四小節練習。
+在正常 MuseScore 視窗查看所選版式的實際參考檔，複製相符版式，依 [版式驗證流程](docs/guide/tryout.md) 用新曲的代表段落檢查，再完成全曲。原生音符、數字覆層與實際 MuseScore 畫面要互相對得上，不能只檢查 XML；不再生成原創四小節練習。
 
 ## Profiles and history
 
-`profiles/fixed-c.json` 是本專案的固定 C 顯示方案。`profiles/skyhong.json` 是使用者的選用偏好。通用規則、個人偏好、Summer 的小節例外及某次 macOS 匯出問題分開維護。
+`profiles/fixed-c.json` 是本專案的固定 C 顯示方案。`profiles/skyhong.json` 是使用者的選用偏好。通用規則、個人偏好、特定作品的小節例外及某次 macOS 匯出問題分開維護。
 
 `docs/history/conversation-decisions.md` 依相關對話順序記錄要求與後續更正，不公開截圖中與製譜無關的私人聊天，也不包含私人檔案路徑。可執行的規則以目前有效決策為準。
 
@@ -53,7 +53,7 @@ Keep source corrections, musical adaptations and layout-only edits separate.
 SKILL.md, AGENTS.md   agent 入口與工作守則
 docs/                 手冊：guide 開始、rules 規則、engraving MuseScore 工法、history 偏好與決策
 profiles/             顯示方案與選用偏好
-layouts/summer/       從 Summer 原檔抽出的共用版式
+layouts/              共用版式、聲部設定、字形樣板與來源紀錄
 pieces/<id>/          每首範例曲：piece.json、來源、生成腳本、MSCZ、事件、預覽與驗證紀錄
 tools/                可攜式通用工具（幾何、碰撞、部距）
 plugins/              MuseScore 幾何讀取插件

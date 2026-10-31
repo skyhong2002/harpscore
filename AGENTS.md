@@ -6,7 +6,7 @@ HarpScore is an agent skill and shared knowledge base for serious harmonica arra
 
 Read `docs/guide/agent-contract.md`, `docs/guide/workflow.md` and `docs/rules/arranging.md`. For Jianpu read `docs/rules/jianpu.md` and the chosen profile. To reuse the founding user's style read `docs/history/preferences.md`; use `docs/history/conversation-decisions.md` to resolve superseded requirements. Before delivery read `docs/rules/verification.md`.
 
-Keep performed pitch, onset, duration and velocity unchanged for layout-only tasks. Preserve phrases in beginner duets, Bass grooves and Chord's rhythmic role. Validate the actual renderer, not only logical grouping. A native-note/text overlay must remain semantically synchronized. Follow `docs/guide/tryout.md`: inspect the actual Summer reference, copy its verified layout, then check representative passages from the requested piece. Do not generate an original four-bar exercise.
+Keep performed pitch, onset, duration and velocity unchanged for layout-only tasks. Preserve phrases in beginner duets, Bass grooves and Chord's rhythmic role. Validate the actual renderer, not only logical grouping. A native-note/text overlay must remain semantically synchronized. Follow `docs/guide/tryout.md`: inspect the actual selected reference, copy its verified layout, then check representative passages from the requested piece. Do not generate an original four-bar exercise.
 
 ## When maintaining this repository
 

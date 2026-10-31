@@ -5,7 +5,7 @@ description: Create and revise playable harmonica arrangements and readable Jian
 
 # HarpScore
 
-An agent-readable arranging and engraving skill. Read rules, inspect the actual Summer reference and the requested score's rendering, then apply the verified layout to the complete requested work. This repository is not an audio-to-score service.
+An agent-readable arranging and engraving skill. Read rules, inspect the actual selected reference and the requested score's rendering, then apply the verified layout to the complete requested work. This repository is not an audio-to-score service.
 
 ## Load only the needed references
 
@@ -16,9 +16,9 @@ An agent-readable arranging and engraving skill. Read rules, inspect the actual 
 - Uneven or colliding adjacent Jianpu staves: read `docs/engraving/adaptive-spacing.md`; use `tools/adaptive_staff_spacing.py` with fresh renderer geometry to expand only systems that need space.
 - MuseScore editing/export: `docs/engraving/musescore-adapter.md`. Machine-specific constraints are conditional.
 - Re-engraving or checking another edition: `docs/rules/source-verification.md`; a transcription table is an intermediate, not independent proof of the original scan.
-- Starting a new piece: `docs/guide/starting-a-piece.md` and `pieces/entertainer/scores/`. Check the verification record and copy the matching musical example, which contains the public-domain complete Entertainer arrangement using the copied Summer layouts, rather than an empty starter. See its exact verification record. Numbered overlays still require explicit synchronization after editing notes.
+- Starting a new piece: `docs/guide/starting-a-piece.md`. Select layout assets by instrumentation and notation, then establish music from the current task’s verified source. Check the selected assets’ provenance and verification scope; no named composition is a required teaching example or starting score. Numbered overlays still require explicit synchronization after editing notes.
 - Before delivery: `docs/rules/verification.md`.
-- First use or changed renderer/font: `docs/guide/tryout.md`; open the actual Summer reference in MuseScore, reuse its matching layout and inspect representative passages from the requested piece. Do not create an original four-bar exercise or treat a substitute exercise as evidence for Summer's layout.
+- First use or changed renderer/font: `docs/guide/tryout.md`; open the actual selected reference in MuseScore, reuse its matching layout and inspect representative passages from the requested piece. Do not create an original four-bar exercise or treat a substitute exercise as evidence for the selected layout.
 
 ## Non-negotiable checks
 

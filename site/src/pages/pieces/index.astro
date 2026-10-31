@@ -10,7 +10,7 @@ const editions = all.reduce((count, piece) => count + piece.editions.length, 0);
       <p class="eyebrow">HarpScore pieces</p>
       <h1>範例曲目</h1>
       <p class="lead">由 HarpScore 製作的口琴編曲與重製版本。每份版本都有自己的第一頁預覽與可編輯樂譜；編曲候選及尚待聽奏驗收的狀態分別標示。</p>
-      <p class="muted">{all.length} 首曲目 · {editions} 個版本。製作新曲的方法見<a href={url('docs/guide/starting-a-piece/')}>從範例開始新曲</a>。</p>
+      <p class="muted">{all.length} 首曲目 · {editions} 個版本。製作新曲的方法見<a href={url('docs/guide/starting-a-piece/')}>選擇編制與記譜版式</a>。</p>
       <label class="piece-search">找一首曲子<input type="search" id="piece-search" placeholder="搜尋曲名、作曲家、五線譜或簡譜" /></label>
       <p id="piece-count" role="status" aria-live="polite">顯示 {all.length} 首曲目</p>
     </header>

@@ -87,7 +87,7 @@ def build(out=None):
                      "An agent-readable harmonica arranging and Jianpu skill.\n\n"
                      "Agent entrypoint: SKILL.md\nContract: docs/guide/agent-contract.md\n"
                      "Full rules and decisions: llms-full.txt\n"
-                     "Summer layout validation: docs/guide/tryout.md\n"
+                     "Layout validation: docs/guide/tryout.md\n"
                      "Profile: profiles/skyhong.json\n"
                      "Repository: https://github.com/skyhong2002/harpscore\n"
                      "Download: downloads/harpscore-skill.zip\n").encode(),
