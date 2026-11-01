@@ -1,6 +1,6 @@
 ---
 name: harpscore
-description: Create and revise playable harmonica arrangements and readable Jianpu in MuseScore. Use for harmonica score creation, beginner duet orchestration, numbered notation and engraving corrections with rendered verification.
+description: Create and revise playable harmonica arrangements and readable Jianpu in MuseScore. Use for harmonica orchestration, numbered notation, engraving corrections, and instrument-specific tone, articulation and playback sampling.
 ---
 
 # HarpScore
@@ -10,6 +10,7 @@ An agent-readable arranging and engraving skill. Read rules, inspect the actual 
 ## Load only the needed references
 
 - Always: `docs/guide/agent-contract.md`, `docs/guide/workflow.md`, `docs/rules/arranging.md`.
+- Harmonica tone, articulation or ensemble playback: read `docs/rules/harmonica-performance.md`. For SoundFont/VST choices or audio sampling also read `docs/guide/sound-sampling.md`; teaching videos and caption evidence are indexed in `docs/history/dming-studio-sources.md`.
 - Jianpu: `docs/rules/jianpu.md` and the chosen profile in `profiles/`.
 - Reusing the founding user's style: `docs/history/preferences.md` and `profiles/skyhong.json`.
 - Resolving an old contradictory instruction: `docs/history/conversation-decisions.md`. Later explicit corrections supersede earlier requests; do not average contradictory instructions.

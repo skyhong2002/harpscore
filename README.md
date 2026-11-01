@@ -25,6 +25,7 @@ Keep source corrections, musical adaptations and layout-only edits separate.
 
 - Agent 守則：何時讀哪些資料、先試做什麼、怎樣才算真的完成。
 - 配器與簡譜：樂句交接、初學難度、Bass 延音、Chord 節奏，以及數字、減時線、點、升降與版面。
+- [口琴音色與奏法](docs/rules/harmonica-performance.md)：半音階起音與振音、Bass 八度簧、Chord 斯洽與重音；附 DMing Studio 字幕來源及[取樣與播放流程](docs/guide/sound-sampling.md)。實驗取樣音訊與音色庫不隨公開套件散布。
 - 完整偏好與 **對話決策紀錄**：保留修正過程與優先順序，不把被推翻的做法當成預設。
 - [自適應部距](docs/engraving/adaptive-spacing.md)：依實際字形計算局部最小部距，附幾何讀取插件與可攜式工具。
 - MuseScore 實作經驗：覆層風險、已用過的起始參數、單曲例外與環境限制分開。

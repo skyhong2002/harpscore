@@ -10,6 +10,8 @@ Keep performed pitch, onset, duration and velocity unchanged for layout-only tas
 
 Teaching content must use general principles, without requiring a named composition as an example. Keep composition-specific details in piece records or the historical ledger; preserve the work gallery and source/license attribution.
 
+For instrument tone and articulation, read `docs/rules/harmonica-performance.md`; for sampling or playback resources, read `docs/guide/sound-sampling.md`. DMing Studio caption sources are indexed in `docs/history/dming-studio-sources.md`. Keep caption evidence, audio analysis, synthesizer checks and actual listening distinct; preserve naturally sampled octave content without duplicating it.
+
 ## When maintaining this repository
 
 Read `docs/maintaining.md`. `SKILL.md`, `docs/`, profiles and original fixtures are canonical. Build creates the website and portable skill ZIP from them. Keep references relative and runnable after installation. Do not add a fake transcription engine, fabricate verification or substitute stale score thumbnails.
