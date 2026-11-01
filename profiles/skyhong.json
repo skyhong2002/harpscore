@@ -74,6 +74,17 @@
     "individual_harmonica_parts": false
   },
   "jianpu_first_edition": "1.0",
+  "piano_hand_notation": {
+    "use_voice_stems_and_cross_staff_beams": true,
+    "add_hand_text_labels": false,
+    "decisions": ["D112", "D113"]
+  },
+  "musescore_preview": {
+    "page_flow": "left-to-right",
+    "scroll_direction": "horizontal",
+    "scope": "all score previews; does not change paper orientation or music",
+    "decision": "D109"
+  },
   "export_policy": "record per task; local MuseScore work, PDF/audio exports and cloud delivery are independent phases",
   "references": [
     "docs/history/preferences.md",

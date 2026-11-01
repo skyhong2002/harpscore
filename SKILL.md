@@ -15,6 +15,7 @@ An agent-readable arranging and engraving skill. Read rules, inspect the actual 
 - Resolving an old contradictory instruction: `docs/history/conversation-decisions.md`. Later explicit corrections supersede earlier requests; do not average contradictory instructions.
 - Uneven or colliding adjacent Jianpu staves: read `docs/engraving/adaptive-spacing.md`; use `tools/adaptive_staff_spacing.py` with fresh renderer geometry to expand only systems that need space.
 - MuseScore editing/export: `docs/engraving/musescore-adapter.md`. Machine-specific constraints are conditional.
+- Staff notation or performance-MIDI reconstruction: `docs/engraving/readable-staff-notation.md`; establish meter and musical voices before quantizing or changing beams. For a medley, identify constituent melodies and transitions under W02a before naming sections.
 - Re-engraving or checking another edition: `docs/rules/source-verification.md`; a transcription table is an intermediate, not independent proof of the original scan.
 - Starting a new piece: `docs/guide/starting-a-piece.md`. Select layout assets by instrumentation and notation, then establish music from the current task’s verified source. Check the selected assets’ provenance and verification scope; no named composition is a required teaching example or starting score. Numbered overlays still require explicit synchronization after editing notes.
 - Before delivery: `docs/rules/verification.md`.
