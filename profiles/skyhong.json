@@ -149,6 +149,12 @@
       "incomplete final page",
       "unusual notation requiring extra space, verified in rendering"
     ],
-    "verification": "V21: record actual system starts and reasons for exceptions"
+    "verification": "V21: record actual system starts and reasons for exceptions",
+    "vertical_distribution": {
+      "staff_notation": "share spare page height among staves; use consistent staff and system spacing across ordinary full pages",
+      "local_exceptions": "only actual notation clearance verified in rendering",
+      "approved_numbered_layout": "preserve staff spacing, system spacing and page breaks when only fixing symbol collisions",
+      "verification": "V21a; D116"
+    }
   }
 }

@@ -12,6 +12,7 @@ An agent-readable arranging and engraving skill. Read rules, inspect the actual 
 - Always: `docs/guide/agent-contract.md`, `docs/guide/workflow.md`, `docs/rules/arranging.md`.
 - Harmonica tone, articulation or ensemble playback: read `docs/rules/harmonica-performance.md`. For SoundFont/VST choices or audio sampling also read `docs/guide/sound-sampling.md`; teaching videos and caption evidence are indexed in `docs/history/dming-studio-sources.md`.
 - Jianpu: `docs/rules/jianpu.md` and the chosen profile in `profiles/`.
+- Jianpu collisions involving tuplets, octave dots, stacked notes or Chord symbols: apply J08b, J10a and J23a, then V25 in `docs/rules/verification.md`. Check every underline layer and matching cases throughout the work; preserve approved page geometry.
 - Reusing the founding user's style: `docs/history/preferences.md` and `profiles/skyhong.json`.
 - Resolving an old contradictory instruction: `docs/history/conversation-decisions.md`. Later explicit corrections supersede earlier requests; do not average contradictory instructions.
 - Uneven or colliding adjacent Jianpu staves: read `docs/engraving/adaptive-spacing.md`; use `tools/adaptive_staff_spacing.py` with fresh renderer geometry to expand only systems that need space.
