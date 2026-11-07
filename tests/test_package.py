@@ -91,6 +91,11 @@ class PackageTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn('--clearance', result.stdout)
             self.assertTrue((installed/'plugins/HarpScoreGeometry/HarpScoreGeometry.qml').is_file())
+            result = subprocess.run([sys.executable, 'tools/chord_spacing.py', 'prepare', '--help'],
+                                    cwd=installed, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn('--probe', result.stdout)
+            self.assertTrue((installed/'plugins/HarpScoreChordMetrics/HarpScoreChordMetrics.qml').is_file())
             for path in [installed/'SKILL.md', installed/'AGENTS.md', *sorted((installed/'docs').rglob('*.md'))]:
                 for resolved, ref in references(path):
                     # Root references in code samples use the installed skill root.
